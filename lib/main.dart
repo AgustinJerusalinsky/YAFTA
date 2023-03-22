@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yafta/theme/theme_data.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,9 +12,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: lightTheme,
+      darkTheme: darkTheme,
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
