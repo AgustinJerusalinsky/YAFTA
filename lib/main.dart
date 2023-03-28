@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yafta/theme/theme_data.dart';
+import 'package:yafta/design_system/theme_data.dart';
 
 void main() {
   runApp(const MyApp());
