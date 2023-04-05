@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:yafta/design_system/theme_data.dart';
+import 'package:yafta/design_system/tokens/theme_data.dart';
+import 'package:yafta/design_system/molecules/yafta_navigation_bar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -42,6 +43,8 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
+      bottomNavigationBar:
+          YaftaNavigationBar(onDestinationSelected: (int idx) => print(idx)),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
