@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yafta/design_system/tokens/theme_data.dart';
-import 'package:yafta/design_system/molecules/yafta_navigation_bar.dart';
+import 'package:yafta/design_system/design_system.dart';
 
 void main() {
   runApp(const MyApp());
@@ -37,6 +36,8 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _onDestinationSelected(Set<int> n) {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,19 +46,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       bottomNavigationBar:
           YaftaNavigationBar(onDestinationSelected: (int idx) => print(idx)),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
+      body: YaftaSegmentedButton(
+        onSelectionChanged: (Set<int> idx) => print(idx),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
