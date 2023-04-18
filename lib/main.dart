@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:yafta/design_system/design_system.dart';
 
+import 'design_system/atoms/yafta_logo.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -46,9 +48,12 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       bottomNavigationBar:
           YaftaNavigationBar(onDestinationSelected: (int idx) => print(idx)),
-      body: YaftaSegmentedButton(
-        onSelectionChanged: (Set<int> idx) => print(idx),
-      ),
+      body: Column(children: [
+        YaftaSegmentedButton(
+          onSelectionChanged: (Set<int> idx) => print(idx),
+        ),
+        const YaftaLogo.isologo()
+      ]),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
