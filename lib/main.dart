@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yafta/design_system/design_system.dart';
+import 'package:yafta/screens/auth/login.dart';
 
 import 'design_system/atoms/yafta_logo.dart';
 
@@ -13,11 +14,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
+        title: 'Flutter Demo',
+        theme: lightTheme,
+        darkTheme: darkTheme,
+        home: LoginScreen()
+        // const MyHomePage(title: 'Flutter Demo Home Page'),
+        );
   }
 }
 
