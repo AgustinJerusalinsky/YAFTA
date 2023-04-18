@@ -1,25 +1,36 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:yafta/design_system/design_system.dart';
 import 'package:yafta/screens/auth/login.dart';
 
 import 'design_system/atoms/yafta_logo.dart';
+import 'screens/auth/signup.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final routerDelegate = BeamerDelegate(
+      locationBuilder: RoutesLocationBuilder(routes: {
+    '/auth/login': (context, state, data) => const LoginScreen(),
+    '/auth/signup': (context, state, data) => const SignupScreen(),
+  }));
+
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: lightTheme,
-        darkTheme: darkTheme,
-        home: LoginScreen()
-        // const MyHomePage(title: 'Flutter Demo Home Page'),
-        );
+    return MaterialApp.router(
+      title: 'Flutter Demo',
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      routerDelegate: routerDelegate,
+      routeInformationParser: BeamerParser(),
+      backButtonDispatcher:
+          BeamerBackButtonDispatcher(delegate: routerDelegate),
+      // const MyHomePage(title: 'Flutter Demo Home Page'),
+    );
   }
 }
 

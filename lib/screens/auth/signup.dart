@@ -9,23 +9,26 @@ class SignupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(children: [
-        const YaftaLogo.isologo(),
-        const YaftaTextField(label: "Full name"),
-        const YaftaTextField(label: "Username"),
-        const YaftaTextField(label: "Email"),
-        const YaftaTextField(label: "Password", obscureText: true),
-        const YaftaTextField(label: "Confirm password", obscureText: true),
-        YaftaButton(
-            onPressed: () => print("Sign up"),
-            variant: "filled",
-            secondary: true,
-            child: const Text("Sign up")),
-        YaftaButton(
-            variant: "text",
-            child: const Text("I already have an account"),
-            onPressed: () => print("I already have an account"))
-      ]),
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 52),
+        child: Column(children: [
+          const YaftaLogo.isologo(),
+          const YaftaTextField(label: "Full name"),
+          const YaftaTextField(label: "Username"),
+          const YaftaTextField(label: "Email"),
+          const YaftaTextField(label: "Password", obscureText: true),
+          const YaftaTextField(label: "Confirm password", obscureText: true),
+          YaftaButton(
+              onPressed: () => print("Sign up"),
+              variant: "filled",
+              secondary: true,
+              child: const Text("Sign up")),
+          YaftaButton(
+              variant: "text",
+              child: const Text("I already have an account"),
+              onPressed: () => print("I already have an account"))
+        ]),
+      ),
     );
   }
 }
