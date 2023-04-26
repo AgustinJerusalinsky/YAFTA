@@ -6,6 +6,7 @@ import 'package:yafta/screens/auth/login.dart';
 import 'package:yafta/services/app_navigation.dart';
 
 import 'design_system/atoms/yafta_logo.dart';
+import 'design_system/molecules/main_layout.dart';
 import 'screens/auth/signup.dart';
 
 void main() {
@@ -15,16 +16,23 @@ void main() {
 
 class MyApp extends StatelessWidget {
   final routerDelegate = BeamerDelegate(
-      locationBuilder: RoutesLocationBuilder(routes: {
-    '/auth/login': (context, state, data) => const LoginScreen(),
-    '/auth/signup': (context, state, data) => const SignupScreen(),
-    '/home': (context, state, data) =>
-        const MyHomePage(title: 'Home', backgroundColor: Colors.green),
-    '/incomes': (context, state, data) =>
-        const MyHomePage(title: 'Incomes', backgroundColor: Colors.red),
-    '/expenses': (context, state, data) =>
-        const MyHomePage(title: 'Expenses', backgroundColor: Colors.blue),
-  }));
+    locationBuilder: BeamerLocationBuilder(
+      beamLocations: [
+        HomeLocation(),
+        IncomeLocation(),
+        ExpensesLocation(),
+        BudgetsLocation(),
+      ],
+    ),
+    //   locationBuilder: RoutesLocationBuilder(routes: {
+    // '/auth/login': (context, state, data) => const LoginScreen(),
+    // '/auth/signup': (context, state, data) => const SignupScreen(),
+    // '/': (context, state, data) => HomeLocation(),
+    // '/incomes': (context, state, data) => IncomeLocation(),
+    // '/expenses': (context, state, data) => ExpensesLocation(),
+    // '/budgets': (context, state, data) => BudgetsLocation(),
+    // })
+  );
 
   MyApp({super.key});
 
@@ -43,47 +51,62 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage(
-      {super.key, required this.title, required this.backgroundColor});
-  final String title;
-  final Color backgroundColor;
+class HomeLocation extends BeamLocation<BeamState> {
+  @override
+  List<BeamPage> buildPages(BuildContext context, BeamState state) {
+    return [
+      BeamPage(
+        key: ValueKey('home'),
+        child: MainLayout(body: Container(color: Colors.red)),
+      ),
+    ];
+  }
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  List<Pattern> get pathPatterns => ['/'];
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+class IncomeLocation extends BeamLocation<BeamState> {
+  @override
+  List<BeamPage> buildPages(BuildContext context, BeamState state) {
+    return [
+      BeamPage(
+        key: ValueKey('incomes'),
+        child: MainLayout(body: Container(color: Colors.green)),
+      ),
+    ];
   }
-
-  void _onDestinationSelected(Set<int> n) {}
 
   @override
-  Widget build(BuildContext context) {
-    final appNavigation = Provider.of<AppNavigation>(context);
-    return Scaffold(
-      backgroundColor: widget.backgroundColor,
-      appBar: AppBar(
-        title: Text(widget.title),
+  List<Pattern> get pathPatterns => ['/incomes'];
+}
+
+class ExpensesLocation extends BeamLocation<BeamState> {
+  @override
+  List<BeamPage> buildPages(BuildContext context, BeamState state) {
+    return [
+      BeamPage(
+        key: ValueKey('expenses'),
+        child: MainLayout(body: Container(color: Colors.blue)),
       ),
-      bottomNavigationBar: YaftaNavigationBar(),
-      body: Column(children: [
-        YaftaSegmentedButton(
-          onSelectionChanged: (Set<int> idx) => print(idx),
-        ),
-        const YaftaLogo.isologo()
-      ]),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
-    );
+    ];
   }
+
+  @override
+  List<Pattern> get pathPatterns => ['/expenses'];
+}
+
+class BudgetsLocation extends BeamLocation<BeamState> {
+  @override
+  List<BeamPage> buildPages(BuildContext context, BeamState state) {
+    return [
+      BeamPage(
+        key: ValueKey('budgets'),
+        child: MainLayout(body: Container(color: Colors.purple)),
+      ),
+    ];
+  }
+
+  @override
+  List<Pattern> get pathPatterns => ['/budgets'];
 }

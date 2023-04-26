@@ -6,7 +6,12 @@ import 'package:yafta/services/app_navigation.dart';
 class YaftaNavigationBar extends StatelessWidget {
   const YaftaNavigationBar({
     Key? key,
+    required this.currentIndex,
+    required this.onDestinationSelected,
   }) : super(key: key);
+
+  final currentIndex;
+  final onDestinationSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +28,7 @@ class YaftaNavigationBar extends StatelessWidget {
         .toList();
     return NavigationBar(
         elevation: 5,
-        onDestinationSelected: (int idx) {
-          appNavigation.currentIndex = idx;
-          Beamer.of(context).beamToNamed(appNavigation.getCurrentRoute());
-        },
+        onDestinationSelected: onDestinationSelected,
         selectedIndex: appNavigation.currentIndex,
         destinations: navItems);
   }
