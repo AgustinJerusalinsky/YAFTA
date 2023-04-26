@@ -3,6 +3,7 @@ import 'package:yafta/design_system/molecules/text_field.dart';
 
 import '../../design_system/atoms/yafta_logo.dart';
 import '../../design_system/molecules/button.dart';
+import '../../design_system/molecules/password_text_field.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -15,15 +16,15 @@ class LoginScreen extends StatelessWidget {
       child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
         const YaftaLogo.imagotype(),
         const YaftaTextField(label: "Username"),
-        const YaftaTextField(label: "Password", obscureText: true),
+        YaftaPasswordTextField(),
         YaftaButton(
             onPressed: () => print("Login"),
             variant: "filled",
             secondary: true,
-            child: const Text("Login")),
+            text: "Login"),
         YaftaButton(
             variant: "text",
-            child: Text("I don't have an account"),
+            text: "I don't have an account",
             onPressed: () => print("I don't have an account"))
       ]),
     ));
