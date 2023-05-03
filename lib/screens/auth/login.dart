@@ -1,12 +1,34 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:yafta/design_system/molecules/text_field.dart';
 
 import '../../design_system/atoms/yafta_logo.dart';
 import '../../design_system/molecules/button.dart';
 import '../../design_system/molecules/password_text_field.dart';
+import '../../services/auth_provider.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  void _handleLogin() async {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+
+    if (email.isNotEmpty && password.isNotEmpty) {
+      await context.read<AuthProvider>().login(email, password);
+      // Navigate to home without context
+      context.beamToReplacementNamed('/');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +37,12 @@ class LoginScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 52),
       child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
         const YaftaLogo.imagotype(),
-        const YaftaTextField(label: "Username"),
-        YaftaPasswordTextField(),
+        YaftaTextField(label: "Email", textController: _emailController),
+        YaftaPasswordTextField(
+          editingController: _passwordController,
+        ),
         YaftaButton(
-            onPressed: () => print("Login"),
+            onPressed: _handleLogin,
             variant: "filled",
             secondary: true,
             text: "Login"),
