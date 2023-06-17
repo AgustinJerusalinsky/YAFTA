@@ -1,4 +1,3 @@
-import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yafta/design_system/atoms/yafta_logo.dart';
@@ -31,7 +30,6 @@ class _SignupScreenState extends State<SignupScreen> {
         password == passwordConfirmation) {
       await context.read<AuthProvider>().login(email, password);
       // Navigate to home without context
-      context.beamToReplacementNamed('/');
     }
   }
 
@@ -59,7 +57,7 @@ class _SignupScreenState extends State<SignupScreen> {
           YaftaButton(
               variant: "text",
               text: "I already have an account",
-              onPressed: () => Beamer.of(context).beamToNamed('/auth/login'))
+              onPressed: () => Navigator.pushNamed(context, '/login'))
         ]),
       ),
     );

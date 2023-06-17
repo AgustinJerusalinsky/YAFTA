@@ -1,5 +1,5 @@
-import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:yafta/design_system/molecules/yafta_navigation_bar.dart';
 
@@ -16,8 +16,22 @@ class MainLayout extends StatelessWidget {
       bottomNavigationBar: YaftaNavigationBar(
         currentIndex: appNavigation.currentIndex,
         onDestinationSelected: (index) {
+          switch (index) {
+            case 0:
+              context.go('/');
+              break;
+            case 1:
+              print("go to incomes");
+              context.go('/incomes');
+              break;
+            case 2:
+              context.go('/expenses');
+              break;
+            case 3:
+              context.go('/budgets');
+              break;
+          }
           appNavigation.currentIndex = index;
-          Beamer.of(context).beamToNamed(appNavigation.currentOptionRoute);
         },
       ),
     );

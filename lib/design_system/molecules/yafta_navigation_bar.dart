@@ -1,4 +1,3 @@
-import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yafta/services/app_navigation.dart';
@@ -16,7 +15,7 @@ class YaftaNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appNavigation = Provider.of<AppNavigation>(context);
-    final List<Widget> navItems = appNavigation.navigationItems
+    final List<Widget> navItems = AppNavigation.navigationItems
         .map((e) => NavigationDestination(
               icon: Icon(
                 e["icon"] as IconData,

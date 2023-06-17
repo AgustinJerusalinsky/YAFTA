@@ -1,4 +1,3 @@
-import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yafta/design_system/molecules/text_field.dart';
@@ -26,7 +25,6 @@ class _LoginScreenState extends State<LoginScreen> {
     if (email.isNotEmpty && password.isNotEmpty) {
       await context.read<AuthProvider>().login(email, password);
       // Navigate to home without context
-      context.beamToReplacementNamed('/');
     }
   }
 
