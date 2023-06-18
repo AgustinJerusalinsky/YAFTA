@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:yafta/design_system/tokens/theme_data.dart';
 import 'package:yafta/routing/router_provider.dart';
 import 'package:yafta/services/app_navigation.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -45,9 +46,7 @@ class _MyAppState extends State<MyApp> {
           final GoRouter goRouter = Provider.of<AppRouter>(context).router;
           return MaterialApp.router(
             title: 'Yafta',
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-            ),
+            theme: lightTheme,
             routerConfig: goRouter,
           );
         }));

@@ -5,6 +5,7 @@ import 'package:yafta/design_system/molecules/main_layout.dart';
 import 'package:yafta/routing/router_utils.dart';
 import 'package:yafta/screens/auth/login.dart';
 import 'package:yafta/screens/auth/signup.dart';
+import 'package:yafta/screens/home.dart';
 import 'package:yafta/services/auth_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -64,19 +65,7 @@ Page<dynamic> _getShellPageBuilder(
     BuildContext context, GoRouterState state, AppRoutes route) {
   switch (route) {
     case AppRoutes.home:
-      return NoTransitionPage(
-          child: Container(
-        color: Colors.red,
-        child: SizedBox(
-            height: 30,
-            child: YaftaButton(
-              text: "Logout",
-              onPressed: () {
-                context.read<AuthProvider>().logout();
-                // context.go(AppRoutes.login.path);
-              },
-            )),
-      ));
+      return NoTransitionPage(child: Home());
     case AppRoutes.incomes:
       return NoTransitionPage(child: Container(color: Colors.green));
     case AppRoutes.expenses:

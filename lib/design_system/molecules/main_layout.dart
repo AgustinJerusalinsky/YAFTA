@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:yafta/design_system/molecules/yafta_app_bar.dart';
 import 'package:yafta/design_system/molecules/yafta_navigation_bar.dart';
 
 import '../../services/app_navigation.dart';
@@ -12,7 +13,13 @@ class MainLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     final appNavigation = Provider.of<AppNavigation>(context);
     return Scaffold(
-      body: body,
+      appBar: const YaftaAppBar(
+        title: "Home",
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(26.0),
+        child: body,
+      ),
       bottomNavigationBar: YaftaNavigationBar(
         currentIndex: appNavigation.currentIndex,
         onDestinationSelected: (index) {

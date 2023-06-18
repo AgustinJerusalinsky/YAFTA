@@ -29,6 +29,13 @@
             {
               "client_id": "29066576881-2d5l8f8d52crr1883lo67892v0vdt61t.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "29066576881-f2u872b5pacp36ncp9iao95get7934bo.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.yafta"
+              }
             }
           ]
         }
