@@ -10,10 +10,9 @@ class YaftaPieChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return PieChart(
       dataMap: data,
-      animationDuration: Duration(milliseconds: 800),
-      chartLegendSpacing: 10,
+      animationDuration: const Duration(milliseconds: 800),
+      chartLegendSpacing: 25,
       chartRadius: MediaQuery.of(context).size.width / 2,
-      baseChartColor: Theme.of(context).colorScheme.primary,
       initialAngleInDegree: 0,
       chartType: ChartType.disc,
       ringStrokeWidth: 32,
@@ -22,17 +21,13 @@ class YaftaPieChart extends StatelessWidget {
         legendPosition: LegendPosition.bottom,
         showLegends: true,
         legendShape: BoxShape.circle,
-        legendTextStyle: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 14,
-        ),
+        legendTextStyle: Theme.of(context).textTheme.labelLarge!,
       ),
       chartValuesOptions: ChartValuesOptions(
-        showChartValueBackground: false,
         showChartValues: true,
-        showChartValuesInPercentage: true,
-        showChartValuesOutside: false,
-        decimalPlaces: 1,
+        decimalPlaces: 2,
+        chartValueStyle: Theme.of(context).textTheme.labelSmall!,
+        chartValueBackgroundColor: Theme.of(context).colorScheme.surface,
       ),
       // gradientList: ---To add gradient colors---
       // emptyColorGradient: ---Empty Color gradient---

@@ -4,12 +4,12 @@ import 'package:yafta/design_system/molecules/yafta_card.dart';
 class BalanceCard extends StatelessWidget {
   const BalanceCard({
     Key? key,
-    required this.balance,
+    required this.total,
     required this.income,
     required this.expenses,
   }) : super(key: key);
 
-  final String balance;
+  final String total;
   final String income;
   final String expenses;
 
@@ -22,24 +22,18 @@ class BalanceCard extends StatelessWidget {
           Padding(
             padding:
                 const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-            child: Row(
+            child: Flex(
+              direction: Axis.horizontal,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      balance,
-                      style: const TextStyle(
-                          fontSize: 48, fontWeight: FontWeight.w700),
-                    ),
-                    Text(
-                      'Balance',
-                      style: TextStyle(
-                          fontSize:
-                              Theme.of(context).textTheme.bodyMedium!.fontSize,
-                          fontWeight: FontWeight.w400),
-                    ),
-                  ],
+                const Text(
+                  'Total',
+                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.w700),
+                ),
+                Text(
+                  '\$ ' + total,
+                  style: const TextStyle(
+                      fontSize: 48, fontWeight: FontWeight.w700),
                 ),
               ],
             ),
