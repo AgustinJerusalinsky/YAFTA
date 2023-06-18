@@ -6,6 +6,7 @@ import 'package:yafta/design_system/molecules/yafta_navigation_bar.dart';
 import 'package:yafta/routing/router_utils.dart';
 
 import '../../services/app_navigation.dart';
+import '../../utils/analytics.dart';
 
 class MainLayout extends StatelessWidget {
   const MainLayout({Key? key, required this.body}) : super(key: key);

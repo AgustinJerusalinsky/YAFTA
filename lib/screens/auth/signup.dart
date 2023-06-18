@@ -5,6 +5,7 @@ import 'package:yafta/design_system/molecules/button.dart';
 import 'package:yafta/design_system/molecules/text_field.dart';
 import 'package:yafta/services/auth_provider.dart';
 import 'package:go_router/go_router.dart';
+import 'package:yafta/utils/analytics.dart';
 
 import '../../design_system/molecules/password_text_field.dart';
 
@@ -31,6 +32,7 @@ class _SignupScreenState extends State<SignupScreen> {
         password == passwordConfirmation) {
       final response =
           await context.read<AuthProvider>().signup(email, password);
+      AnalyticsHandler.logSignup();
       print(response);
       context.go('/');
 
