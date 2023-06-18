@@ -4,6 +4,7 @@ import 'package:yafta/design_system/atoms/yafta_logo.dart';
 import 'package:yafta/design_system/molecules/button.dart';
 import 'package:yafta/design_system/molecules/text_field.dart';
 import 'package:yafta/services/auth_provider.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../design_system/molecules/password_text_field.dart';
 
@@ -28,7 +29,11 @@ class _SignupScreenState extends State<SignupScreen> {
     if (email.isNotEmpty &&
         password.isNotEmpty &&
         password == passwordConfirmation) {
-      await context.read<AuthProvider>().login(email, password);
+      final response =
+          await context.read<AuthProvider>().signup(email, password);
+      print(response);
+      context.go('/');
+
       // Navigate to home without context
     }
   }
@@ -57,7 +62,7 @@ class _SignupScreenState extends State<SignupScreen> {
           YaftaButton(
               variant: "text",
               text: "I already have an account",
-              onPressed: () => Navigator.pushNamed(context, '/login'))
+              onPressed: () => context.go("/login"))
         ]),
       ),
     );

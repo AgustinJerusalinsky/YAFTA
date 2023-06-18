@@ -5,6 +5,8 @@ import 'package:yafta/design_system/molecules/text_field.dart';
 import '../../design_system/atoms/yafta_logo.dart';
 import '../../design_system/molecules/button.dart';
 import '../../design_system/molecules/password_text_field.dart';
+import 'package:go_router/go_router.dart';
+
 import '../../services/auth_provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -23,7 +25,10 @@ class _LoginScreenState extends State<LoginScreen> {
     final password = _passwordController.text.trim();
 
     if (email.isNotEmpty && password.isNotEmpty) {
-      await context.read<AuthProvider>().login(email, password);
+      final response =
+          await context.read<AuthProvider>().login(email, password);
+      //TODO: replace with login framework
+      print(response);
       // Navigate to home without context
     }
   }
@@ -47,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
         YaftaButton(
             variant: "text",
             text: "I don't have an account",
-            onPressed: () => print("I don't have an account"))
+            onPressed: () => context.go("/signup"))
       ]),
     ));
   }
