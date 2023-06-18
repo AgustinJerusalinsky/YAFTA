@@ -67,7 +67,7 @@ Page<dynamic> _getShellPageBuilder(
       return NoTransitionPage(
           child: Container(
         color: Colors.red,
-        child: Container(
+        child: SizedBox(
             height: 30,
             child: YaftaButton(
               text: "Logout",
