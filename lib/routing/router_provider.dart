@@ -5,7 +5,8 @@ import 'package:yafta/design_system/molecules/main_layout.dart';
 import 'package:yafta/routing/router_utils.dart';
 import 'package:yafta/screens/auth/login.dart';
 import 'package:yafta/screens/auth/signup.dart';
-import 'package:yafta/screens/home.dart';
+import 'package:yafta/screens/dashboard/home.dart';
+import 'package:yafta/screens/profile/profile.dart';
 import 'package:yafta/services/auth_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -47,6 +48,23 @@ class AppRouter {
             name: AppRoutes.signup.name,
             pageBuilder: (context, state) =>
                 const NoTransitionPage(child: SignupScreen())),
+        GoRoute(
+            parentNavigatorKey: _rootNavigator,
+            path: AppRoutes.profile.path,
+            name: AppRoutes.profile.name,
+            pageBuilder: (context, state) => CustomTransitionPage(
+                  child: const ProfileScreen(),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) =>
+                          SlideTransition(
+                              position: animation.drive(
+                                Tween<Offset>(
+                                  begin: const Offset(1, 0),
+                                  end: Offset.zero,
+                                ),
+                              ),
+                              child: child),
+                )),
         ShellRoute(
             navigatorKey: _shellNavigator,
             builder: (context, state, child) => MainLayout(body: child),
@@ -57,7 +75,7 @@ class AppRouter {
                       pageBuilder: (context, state) =>
                           _getShellPageBuilder(context, state, route),
                     ))
-                .toList())
+                .toList()),
       ]);
 }
 
@@ -65,7 +83,7 @@ Page<dynamic> _getShellPageBuilder(
     BuildContext context, GoRouterState state, AppRoutes route) {
   switch (route) {
     case AppRoutes.home:
-      return NoTransitionPage(child: Home());
+      return NoTransitionPage(child: HomeScreen());
     case AppRoutes.incomes:
       return NoTransitionPage(child: Container(color: Colors.green));
     case AppRoutes.expenses:

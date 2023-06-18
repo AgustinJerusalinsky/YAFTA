@@ -1,4 +1,13 @@
-enum AppRoutes { login, signup, home, incomes, expenses, budgets, error }
+enum AppRoutes {
+  login,
+  signup,
+  home,
+  incomes,
+  expenses,
+  budgets,
+  profile,
+  error
+}
 
 final shellRoutes = [
   AppRoutes.home,
@@ -22,6 +31,8 @@ extension AppRouteExtension on AppRoutes {
         return "/expenses";
       case AppRoutes.budgets:
         return "/budgets";
+      case AppRoutes.profile:
+        return "/profile";
       default:
         return "/error";
     }
@@ -41,6 +52,8 @@ extension AppRouteExtension on AppRoutes {
         return "expenses";
       case AppRoutes.budgets:
         return "budgets";
+      case AppRoutes.profile:
+        return "profile";
       default:
         return "error";
     }
@@ -60,6 +73,8 @@ extension AppRouteExtension on AppRoutes {
         return "Gastos";
       case AppRoutes.budgets:
         return "Presupuestos";
+      case AppRoutes.profile:
+        return "Perfil";
       default:
         return "Error";
     }

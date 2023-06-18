@@ -28,7 +28,6 @@ class MainLayout extends StatelessWidget {
               context.go('/');
               break;
             case 1:
-              print("go to incomes");
               context.go('/incomes');
               break;
             case 2:
