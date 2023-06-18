@@ -7,21 +7,29 @@ class AppNavigation extends ChangeNotifier {
       "icon": Icons.home_outlined,
       "label": "Inicio",
       "route": "/",
+      "fabLabel": "Agregar",
+      "fabRoute": "/add"
     },
     {
       "icon": Icons.trending_up,
       "label": "Ingresos",
       "route": "/incomes",
+      "fabLabel": "Ingreso",
+      "fabRoute": "/add/incomes"
     },
     {
       "icon": Icons.trending_down,
       "label": "Gastos",
       "route": "/expenses",
+      "fabLabel": "Gasto",
+      "fabRoute": "/add/expenses"
     },
     {
       "icon": Icons.savings_outlined,
       "label": "Presupuestos",
       "route": "/budgets",
+      "fabLabel": "Presupuesto",
+      "fabRoute": "/add/budgets"
     }
   ];
   static List<Map<String, dynamic>> get navigationItems => _navigationItems;

@@ -12,6 +12,7 @@ class MainLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appNavigation = Provider.of<AppNavigation>(context);
+
     return Scaffold(
       appBar: const YaftaAppBar(
         title: "Home",
@@ -19,6 +20,17 @@ class MainLayout extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(26.0),
         child: body,
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
+        onPressed: () {
+          context.go(
+              "${AppNavigation.navigationItems[appNavigation.currentIndex]["fabRoute"]}");
+        },
+        icon: const Icon(Icons.add),
+        label: Text(
+          "${AppNavigation.navigationItems[appNavigation.currentIndex]["fabLabel"]}",
+        ),
       ),
       bottomNavigationBar: YaftaNavigationBar(
         currentIndex: appNavigation.currentIndex,
