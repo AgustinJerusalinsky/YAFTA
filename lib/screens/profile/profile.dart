@@ -6,19 +6,14 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const YaftaAppBar(
-          back: true,
-          showBrand: true,
-        ),
-        Expanded(
-          child: Container(
-            height: 200,
-            color: Colors.red,
-          ),
-        )
-      ],
+    return Scaffold(
+      appBar: const YaftaAppBar(
+        back: true,
+        showBrand: true,
+      ),
+      body: Container(
+        color: Colors.red,
+      ),
     );
   }
 }

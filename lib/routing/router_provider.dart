@@ -11,6 +11,7 @@ import 'package:yafta/services/auth_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../screens/error_screen.dart';
+import '../screens/incomes/incomes.dart';
 
 final GlobalKey<NavigatorState> _rootNavigator =
     GlobalKey<NavigatorState>(debugLabel: 'root');
@@ -83,9 +84,9 @@ Page<dynamic> _getShellPageBuilder(
     BuildContext context, GoRouterState state, AppRoutes route) {
   switch (route) {
     case AppRoutes.home:
-      return NoTransitionPage(child: HomeScreen());
+      return const NoTransitionPage(child: HomeScreen());
     case AppRoutes.incomes:
-      return NoTransitionPage(child: Container(color: Colors.green));
+      return const NoTransitionPage(child: IncomesScreen());
     case AppRoutes.expenses:
       return NoTransitionPage(child: Container(color: Colors.blue));
     case AppRoutes.budgets:
