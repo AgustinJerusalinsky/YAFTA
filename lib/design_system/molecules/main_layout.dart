@@ -18,7 +18,7 @@ class MainLayout extends StatelessWidget {
         title: "Home",
       ),
       body: Padding(
-        padding: const EdgeInsets.all(26.0),
+        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 15.0),
         child: body,
       ),
       floatingActionButton: FloatingActionButton.extended(

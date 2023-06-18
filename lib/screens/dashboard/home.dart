@@ -15,12 +15,16 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const SizedBox(
+          height: 20,
+        ),
         const YaftaSegmentedButton(onSelectionChanged: _onSelectionChanged),
         const SizedBox(
           height: 20,
         ),
         Expanded(
           child: ListView(
+            padding: EdgeInsets.only(bottom: 26.0),
             children: [
               const BalanceCard(
                 total: '0,00',
