@@ -15,16 +15,17 @@ const List<String> items = [
 ];
 
 class CategoriesSearchBar extends StatelessWidget {
-  const CategoriesSearchBar({Key? key}) : super(key: key);
+  const CategoriesSearchBar({Key? key, required this.onSelectedItemsChange})
+      : super(key: key);
+
+  final Function(List<String>) onSelectedItemsChange;
 
   @override
   Widget build(BuildContext context) {
     return SearchBar(
       label: "Categorías",
       items: items,
-      onSelectedItemsChange: (items) {
-        print(items);
-      },
+      onSelectedItemsChange: onSelectedItemsChange,
     );
   }
 }

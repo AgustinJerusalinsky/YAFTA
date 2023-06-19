@@ -46,6 +46,7 @@ dependencies:
   firebase_remote_config: ^4.2.3
   cloud_firestore: ^4.8.1
   logging: ^1.2.0
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:

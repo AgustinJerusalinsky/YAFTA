@@ -6,6 +6,7 @@ import 'package:yafta/routing/router_utils.dart';
 import 'package:yafta/screens/auth/login.dart';
 import 'package:yafta/screens/auth/signup.dart';
 import 'package:yafta/screens/dashboard/home.dart';
+import 'package:yafta/screens/expenses/expenses.dart';
 import 'package:yafta/screens/profile/profile.dart';
 import 'package:yafta/services/auth_provider.dart';
 import 'package:provider/provider.dart';
@@ -88,7 +89,7 @@ Page<dynamic> _getShellPageBuilder(
     case AppRoutes.incomes:
       return const NoTransitionPage(child: IncomesScreen());
     case AppRoutes.expenses:
-      return NoTransitionPage(child: Container(color: Colors.blue));
+      return const NoTransitionPage(child: ExpensesScreen());
     case AppRoutes.budgets:
       return NoTransitionPage(child: Container(color: Colors.yellow));
     default:

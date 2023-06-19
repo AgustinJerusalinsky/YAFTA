@@ -62,7 +62,7 @@ class _MyAppState extends State<MyApp> {
             title: 'Yafta',
             theme: RemoteConfigHandler.getTheme() == AppTheme.light
                 ? lightTheme
-                : darkTheme,
+                : lightTheme,
             routerConfig: goRouter,
           );
         }));
