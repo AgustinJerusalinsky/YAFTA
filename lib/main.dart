@@ -9,6 +9,7 @@ import 'package:yafta/design_system/tokens/theme_data.dart';
 import 'package:yafta/routing/router_provider.dart';
 import 'package:yafta/services/app_navigation.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:yafta/utils/remote_config.dart';
 import 'models/user.dart';
 import 'services/auth_provider.dart';
 
@@ -21,6 +22,8 @@ void main() async {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
   };
+
+  RemoteConfigHandler.initializeDefaults();
 
   runApp(MyApp());
 }
@@ -55,7 +58,9 @@ class _MyAppState extends State<MyApp> {
           final GoRouter goRouter = Provider.of<AppRouter>(context).router;
           return MaterialApp.router(
             title: 'Yafta',
-            theme: lightTheme,
+            theme: RemoteConfigHandler.getTheme() == AppTheme.light
+                ? lightTheme
+                : darkTheme,
             routerConfig: goRouter,
           );
         }));

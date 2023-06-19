@@ -43,6 +43,7 @@ dependencies:
   pie_chart: ^5.3.2
   firebase_crashlytics: ^3.3.3
   firebase_analytics: ^10.4.3
+  firebase_remote_config: ^4.2.3
 
 dev_dependencies:
   flutter_test:
