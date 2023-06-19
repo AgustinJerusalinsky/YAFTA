@@ -1,0 +1,143 @@
+import 'package:flutter/material.dart';
+
+class SearchBar extends StatefulWidget {
+  final List<String> items;
+  final String label;
+  final Function(List<String>) onSelectedItemsChange;
+
+  const SearchBar(
+      {Key? key,
+      required this.items,
+      required this.label,
+      required this.onSelectedItemsChange})
+      : super(key: key);
+
+  @override
+  SearchBarState createState() => SearchBarState();
+}
+
+class SearchBarState extends State<SearchBar> {
+  List<String> selectedItems = [];
+
+  void openModal() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return DialogContent(
+          allItems: widget.items,
+          selectedItems: selectedItems,
+          onItemTapped: (item) {
+            setState(() {
+              final isSelected = selectedItems.contains(item);
+              if (!isSelected) {
+                selectedItems.add(item);
+                widget.onSelectedItemsChange(selectedItems);
+              }
+            });
+          },
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        ListTile(
+          tileColor: Theme.of(context).colorScheme.surfaceVariant,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25),
+          ),
+          title: Text(widget.label),
+          trailing: IconButton(
+            icon: Icon(Icons.search),
+            onPressed: openModal,
+          ),
+          leading: Icon(Icons.menu),
+          onTap: openModal,
+        ),
+        Align(
+          alignment: Alignment.topLeft,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Wrap(
+              spacing: 5,
+              children: selectedItems.map((item) {
+                return Chip(
+                  side: BorderSide(
+                    color: Theme.of(context).colorScheme.secondaryContainer,
+                  ),
+                  label:
+                      Text(item, style: Theme.of(context).textTheme.bodyMedium),
+                  backgroundColor:
+                      Theme.of(context).colorScheme.secondaryContainer,
+                  onDeleted: () {
+                    setState(() {
+                      selectedItems.remove(item);
+                      widget.onSelectedItemsChange(selectedItems);
+                    });
+                  },
+                );
+              }).toList(),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class DialogContent extends StatefulWidget {
+  final List<String> allItems;
+  final List<String> selectedItems;
+  final Function(String) onItemTapped;
+
+  const DialogContent({
+    Key? key,
+    required this.allItems,
+    required this.selectedItems,
+    required this.onItemTapped,
+  }) : super(key: key);
+
+  @override
+  _DialogContentState createState() => _DialogContentState();
+}
+
+class _DialogContentState extends State<DialogContent> {
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: widget.allItems.length,
+            itemBuilder: (BuildContext context, int index) {
+              final item = widget.allItems[index];
+
+              return ListTile(
+                title: Text(item),
+                trailing: Icon(
+                  widget.selectedItems.contains(item) ? Icons.check : Icons.add,
+                  color:
+                      widget.selectedItems.contains(item) ? Colors.green : null,
+                ),
+                onTap: () {
+                  widget.onItemTapped(item);
+                },
+              );
+            },
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Volver'),
+          ),
+        ],
+      ),
+    );
+  }
+}
