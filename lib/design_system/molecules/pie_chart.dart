@@ -47,12 +47,12 @@ class YaftaPieChart extends StatelessWidget {
       legendOptions: LegendOptions(
         showLegendsInRow: true,
         legendPosition: LegendPosition.bottom,
-        showLegends: showLegends ?? true,
+        showLegends: showLegends ?? (data[''] == null ? true : false),
         legendShape: BoxShape.circle,
         legendTextStyle: Theme.of(context).textTheme.labelLarge!,
       ),
       chartValuesOptions: ChartValuesOptions(
-        showChartValues: showChartValues ?? true,
+        showChartValues: showChartValues ?? (data[''] == null ? true : false),
         decimalPlaces: 2,
         chartValueStyle: Theme.of(context).textTheme.labelSmall!,
         showChartValueBackground: showChartValueBackground ?? true,

@@ -4,11 +4,17 @@ import 'package:yafta/design_system/molecules/pie_chart.dart';
 
 class BalanceGraph extends StatelessWidget {
   const BalanceGraph(
-      {Key? key, required this.incomeData, required this.expenseData})
+      {Key? key,
+      required this.incomeData,
+      required this.expenseData,
+      required this.incomeLoading,
+      required this.expenseLoading})
       : super(key: key);
 
   final Map<String, double> incomeData;
+  final bool incomeLoading;
   final Map<String, double> expenseData;
+  final bool expenseLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +32,14 @@ class BalanceGraph extends StatelessWidget {
                   Text("Gastos",
                       style: Theme.of(context).textTheme.headlineMedium),
                   const SizedBox(height: 20),
-                  YaftaPieChart(
-                    data: expenseData,
-                  ),
+                  expenseLoading
+                      ? SizedBox(
+                          child: Center(child: CircularProgressIndicator()),
+                          height: 215,
+                          width: 200)
+                      : YaftaPieChart(
+                          data: expenseData,
+                        ),
                 ],
               ),
             ),
@@ -42,9 +53,14 @@ class BalanceGraph extends StatelessWidget {
                   Text("Ingresos",
                       style: Theme.of(context).textTheme.headlineMedium),
                   const SizedBox(height: 20),
-                  YaftaPieChart(
-                    data: incomeData,
-                  ),
+                  incomeLoading
+                      ? SizedBox(
+                          child: Center(child: CircularProgressIndicator()),
+                          height: 215,
+                          width: 200)
+                      : YaftaPieChart(
+                          data: incomeData,
+                        ),
                 ],
               ),
             ),
