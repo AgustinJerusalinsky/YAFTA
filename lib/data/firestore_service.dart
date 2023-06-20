@@ -96,7 +96,7 @@ class FirestoreService {
   }
 
   //get movements today
-  Future<List<Movement>> getMovementsToday(String userId,
+  Future<List<Movement>> getMovementsWeek(String userId,
       {List<MovementType>? types = MovementType.values}) {
     DateTime now = DateTime.now();
     return firestore
@@ -105,7 +105,7 @@ class FirestoreService {
         .collection('movements')
         .where('type', whereIn: types!.map((e) => e.toString()).toList())
         .where('date',
-            isGreaterThanOrEqualTo: DateTime(now.year, now.month, now.day))
+            isGreaterThanOrEqualTo: DateTime(now.year, now.month, now.day - 7))
         .get()
         .then((snapshot) => snapshot.docs
             .map((document) => movementFromDocument(document))

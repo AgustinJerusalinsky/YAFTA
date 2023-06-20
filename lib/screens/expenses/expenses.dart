@@ -15,9 +15,9 @@ class ExpensesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<MovementProvider>(builder: (context, provider, _) {
       return MovementScreen(
-        movements: provider.expenses,
+        movements: provider.totalExpenses,
         type: MovementType.expense,
-        loading: provider.expensesShouldFetch,
+        loading: provider.expensesTotalShouldFetch,
       );
     });
   }

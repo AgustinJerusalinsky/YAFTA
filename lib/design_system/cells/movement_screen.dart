@@ -23,17 +23,37 @@ class _MovementScreenState extends State<MovementScreen> {
   List<String> selectedCategories = [];
   List<Movement> filteredMovements = [];
   List<Movement> _movements = [];
+  String selectedFilter = filterOptions[0];
+
+  void onSelectedFilterChange(String filter) {
+    setState(() {
+      selectedFilter = filter;
+    });
+    filterMovements();
+  }
 
   void filterMovements() {
+    final dateToCompare;
+    if (selectedFilter == filterOptions[0]) {
+      dateToCompare = DateTime.now().subtract(Duration(days: 7));
+    } else if (selectedFilter == filterOptions[1]) {
+      dateToCompare = DateTime(DateTime.now().year, DateTime.now().month);
+    } else {
+      dateToCompare = DateTime(0);
+    }
+
     if (selectedCategories.isEmpty) {
       setState(() {
-        filteredMovements = List.from(_movements);
+        filteredMovements = _movements
+            .where((element) => element.date!.isAfter(dateToCompare))
+            .toList();
       });
     } else {
       setState(() {
         filteredMovements = _movements
             .where((movement) =>
                 selectedCategories.contains(movement.category.name))
+            .where((element) => element.date!.isAfter(dateToCompare))
             .toList();
       });
     }
@@ -61,6 +81,8 @@ class _MovementScreenState extends State<MovementScreen> {
     return Column(
       children: [
         CategoriesSearchBar(
+          onFilterChange: onSelectedFilterChange,
+          selectedFilter: selectedFilter,
           onSelectedItemsChange: (selectedCategories) {
             setState(() {
               this.selectedCategories = selectedCategories;

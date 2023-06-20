@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:yafta/design_system/molecules/pie_chart.dart';
 import 'package:yafta/design_system/molecules/yafta_card.dart';
+import 'package:yafta/utils/text.dart';
 
 class BudgetRing extends StatelessWidget {
   const BudgetRing(
@@ -113,11 +114,12 @@ class BudgetRing extends StatelessWidget {
                   Text(
                     "${percentage.toStringAsFixed(0)}%",
                     style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                          color: showOverBudget
-                              ? Colors.red
-                              : Theme.of(context).colorScheme.primary,
-                          fontWeight: FontWeight.w800,
-                        ),
+                        color: showOverBudget
+                            ? Colors.red
+                            : Theme.of(context).colorScheme.primary,
+                        fontWeight: FontWeight.w800,
+                        fontSize: getTextSizeBig(
+                            "${percentage.toStringAsFixed(0)}%")),
                   ),
                   Divider(
                     color: Theme.of(context).colorScheme.surfaceVariant,

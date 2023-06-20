@@ -93,9 +93,7 @@ class _BudgetsScreenState extends State<BudgetsScreen> {
                                 key: Key(categoryBudgets[index]
                                     .category
                                     .categoryId!),
-                                budget: categoryBudgets[index]
-                                    .total
-                                    .toDouble(), //TODO change this to double
+                                budget: categoryBudgets[index].total.toDouble(),
                                 spent: categoryBudgets[index].amount.toDouble(),
                                 category: categoryBudgets[index].category.name,
                               ),

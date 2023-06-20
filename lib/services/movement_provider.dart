@@ -11,59 +11,163 @@ class MovementProvider extends ChangeNotifier {
   final FirestoreService _firestoreService = FirestoreService.instance;
   final AuthProvider _authProvider;
 
-  List<Movement> _incomes = [];
-  List<Movement> _expenses = [];
+  List<Movement> _totalIncomes = [];
+  List<Movement> _totalExpenses = [];
+  List<Movement> _monthIncomes = [];
+  List<Movement> _monthExpenses = [];
+  List<Movement> _weekIncomes = [];
+  List<Movement> _weekExpenses = [];
 
-  bool _incomeDirty = true;
-  bool _expenseDirty = true;
+  bool _incomeTotalDirty = true;
+  bool _expenseTotalDirty = true;
+  bool _incomeMonthDirty = true;
+  bool _expenseMonthDirty = true;
+  bool _incomeWeekDirty = true;
+  bool _expenseWeekDirty = true;
 
   MovementProvider(this._authProvider);
 
-  bool get incomesShouldFetch => _incomeDirty;
+  bool get incomesTotalShouldFetch => _incomeTotalDirty;
 
-  bool get expensesShouldFetch => _expenseDirty;
+  bool get expensesTotalShouldFetch => _expenseTotalDirty;
 
-  List<Movement> get incomes {
+  bool get incomesMonthShouldFetch => _incomeMonthDirty;
+
+  bool get expensesMonthShouldFetch => _expenseMonthDirty;
+
+  bool get incomesWeekShouldFetch => _incomeWeekDirty;
+
+  bool get expensesWeekShouldFetch => _expenseWeekDirty;
+
+  List<Movement> get totalIncomes {
     String userId = _authProvider.user!.uid;
 
-    if (_incomeDirty) {
-      _getFirestoreIncomes(userId).then((value) {
-        incomes = value;
-        incomeDirty = false;
+    if (_incomeTotalDirty) {
+      _getFirestoreTotalIncomes(userId).then((value) {
+        totalIncomes = value;
+        incomeTotalDirty = false;
       });
     }
-    return _incomes;
+    return _totalIncomes;
   }
 
-  List<Movement> get expenses {
+  List<Movement> get totalExpenses {
     String userId = _authProvider.user!.uid;
 
-    if (_expenseDirty) {
-      _getFirestoreExpenses(userId).then((value) {
-        expenses = value;
-        expenseDirty = false;
+    if (_expenseTotalDirty) {
+      _getFirestoreTotalExpenses(userId).then((value) {
+        totalExpenses = value;
+        expenseTotalDirty = false;
       });
     }
-    return _expenses;
+    return _totalExpenses;
   }
 
-  set incomeDirty(bool value) {
-    _incomeDirty = value;
+  List<Movement> get monthIncomes {
+    String userId = _authProvider.user!.uid;
+
+    if (_incomeMonthDirty) {
+      _getFirestoreMonthIncomes(userId).then((value) {
+        monthIncomes = value;
+        incomeMonthDirty = false;
+      });
+    }
+    return _monthIncomes;
+  }
+
+  List<Movement> get monthExpenses {
+    String userId = _authProvider.user!.uid;
+
+    if (_expenseMonthDirty) {
+      _getFirestoreMonthExpenses(userId).then((value) {
+        monthExpenses = value;
+        expenseMonthDirty = false;
+      });
+    }
+    return _monthExpenses;
+  }
+
+  List<Movement> get weekIncomes {
+    String userId = _authProvider.user!.uid;
+
+    if (_incomeWeekDirty) {
+      _getFirestoreWeekIncomes(userId).then((value) {
+        weekIncomes = value;
+        incomeWeekDirty = false;
+      });
+    }
+    return _weekIncomes;
+  }
+
+  List<Movement> get weekExpenses {
+    String userId = _authProvider.user!.uid;
+
+    if (_expenseWeekDirty) {
+      _getFirestoreWeekExpenses(userId).then((value) {
+        weekExpenses = value;
+        expenseWeekDirty = false;
+      });
+    }
+    return _weekExpenses;
+  }
+
+  set incomeTotalDirty(bool value) {
+    _incomeTotalDirty = value;
     notifyListeners();
   }
 
-  set expenseDirty(bool value) {
-    _expenseDirty = value;
+  set expenseTotalDirty(bool value) {
+    _expenseTotalDirty = value;
     notifyListeners();
   }
 
-  set incomes(List<Movement> value) {
-    _incomes = value;
+  set incomeMonthDirty(bool value) {
+    _incomeMonthDirty = value;
     notifyListeners();
   }
 
-  set expenses(List<Movement> value) {
-    _expenses = value;
+  set expenseMonthDirty(bool value) {
+    _expenseMonthDirty = value;
+    notifyListeners();
+  }
+
+  set incomeWeekDirty(bool value) {
+    _incomeWeekDirty = value;
+    notifyListeners();
+  }
+
+  set expenseWeekDirty(bool value) {
+    _expenseWeekDirty = value;
+    notifyListeners();
+  }
+
+  set totalIncomes(List<Movement> value) {
+    _totalIncomes = value;
+    notifyListeners();
+  }
+
+  set totalExpenses(List<Movement> value) {
+    _totalExpenses = value;
+    notifyListeners();
+  }
+
+  set monthIncomes(List<Movement> value) {
+    _monthIncomes = value;
+    notifyListeners();
+  }
+
+  set monthExpenses(List<Movement> value) {
+    _monthExpenses = value;
+    notifyListeners();
+  }
+
+  set weekIncomes(List<Movement> value) {
+    _weekIncomes = value;
+    notifyListeners();
+  }
+
+  set weekExpenses(List<Movement> value) {
+    _weekExpenses = value;
     notifyListeners();
   }
 
@@ -82,9 +186,9 @@ class MovementProvider extends ChangeNotifier {
     // add movement to firestore
     return _firestoreService.addMovement(userId, movement).then((value) {
       if (type == MovementType.income) {
-        incomeDirty = true;
+        incomeTotalDirty = true;
       } else {
-        expenseDirty = true;
+        expenseTotalDirty = true;
       }
       return value;
     });
@@ -93,20 +197,40 @@ class MovementProvider extends ChangeNotifier {
   // delete movement
   Future<void> deleteMovement(String userId, String movementId) {
     return _firestoreService.deleteMovement(userId, movementId).then((value) {
-      incomeDirty = true;
-      expenseDirty = true;
+      incomeTotalDirty = true;
+      expenseTotalDirty = true;
       return value;
     });
   }
 
   // get incomes
-  Future<List<Movement>> _getFirestoreIncomes(userId) {
+  Future<List<Movement>> _getFirestoreTotalIncomes(userId) {
     return _firestoreService.getMovements(userId, types: [MovementType.income]);
   }
 
   // get expenses
-  Future<List<Movement>> _getFirestoreExpenses(userId) {
+  Future<List<Movement>> _getFirestoreTotalExpenses(userId) {
     return _firestoreService
         .getMovements(userId, types: [MovementType.expense]);
+  }
+
+  Future<List<Movement>> _getFirestoreMonthIncomes(userId) {
+    return _firestoreService
+        .getMovementsMTD(userId, types: [MovementType.income]);
+  }
+
+  Future<List<Movement>> _getFirestoreMonthExpenses(userId) {
+    return _firestoreService
+        .getMovementsMTD(userId, types: [MovementType.expense]);
+  }
+
+  Future<List<Movement>> _getFirestoreWeekIncomes(userId) {
+    return _firestoreService
+        .getMovementsWeek(userId, types: [MovementType.income]);
+  }
+
+  Future<List<Movement>> _getFirestoreWeekExpenses(userId) {
+    return _firestoreService
+        .getMovementsWeek(userId, types: [MovementType.expense]);
   }
 }

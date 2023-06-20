@@ -14,12 +14,12 @@ class IncomesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<MovementProvider>(builder: (context, provider, _) {
-      final incomeMovements = provider.incomes;
+      final incomeMovements = provider.totalIncomes;
       print(incomeMovements);
       return MovementScreen(
         movements: incomeMovements,
         type: MovementType.income,
-        loading: provider.incomesShouldFetch,
+        loading: provider.incomesTotalShouldFetch,
       );
     });
   }

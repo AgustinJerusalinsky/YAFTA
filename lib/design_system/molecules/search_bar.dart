@@ -5,6 +5,9 @@ class YaftaSearchBar extends StatefulWidget {
   final String label;
   final String emptyLabel;
   final Function(List<String>) onSelectedItemsChange;
+  final List<String> filterOptions;
+  final Function(String) onFilterChange;
+  final String selectedFilter;
   final bool loading;
 
   const YaftaSearchBar(
@@ -13,7 +16,10 @@ class YaftaSearchBar extends StatefulWidget {
       required this.label,
       required this.onSelectedItemsChange,
       required this.loading,
-      required this.emptyLabel})
+      required this.emptyLabel,
+      required this.filterOptions,
+      required this.onFilterChange,
+      required this.selectedFilter})
       : super(key: key);
 
   @override
@@ -49,18 +55,34 @@ class YaftaSearchBarState extends State<YaftaSearchBar> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ListTile(
-          tileColor: Theme.of(context).colorScheme.surfaceVariant,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
-          ),
-          title: Text(widget.label),
-          trailing: IconButton(
-            icon: Icon(Icons.search),
-            onPressed: openModal,
-          ),
-          leading: Icon(Icons.menu),
-          onTap: openModal,
+        Row(
+          children: [
+            Expanded(
+              child: ListTile(
+                tileColor: Theme.of(context).colorScheme.surfaceVariant,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                title: Text(widget.label),
+                leading: Icon(Icons.menu),
+                onTap: openModal,
+              ),
+            ),
+            PopupMenuButton(
+                onSelected: widget.onFilterChange,
+                surfaceTintColor: Theme.of(context).colorScheme.surface,
+                initialValue: widget.selectedFilter,
+                itemBuilder: (context) {
+                  return widget.filterOptions.map((option) {
+                    return PopupMenuItem(
+                      child: Text(option),
+                      value: option,
+                    );
+                  }).toList();
+                },
+                position: PopupMenuPosition.under,
+                icon: Icon(Icons.filter_list))
+          ],
         ),
         SizedBox(height: 16),
         selectedItems.length > 0

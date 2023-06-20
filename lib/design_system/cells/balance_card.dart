@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yafta/design_system/molecules/yafta_card.dart';
+import 'package:yafta/utils/text.dart';
 
 class BalanceCard extends StatelessWidget {
   const BalanceCard({
@@ -7,11 +8,15 @@ class BalanceCard extends StatelessWidget {
     required this.total,
     required this.income,
     required this.expenses,
+    required this.loadingExpenses,
+    required this.loadingIncomes,
   }) : super(key: key);
 
   final String total;
   final String income;
   final String expenses;
+  final bool loadingExpenses;
+  final bool loadingIncomes;
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +35,17 @@ class BalanceCard extends StatelessWidget {
                   'Total',
                   style: TextStyle(fontSize: 40, fontWeight: FontWeight.w700),
                 ),
-                Text(
-                  '\$ ' + total,
-                  style: const TextStyle(
-                      fontSize: 48, fontWeight: FontWeight.w700),
-                ),
+                (loadingExpenses || loadingIncomes)
+                    ? const Padding(
+                        padding: EdgeInsets.only(right: 75.0),
+                        child: CircularProgressIndicator(),
+                      )
+                    : Text(
+                        '\$ ' + total,
+                        style: TextStyle(
+                            fontSize: getTextSizeBig(total),
+                            fontWeight: FontWeight.w700),
+                      ),
               ],
             ),
           ),
@@ -47,13 +58,15 @@ class BalanceCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      income,
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.onSurface,
-                          fontSize: 24,
-                          fontWeight: FontWeight.w400),
-                    ),
+                    loadingIncomes
+                        ? CircularProgressIndicator()
+                        : Text(
+                            income,
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.onSurface,
+                                fontSize: getTextSize(income),
+                                fontWeight: FontWeight.w400),
+                          ),
                     Text(
                       "Ingresos",
                       style: TextStyle(
@@ -73,13 +86,15 @@ class BalanceCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      expenses,
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.onSurface,
-                          fontSize: 24,
-                          fontWeight: FontWeight.w400),
-                    ),
+                    loadingExpenses
+                        ? CircularProgressIndicator()
+                        : Text(
+                            expenses,
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.onSurface,
+                                fontSize: getTextSize(expenses),
+                                fontWeight: FontWeight.w400),
+                          ),
                     Text(
                       "Gastos",
                       style: TextStyle(
