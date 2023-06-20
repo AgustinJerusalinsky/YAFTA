@@ -4,11 +4,11 @@ import 'package:yafta/design_system/molecules/pie_chart.dart';
 
 class BalanceGraph extends StatelessWidget {
   const BalanceGraph(
-      {Key? key, required this.incomeData, required this.expensedData})
+      {Key? key, required this.incomeData, required this.expenseData})
       : super(key: key);
 
   final Map<String, double> incomeData;
-  final Map<String, double> expensedData;
+  final Map<String, double> expenseData;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class BalanceGraph extends StatelessWidget {
                       style: Theme.of(context).textTheme.headlineMedium),
                   const SizedBox(height: 20),
                   YaftaPieChart(
-                    data: expensedData,
+                    data: expenseData,
                   ),
                 ],
               ),

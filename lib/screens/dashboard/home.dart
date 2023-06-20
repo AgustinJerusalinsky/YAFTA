@@ -99,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 20,
                   ),
                   const BalanceGraph(
-                    expensedData: {
+                    expenseData: {
                       "Supermercado": 1000,
                       "Transporte": 1000,
                       "Ocio": 1000,

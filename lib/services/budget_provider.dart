@@ -41,7 +41,7 @@ class BudgetProvider extends ChangeNotifier {
     String userId = authProvider.user!.uid;
 
     if (_budgetDirty) {
-      _getFirestoreBudgets(userId).then((value) {
+      _buildBudgets(userId).then((value) {
         budgets = value;
         budgetDirty = false;
         return _budgets;
@@ -114,7 +114,7 @@ class BudgetProvider extends ChangeNotifier {
   }
 
   // get budget
-  Future<List<Budget>> _getFirestoreBudgets(String userId) async {
+  Future<List<Budget>> _buildBudgets(String userId) async {
     Map<String, Budget> budgetsMap = {};
 
     List<Category> firestoreCategories =
