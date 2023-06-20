@@ -21,7 +21,7 @@ class _CategoriesSearchBarState extends State<CategoriesSearchBar> {
   Widget build(BuildContext context) {
     return Consumer<BudgetProvider>(
       builder: (context, provider, _) {
-        return SearchBar(
+        return YaftaSearchBar(
           label: "Categorías",
           emptyLabel: "Mostrando todas las cetegorías",
           items: provider.categories.map((e) => e.name).toList(),
