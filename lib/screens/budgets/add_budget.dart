@@ -41,10 +41,9 @@ class AddBudgetScreenState extends State<AddBudgetScreen> {
 
     final MovementType type = dropdownValue!;
 
-    final String userId = context.read<AuthProvider>().user!.uid;
     await context
         .read<BudgetProvider>()
-        .addCategory(userId, categoryName, double.parse(amount), type);
+        .addCategory(categoryName, double.parse(amount), type);
     await AnalyticsHandler.logNewBudget(
         budgetName: categoryName, budgetAmount: amount);
     context.pop();

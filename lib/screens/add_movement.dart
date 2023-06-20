@@ -49,14 +49,8 @@ class AddMovementScreenState extends State<AddMovementScreen> {
     final amount = _amountController.text.trim();
     final date = _dateController.text.trim();
 
-    final String userId = context.read<AuthProvider>().user!.uid;
-    await context.read<MovementProvider>().addMovement(
-        userId,
-        double.parse(amount),
-        category!,
-        description,
-        widget.type,
-        DateTime.parse(date));
+    await context.read<MovementProvider>().addMovement(double.parse(amount),
+        category!, description, widget.type, DateTime.parse(date));
     await AnalyticsHandler.logMovement(
         movementType: widget.type, value: double.parse(amount));
     context.pop();

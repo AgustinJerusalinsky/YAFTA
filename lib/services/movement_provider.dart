@@ -194,8 +194,9 @@ class MovementProvider extends ChangeNotifier {
   }
 
   // add movement
-  Future<void> addMovement(String userId, double amount, Category category,
-      String description, MovementType type, DateTime date) {
+  Future<void> addMovement(double amount, Category category, String description,
+      MovementType type, DateTime date) {
+    String userId = _authProvider.user!.uid;
     //add date to movement
     Movement movement = Movement(
       amount: amount,

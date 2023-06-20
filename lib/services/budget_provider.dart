@@ -84,10 +84,9 @@ class BudgetProvider extends ChangeNotifier {
   }
 
   // add category
-  Future<void> addCategory(
-      String userId, String name, double amount, MovementType type) {
+  Future<void> addCategory(String name, double amount, MovementType type) {
     Category category = Category(name: name, amount: amount, type: type);
-
+    String userId = authProvider.user!.uid;
     return firestoreService.addCategory(userId, category).then((value) {
       budgetDirty = true;
       categoryDirty = true;
