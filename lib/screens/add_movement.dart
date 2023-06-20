@@ -12,6 +12,8 @@ import 'package:yafta/services/auth_provider.dart';
 import 'package:yafta/services/budget_provider.dart';
 import 'package:yafta/services/movement_provider.dart';
 
+import '../utils/analytics.dart';
+
 class AddMovementScreen extends StatefulWidget {
   final MovementType type;
   const AddMovementScreen({Key? key, required this.type}) : super(key: key);
@@ -55,7 +57,10 @@ class AddMovementScreenState extends State<AddMovementScreen> {
         description,
         widget.type,
         DateTime.parse(date));
+    await AnalyticsHandler.logMovement(
+        movementType: widget.type, value: int.parse(amount));
     context.pop();
+
     // Navigate to home without context
   }
 

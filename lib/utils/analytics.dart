@@ -1,5 +1,7 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 
+import '../models/movement_type.dart';
+
 enum EventType { add_expense, add_income, new_budget, signup_email }
 
 extension EventName on EventType {
@@ -21,9 +23,12 @@ class AnalyticsHandler {
   static final FirebaseAnalytics _analytics = FirebaseAnalytics.instance;
 
   static Future<void> logMovement(
-      {required final EventType eventType, required final String value}) async {
+      {required final MovementType movementType,
+      required final int value}) async {
     await _analytics.logEvent(
-      name: eventType.name,
+      name: movementType == MovementType.expense
+          ? EventType.add_expense.name
+          : EventType.add_income.name,
       parameters: <String, dynamic>{
         'value': value,
       },
@@ -34,7 +39,7 @@ class AnalyticsHandler {
       {required final String budgetName,
       required final String budgetAmount}) async {
     await _analytics.logEvent(
-      name: 'new_budget',
+      name: EventType.new_budget.name,
       parameters: <String, dynamic>{
         'budget_name': budgetName,
         'budget_amount': budgetAmount,
