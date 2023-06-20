@@ -27,12 +27,13 @@ class _MovementScreenState extends State<MovementScreen> {
   void filterMovements() {
     if (selectedCategories.isEmpty) {
       setState(() {
-        filteredMovements = List.from(widget.movements);
+        filteredMovements = List.from(_movements);
       });
     } else {
       setState(() {
-        filteredMovements = widget.movements
-            .where((movement) => selectedCategories.contains(movement.category))
+        filteredMovements = _movements
+            .where((movement) =>
+                selectedCategories.contains(movement.category.name))
             .toList();
       });
     }
