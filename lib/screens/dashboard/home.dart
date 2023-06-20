@@ -3,11 +3,18 @@ import 'package:yafta/design_system/cells/balance_graph.dart';
 import 'package:yafta/design_system/molecules/yafta_segmented_button.dart';
 
 import '../../design_system/cells/balance_card.dart';
+import '../../models/segment.dart';
+
+final List<Segment> segments = [
+  Segment(label: "Hoy", value: 0),
+  Segment(label: "Este mes", value: 1),
+  Segment(label: "Total", value: 2),
+];
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  static void _onSelectionChanged(Set<int> idx) {
+  static void _onSelectionChanged(int idx) {
     print(idx);
   }
 
@@ -18,7 +25,10 @@ class HomeScreen extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        const YaftaSegmentedButton(onSelectionChanged: _onSelectionChanged),
+        YaftaSegmentedButton(
+          onSelectionChanged: _onSelectionChanged,
+          segments: segments,
+        ),
         const SizedBox(
           height: 20,
         ),

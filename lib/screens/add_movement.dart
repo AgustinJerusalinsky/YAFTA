@@ -99,6 +99,7 @@ class AddMovementScreenState extends State<AddMovementScreen> {
                         isExpanded: true,
                         hint: const Text("Categoria"),
                         items: provider.categories
+                            .where((element) => element.type == widget.type)
                             .map((category) => DropdownMenuItem(
                                   value: category,
                                   child: Text(category.name),

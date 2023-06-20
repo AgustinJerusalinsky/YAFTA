@@ -1,23 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../../models/segment.dart';
+
 enum Calendar { daily, monthly, allTime }
 
-const segments = [
-  {"value": 0, "label": "Hoy"},
-  {
-    "value": 1,
-    "label": "Este mes",
-  },
-  {
-    "value": 2,
-    "label": "Total",
-  }
-];
-
 class YaftaSegmentedButton extends StatefulWidget {
-  const YaftaSegmentedButton({Key? key, required this.onSelectionChanged})
+  const YaftaSegmentedButton(
+      {Key? key, required this.onSelectionChanged, required this.segments})
       : super(key: key);
-  final void Function(Set<int>) onSelectionChanged;
+  final void Function(int) onSelectionChanged;
+  final List<Segment> segments;
   @override
   State<YaftaSegmentedButton> createState() => _YaftaSegmentedButtonState();
 }
@@ -28,8 +20,8 @@ class _YaftaSegmentedButtonState extends State<YaftaSegmentedButton> {
   void onSelectionChanged(Set<int> selected) {
     setState(() {
       _currentSegment = selected.first;
+      widget.onSelectionChanged(selected.first);
     });
-    widget.onSelectionChanged(selected);
   }
 
   @override
@@ -38,10 +30,10 @@ class _YaftaSegmentedButtonState extends State<YaftaSegmentedButton> {
       children: <Widget>[
         Expanded(
           child: SegmentedButton<int>(
-            segments: segments
+            segments: widget.segments
                 .map((segment) => ButtonSegment(
-                      value: segment["value"] as int,
-                      label: Text(segment["label"] as String,
+                      value: segment.value,
+                      label: Text(segment.label,
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.onSurface,
                           )),
