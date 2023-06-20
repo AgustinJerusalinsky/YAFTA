@@ -6,9 +6,11 @@ class YaftaButton extends StatelessWidget {
       this.onPressed,
       required this.text,
       this.variant = 'filled',
+      this.color,
       this.fullWidth = true,
       this.child,
-      this.secondary = false})
+      this.secondary = false,
+      this.textStyle})
       : super(key: key);
   final void Function()? onPressed;
   final Widget? child;
@@ -16,6 +18,8 @@ class YaftaButton extends StatelessWidget {
   final String text;
   final bool secondary;
   final bool fullWidth;
+  final Color? color;
+  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +43,37 @@ class YaftaButton extends StatelessWidget {
                 style: theme,
               ));
         }
-        return FilledButton(onPressed: onPressed, child: Text(text));
+        return FilledButton(
+          onPressed: onPressed,
+          child: Text(
+            text,
+            style: textStyle,
+          ),
+          style: color != null
+              ? ButtonStyle(backgroundColor: MaterialStatePropertyAll(color))
+              : null,
+        );
       case 'outlined':
-        return OutlinedButton(onPressed: onPressed, child: Text(text));
+        return OutlinedButton(
+            onPressed: onPressed,
+            child: Text(
+              text,
+              style: textStyle,
+            ));
       case 'text':
-        return TextButton(onPressed: onPressed, child: Text(text));
+        return TextButton(
+            onPressed: onPressed,
+            child: Text(
+              text,
+              style: textStyle,
+            ));
       default:
-        return FilledButton(onPressed: onPressed, child: Text(text));
+        return FilledButton(
+            onPressed: onPressed,
+            child: Text(
+              text,
+              style: textStyle,
+            ));
     }
   }
 }
