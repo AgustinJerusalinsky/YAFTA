@@ -11,9 +11,9 @@ getTextSize(String text) {
 getTextSizeBig(String text) {
   if (text.length <= 3) {
     return 56.0;
-  } else if (text.length <= 10) {
+  } else if (text.length <= 6) {
     return 32.0;
   } else {
-    return 24.0;
+    return 28.0;
   }
 }
