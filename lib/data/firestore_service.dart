@@ -28,6 +28,43 @@ class FirestoreService {
         .catchError((error) => log.warning("Failed to add movement: $error"));
   }
 
+  Future<void> deleteMovement(String userId, String movementId) {
+    return firestore
+        .collection('users')
+        .doc(userId)
+        .collection('movements')
+        .doc(movementId)
+        .delete()
+        .then((value) => log.info("Movement Deleted"))
+        .catchError(
+            (error) => log.warning("Failed to delete movement: $error"));
+  }
+
+  Future<void> deleteAllMovementsFromCategory(
+      String userId, String categoryId) {
+    return firestore
+        .collection('users')
+        .doc(userId)
+        .collection('movements')
+        .where('category.id', isEqualTo: categoryId)
+        .get()
+        .then((snapshot) {
+          for (DocumentSnapshot ds in snapshot.docs) {
+            ds.reference.delete();
+          }
+        })
+        .then((value) => log.info("Movements Deleted"))
+        .catchError(
+            (error) => log.warning("Failed to delete movements: $error"));
+  }
+
+  Movement movementFromDocument(
+      QueryDocumentSnapshot<Map<String, dynamic>> document) {
+    Movement m = Movement.fromMap(document.data());
+    m.id = document.id;
+    return m;
+  }
+
   // get movements from user
   Future<List<Movement>> getMovements(String userId,
       {List<MovementType>? types = MovementType.values}) {
@@ -38,7 +75,7 @@ class FirestoreService {
         .where('type', whereIn: types!.map((e) => e.toString()).toList())
         .get()
         .then((snapshot) => snapshot.docs
-            .map((document) => Movement.fromMap(document.data()))
+            .map((document) => movementFromDocument(document))
             .toList());
   }
 
@@ -54,7 +91,24 @@ class FirestoreService {
         .where('date', isGreaterThanOrEqualTo: DateTime(now.year, now.month))
         .get()
         .then((snapshot) => snapshot.docs
-            .map((document) => Movement.fromMap(document.data()))
+            .map((document) => movementFromDocument(document))
+            .toList());
+  }
+
+  //get movements today
+  Future<List<Movement>> getMovementsToday(String userId,
+      {List<MovementType>? types = MovementType.values}) {
+    DateTime now = DateTime.now();
+    return firestore
+        .collection('users')
+        .doc(userId)
+        .collection('movements')
+        .where('type', whereIn: types!.map((e) => e.toString()).toList())
+        .where('date',
+            isGreaterThanOrEqualTo: DateTime(now.year, now.month, now.day))
+        .get()
+        .then((snapshot) => snapshot.docs
+            .map((document) => movementFromDocument(document))
             .toList());
   }
 
@@ -66,6 +120,19 @@ class FirestoreService {
         .add(category.toMap())
         .then((value) => log.info("Category Added"))
         .catchError((error) => log.warning("Failed to add category: $error"));
+  }
+
+  Future<void> deleteCategory(String userId, String categoryId) async {
+    await deleteAllMovementsFromCategory(userId, categoryId);
+    return firestore
+        .collection('users')
+        .doc(userId)
+        .collection('categories')
+        .doc(categoryId)
+        .delete()
+        .then((value) => log.info("Category Deleted"))
+        .catchError(
+            (error) => log.warning("Failed to delete category: $error"));
   }
 
   Category categoryFromDocument(

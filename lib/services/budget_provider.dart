@@ -86,6 +86,15 @@ class BudgetProvider extends ChangeNotifier {
     });
   }
 
+  //delete category
+  Future<void> deleteCategory(String userId, String categoryId) {
+    return firestoreService.deleteCategory(userId, categoryId).then((value) {
+      budgetDirty = true;
+      categoryDirty = true;
+      return value;
+    });
+  }
+
   // get categories
   Future<List<Category>> _getFirestoreCategories(String userId) {
     return firestoreService.getCategories(userId);
