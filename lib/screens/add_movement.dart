@@ -28,6 +28,7 @@ class AddMovementScreenState extends State<AddMovementScreen> {
   @override
   void initState() {
     super.initState();
+    _dateController.text = DateTime.now().toString().split(' ')[0];
   }
 
   final _formKey = GlobalKey<FormState>();
