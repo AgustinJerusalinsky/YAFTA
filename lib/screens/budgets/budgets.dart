@@ -23,11 +23,12 @@ class BudgetsScreen extends StatefulWidget {
 class _BudgetsScreenState extends State<BudgetsScreen> {
   final PageController _pageController =
       PageController(initialPage: 0, viewportFraction: 1);
-
+  int _currentPage = 0;
   void onPageChanged(int page) {
     setState(() {
       _pageController.animateToPage(page,
           duration: const Duration(milliseconds: 300), curve: Curves.ease);
+      _currentPage = page;
     });
   }
 
@@ -46,6 +47,7 @@ class _BudgetsScreenState extends State<BudgetsScreen> {
           YaftaSegmentedButton(
             onSelectionChanged: onPageChanged,
             segments: segments,
+            currentIndex: _currentPage,
           ),
           SizedBox(
             height: 20,
@@ -55,6 +57,7 @@ class _BudgetsScreenState extends State<BudgetsScreen> {
                 scrollDirection: Axis.horizontal,
                 itemCount: 2,
                 controller: _pageController,
+                onPageChanged: onPageChanged,
                 itemBuilder: (context, index) {
                   MovementType currentType =
                       index == 0 ? MovementType.expense : MovementType.income;
