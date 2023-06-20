@@ -7,6 +7,7 @@ import 'package:yafta/models/movement.dart';
 import 'package:yafta/models/movement_type.dart';
 import 'package:yafta/screens/budgets/budgets.dart';
 import 'package:yafta/services/auth_provider.dart';
+import 'package:yafta/services/movement_provider.dart';
 
 import '../data/firestore_service.dart';
 
@@ -15,6 +16,7 @@ final log = Logger('BudgetProvider');
 class BudgetProvider extends ChangeNotifier {
   final FirestoreService firestoreService = FirestoreService.instance;
   final AuthProvider authProvider;
+  final MovementProvider movementProvider;
 
   List<Budget> _budgets = [];
   List<Category> _categories = [];
@@ -22,7 +24,14 @@ class BudgetProvider extends ChangeNotifier {
   bool _budgetDirty = true;
   bool _categoryDirty = true;
 
-  BudgetProvider(this.authProvider);
+  BudgetProvider(this.authProvider, this.movementProvider) {
+    movementProvider.addListener(() {
+      if (movementProvider.incomesShouldFetch ||
+          movementProvider.expensesShouldFetch) {
+        budgetDirty = true;
+      }
+    });
+  }
 
   bool get budgetsShouldFetch => _budgetDirty;
 
@@ -93,6 +102,8 @@ class BudgetProvider extends ChangeNotifier {
         .then((value) {
       budgetDirty = true;
       categoryDirty = true;
+      movementProvider.incomeDirty = true;
+      movementProvider.expenseDirty = true;
       return value;
     });
   }
