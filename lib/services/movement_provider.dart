@@ -41,6 +41,12 @@ class MovementProvider extends ChangeNotifier {
 
   bool get expensesWeekShouldFetch => _expenseWeekDirty;
 
+  bool get incomesShouldFetch =>
+      _incomeTotalDirty || _incomeMonthDirty || _incomeWeekDirty;
+
+  bool get expensesShouldFetch =>
+      _expenseTotalDirty || _expenseMonthDirty || _expenseWeekDirty;
+
   List<Movement> get totalIncomes {
     String userId = _authProvider.user!.uid;
 
@@ -143,6 +149,20 @@ class MovementProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  set incomeDirty(bool value) {
+    _incomeTotalDirty = value;
+    _incomeMonthDirty = value;
+    _incomeWeekDirty = value;
+    notifyListeners();
+  }
+
+  set expenseDirty(bool value) {
+    _expenseTotalDirty = value;
+    _expenseMonthDirty = value;
+    _expenseWeekDirty = value;
+    notifyListeners();
+  }
+
   set totalIncomes(List<Movement> value) {
     _totalIncomes = value;
     notifyListeners();
@@ -188,9 +208,9 @@ class MovementProvider extends ChangeNotifier {
     // add movement to firestore
     return _firestoreService.addMovement(userId, movement).then((value) {
       if (type == MovementType.income) {
-        incomeTotalDirty = true;
+        incomeDirty = true;
       } else {
-        expenseTotalDirty = true;
+        expenseDirty = true;
       }
       return value;
     });
@@ -199,8 +219,8 @@ class MovementProvider extends ChangeNotifier {
   // delete movement
   Future<void> deleteMovement(String userId, String movementId) {
     return _firestoreService.deleteMovement(userId, movementId).then((value) {
-      incomeTotalDirty = true;
-      expenseTotalDirty = true;
+      incomeDirty = true;
+      expenseDirty = true;
       return value;
     });
   }
