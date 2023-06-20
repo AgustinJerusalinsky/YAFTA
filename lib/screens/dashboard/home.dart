@@ -33,29 +33,29 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Consumer<MovementProvider>(
-      builder: (context, provider, _) {
+      builder: (context, movementProvider, _) {
         List<Movement> incomes = [];
         List<Movement> expenses = [];
         bool loadingIncomes = true;
         bool loadingExpenses = true;
         switch (_selectedSegment) {
           case 0:
-            incomes = provider.weekIncomes;
-            expenses = provider.weekExpenses;
-            loadingIncomes = provider.incomesWeekShouldFetch;
-            loadingExpenses = provider.expensesWeekShouldFetch;
+            incomes = movementProvider.weekIncomes;
+            expenses = movementProvider.weekExpenses;
+            loadingIncomes = movementProvider.incomesWeekShouldFetch;
+            loadingExpenses = movementProvider.expensesWeekShouldFetch;
             break;
           case 1:
-            incomes = provider.monthIncomes;
-            expenses = provider.monthExpenses;
-            loadingIncomes = provider.incomesMonthShouldFetch;
-            loadingExpenses = provider.expensesMonthShouldFetch;
+            incomes = movementProvider.monthIncomes;
+            expenses = movementProvider.monthExpenses;
+            loadingIncomes = movementProvider.incomesMonthShouldFetch;
+            loadingExpenses = movementProvider.expensesMonthShouldFetch;
             break;
           case 2:
-            incomes = provider.totalIncomes;
-            expenses = provider.totalExpenses;
-            loadingIncomes = provider.incomesTotalShouldFetch;
-            loadingExpenses = provider.expensesTotalShouldFetch;
+            incomes = movementProvider.totalIncomes;
+            expenses = movementProvider.totalExpenses;
+            loadingIncomes = movementProvider.incomesTotalShouldFetch;
+            loadingExpenses = movementProvider.expensesTotalShouldFetch;
             break;
         }
 
@@ -65,13 +65,39 @@ class _HomeScreenState extends State<HomeScreen> {
         final totalExpense = expenses.fold<double>(
             0, (previousValue, element) => previousValue + element.amount);
 
+        final Map<String, double> expensesByCategory = {};
+        final Map<String, double> incomesByCategory = {};
+
+        expenses.forEach((element) {
+          if (expensesByCategory.containsKey(element.category)) {
+            expensesByCategory[element.category.name] =
+                expensesByCategory[element.category.name] =
+                    element.amount.toDouble();
+          } else {
+            expensesByCategory[element.category.name] =
+                element.amount.toDouble();
+          }
+        });
+
+        incomes.forEach((element) {
+          if (incomesByCategory.containsKey(element.category)) {
+            incomesByCategory[element.category.name] =
+                incomesByCategory[element.category.name] =
+                    element.amount.toDouble();
+          } else {
+            incomesByCategory[element.category.name] =
+                element.amount.toDouble();
+          }
+        });
+
         return Column(
           children: [
             const SizedBox(
               height: 20,
             ),
             YaftaSegmentedButton(
-              onSelectionChanged: (idx) => _onSelectionChanged(idx, provider),
+              onSelectionChanged: (idx) =>
+                  _onSelectionChanged(idx, movementProvider),
               segments: segments,
             ),
             const SizedBox(
@@ -98,18 +124,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  const BalanceGraph(
-                    expenseData: {
-                      "Supermercado": 1000,
-                      "Transporte": 1000,
-                      "Ocio": 1000,
-                    },
-                    incomeData: {
-                      "Nómina": 1000,
-                      "Intereses": 1000,
-                      "Otros": 1000,
-                    },
-                  ),
+                  incomesByCategory.isEmpty || expensesByCategory.isEmpty
+                      ? Center(
+                          child: CircularProgressIndicator(), heightFactor: 5.0)
+                      : BalanceGraph(
+                          expenseData: expensesByCategory,
+                          incomeData: incomesByCategory,
+                        ),
                 ],
               ),
             ),
