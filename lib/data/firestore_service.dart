@@ -23,7 +23,7 @@ class FirestoreService {
         .collection('users')
         .doc(userId)
         .collection('movements')
-        .add(movement.toMap())
+        .add(movement.toMap(create: true))
         .then((value) => log.info("Movement Added"))
         .catchError((error) => log.warning("Failed to add movement: $error"));
   }
@@ -73,6 +73,8 @@ class FirestoreService {
         .doc(userId)
         .collection('movements')
         .where('type', whereIn: types!.map((e) => e.toString()).toList())
+        .orderBy("date", descending: true)
+        .orderBy("creation_date", descending: true)
         .get()
         .then((snapshot) => snapshot.docs
             .map((document) => movementFromDocument(document))
@@ -89,6 +91,8 @@ class FirestoreService {
         .collection('movements')
         .where('type', whereIn: types!.map((e) => e.toString()).toList())
         .where('date', isGreaterThanOrEqualTo: DateTime(now.year, now.month))
+        .orderBy("date", descending: true)
+        .orderBy("creation_date", descending: true)
         .get()
         .then((snapshot) => snapshot.docs
             .map((document) => movementFromDocument(document))
@@ -106,6 +110,8 @@ class FirestoreService {
         .where('type', whereIn: types!.map((e) => e.toString()).toList())
         .where('date',
             isGreaterThanOrEqualTo: DateTime(now.year, now.month, now.day - 7))
+        .orderBy("date", descending: true)
+        .orderBy("creation_date", descending: true)
         .get()
         .then((snapshot) => snapshot.docs
             .map((document) => movementFromDocument(document))
@@ -117,7 +123,7 @@ class FirestoreService {
         .collection('users')
         .doc(userId)
         .collection('categories')
-        .add(category.toMap())
+        .add(category.toMap(create: true))
         .then((value) => log.info("Category Added"))
         .catchError((error) => log.warning("Failed to add category: $error"));
   }
@@ -148,6 +154,7 @@ class FirestoreService {
         .collection('users')
         .doc(userId)
         .collection('categories')
+        .orderBy("creation_date", descending: true)
         .get()
         .then((snapshot) => snapshot.docs
             .map((document) => categoryFromDocument(document))

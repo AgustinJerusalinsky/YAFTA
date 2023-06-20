@@ -9,6 +9,7 @@ class Movement {
   String description;
   DateTime? date;
   String? id;
+  DateTime? creationDate;
 
   Movement({
     required this.amount,
@@ -17,17 +18,22 @@ class Movement {
     this.description = '',
     this.date,
     this.id,
+    this.creationDate,
   });
 
   //add toMap and fromMap methods
-  Map<String, dynamic> toMap() {
-    return {
+  Map<String, dynamic> toMap({bool create = false}) {
+    Map<String, dynamic> map = {
       'amount': amount,
       'category': category.toMap(withId: true),
       'type': type.toString(),
       'description': description,
       'date': date,
     };
+    if (create) {
+      map['creation_date'] = DateTime.now();
+    }
+    return map;
   }
 
   factory Movement.fromMap(Map<String, dynamic> map) {
@@ -37,6 +43,7 @@ class Movement {
       category: Category.fromMap(map['category']),
       type: MovementType.values.firstWhere((e) => e.toString() == map['type']),
       date: map['date']?.toDate(),
+      creationDate: map['creation_date']?.toDate(),
     );
   }
 }

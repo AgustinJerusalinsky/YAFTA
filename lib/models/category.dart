@@ -5,15 +5,17 @@ class Category {
   final int amount;
   final MovementType type;
   String? categoryId;
+  final DateTime? creationDate;
 
   Category({
     required this.name,
     required this.amount,
     required this.type,
     this.categoryId,
+    this.creationDate,
   });
 
-  Map<String, dynamic> toMap({bool withId = false}) {
+  Map<String, dynamic> toMap({bool withId = false, bool create = false}) {
     Map<String, dynamic> map = {
       'name': name,
       'amount': amount,
@@ -21,6 +23,9 @@ class Category {
     };
     if (withId) {
       map['category_id'] = categoryId;
+    }
+    if (create) {
+      map['creation_date'] = DateTime.now();
     }
     return map;
   }
@@ -33,6 +38,7 @@ class Category {
         (element) => element.toString() == map['type'],
       ),
       categoryId: map['category_id'],
+      creationDate: map['creation_date']?.toDate(),
     );
   }
 }
