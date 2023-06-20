@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:yafta/design_system/molecules/button.dart';
 import 'package:yafta/design_system/molecules/text_field.dart';
 import 'package:yafta/design_system/molecules/yafta_app_bar.dart';
+import 'package:yafta/design_system/molecules/yafta_overlay_loading.dart';
 import 'package:yafta/models/movement_type.dart';
 import 'package:yafta/services/auth_provider.dart';
 import 'package:yafta/services/budget_provider.dart';
@@ -23,12 +24,16 @@ class AddBudgetScreen extends StatefulWidget {
 class AddBudgetScreenState extends State<AddBudgetScreen> {
   final TextEditingController _categoryController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
+  bool submitting = false;
   MovementType? dropdownValue;
   final _formKey = GlobalKey<FormState>();
   void _handleSubmit() async {
     //validate form
 
     if (!_formKey.currentState!.validate()) return;
+    setState(() {
+      submitting = true;
+    });
 
     final categoryName = _categoryController.text.trim();
     final amount = _amountController.text.trim();
@@ -45,6 +50,7 @@ class AddBudgetScreenState extends State<AddBudgetScreen> {
   void onChanged(dynamic value) {
     setState(() {
       dropdownValue = value;
+      submitting = false;
     });
   }
 
@@ -55,68 +61,73 @@ class AddBudgetScreenState extends State<AddBudgetScreen> {
         back: true,
         showBrand: true,
       ),
-      body: Form(
-        key: _formKey,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(15, 30, 15, 30),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(children: [
-                YaftaTextField(
+      body: YaftaOverlayLoading(
+        isLoading: submitting,
+        child: Form(
+          key: _formKey,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(15, 30, 15, 30),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(children: [
+                  YaftaTextField(
+                      validator: (value) =>
+                          value.isEmpty ? 'Campo requerido' : null,
+                      label: "Categoria",
+                      textController: _categoryController),
+                  YaftaTextField(
                     validator: (value) =>
                         value.isEmpty ? 'Campo requerido' : null,
-                    label: "Categoria",
-                    textController: _categoryController),
-                YaftaTextField(
-                  validator: (value) =>
-                      value.isEmpty ? 'Campo requerido' : null,
-                  label: "Monto",
-                  textController: _amountController,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly,
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: DropdownButtonFormField(
-                      validator: (value) =>
-                          value == null ? 'Campo requerido' : null,
-                      borderRadius: BorderRadius.circular(10),
-                      value: dropdownValue,
-                      isExpanded: true,
-                      hint: const Text("Tipo de movimiento"),
-                      items: items,
-                      onChanged: onChanged),
-                )
-              ]),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: YaftaButton(
-                      text: 'Cancelar',
-                      fullWidth: true,
-                      variant: 'filled',
-                      secondary: true,
-                      onPressed: () => context.pop(),
-                    ),
+                    label: "Monto",
+                    textController: _amountController,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
                   ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: YaftaButton(
-                      text: 'Guardar',
-                      fullWidth: true,
-                      variant: 'filled',
-                      onPressed: _handleSubmit,
-                    ),
-                  ),
-                )
-              ])
-            ],
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: DropdownButtonFormField(
+                        validator: (value) =>
+                            value == null ? 'Campo requerido' : null,
+                        borderRadius: BorderRadius.circular(10),
+                        value: dropdownValue,
+                        isExpanded: true,
+                        hint: const Text("Tipo de movimiento"),
+                        items: items,
+                        onChanged: onChanged),
+                  )
+                ]),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: YaftaButton(
+                            text: 'Cancelar',
+                            fullWidth: true,
+                            variant: 'filled',
+                            secondary: true,
+                            onPressed: () => context.pop(),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: YaftaButton(
+                            text: 'Guardar',
+                            fullWidth: true,
+                            variant: 'filled',
+                            onPressed: _handleSubmit,
+                          ),
+                        ),
+                      )
+                    ])
+              ],
+            ),
           ),
         ),
       ),

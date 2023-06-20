@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:yafta/design_system/molecules/button.dart';
 import 'package:yafta/design_system/molecules/text_field.dart';
 import 'package:yafta/design_system/molecules/yafta_app_bar.dart';
+import 'package:yafta/design_system/molecules/yafta_overlay_loading.dart';
 import 'package:yafta/models/category.dart';
 import 'package:yafta/models/movement_type.dart';
 import 'package:yafta/services/auth_provider.dart';
@@ -23,6 +24,8 @@ class AddMovementScreenState extends State<AddMovementScreen> {
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
 
+  bool _submitting = false;
+
   Category? category;
 
   @override
@@ -36,6 +39,10 @@ class AddMovementScreenState extends State<AddMovementScreen> {
     //validate form
     print(_descriptionController.text.trim());
     if (!_formKey.currentState!.validate()) return;
+
+    setState(() {
+      _submitting = true;
+    });
 
     final description = _descriptionController.text.trim();
     final amount = _amountController.text.trim();
@@ -56,6 +63,7 @@ class AddMovementScreenState extends State<AddMovementScreen> {
   void onChanged(dynamic value) {
     setState(() {
       category = value;
+      _submitting = false;
     });
   }
 
@@ -67,99 +75,102 @@ class AddMovementScreenState extends State<AddMovementScreen> {
         showBrand: true,
         showProfile: false,
       ),
-      body: Consumer<BudgetProvider>(builder: (context, provider, _) {
-        return Form(
-          key: _formKey,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(15, 30, 15, 30),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(children: [
-                  YaftaTextField(
+      body: YaftaOverlayLoading(
+        isLoading: _submitting,
+        child: Consumer<BudgetProvider>(builder: (context, provider, _) {
+          return Form(
+            key: _formKey,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(15, 30, 15, 30),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(children: [
+                    YaftaTextField(
+                        validator: (value) =>
+                            value.isEmpty ? 'Campo requerido' : null,
+                        label: "Descripción",
+                        textController: _descriptionController),
+                    YaftaTextField(
                       validator: (value) =>
                           value.isEmpty ? 'Campo requerido' : null,
-                      label: "Descripción",
-                      textController: _descriptionController),
-                  YaftaTextField(
-                    validator: (value) =>
-                        value.isEmpty ? 'Campo requerido' : null,
-                    label: "Valor",
-                    textController: _amountController,
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly,
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: DropdownButtonFormField(
-                        validator: (value) =>
-                            value == null ? 'Campo requerido' : null,
-                        borderRadius: BorderRadius.circular(10),
-                        value: category,
-                        isExpanded: true,
-                        hint: const Text("Categoria"),
-                        items: provider.categories
-                            .where((element) => element.type == widget.type)
-                            .map((category) => DropdownMenuItem(
-                                  value: category,
-                                  child: Text(category.name),
-                                ))
-                            .toList(),
-                        onChanged: onChanged),
-                  ),
-                  YaftaTextField(
-                    label: "Fecha",
-                    textController: _dateController,
-                    readOnly: true,
-                    validator: (value) =>
-                        value.isEmpty ? 'Campo requerido' : null,
-                    onTap: () async {
-                      final DateTime? date = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(1900),
-                        lastDate: DateTime.now(),
-                      );
-                      if (date != null) {
-                        _dateController.text = date.toString().split(' ')[0];
-                      }
-                    },
-                  ),
-                ]),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: YaftaButton(
-                            text: 'Cancelar',
-                            fullWidth: true,
-                            variant: 'filled',
-                            secondary: true,
-                            onPressed: () => context.pop(),
+                      label: "Valor",
+                      textController: _amountController,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: DropdownButtonFormField(
+                          validator: (value) =>
+                              value == null ? 'Campo requerido' : null,
+                          borderRadius: BorderRadius.circular(10),
+                          value: category,
+                          isExpanded: true,
+                          hint: const Text("Categoria"),
+                          items: provider.categories
+                              .where((element) => element.type == widget.type)
+                              .map((category) => DropdownMenuItem(
+                                    value: category,
+                                    child: Text(category.name),
+                                  ))
+                              .toList(),
+                          onChanged: onChanged),
+                    ),
+                    YaftaTextField(
+                      label: "Fecha",
+                      textController: _dateController,
+                      readOnly: true,
+                      validator: (value) =>
+                          value.isEmpty ? 'Campo requerido' : null,
+                      onTap: () async {
+                        final DateTime? date = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(1900),
+                          lastDate: DateTime.now(),
+                        );
+                        if (date != null) {
+                          _dateController.text = date.toString().split(' ')[0];
+                        }
+                      },
+                    ),
+                  ]),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: YaftaButton(
+                              text: 'Cancelar',
+                              fullWidth: true,
+                              variant: 'filled',
+                              secondary: true,
+                              onPressed: () => context.pop(),
+                            ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: YaftaButton(
-                            text: 'Guardar',
-                            fullWidth: true,
-                            variant: 'filled',
-                            onPressed: _handleSubmit,
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: YaftaButton(
+                              text: 'Guardar',
+                              fullWidth: true,
+                              variant: 'filled',
+                              onPressed: _handleSubmit,
+                            ),
                           ),
-                        ),
-                      )
-                    ])
-              ],
+                        )
+                      ])
+                ],
+              ),
             ),
-          ),
-        );
-      }),
+          );
+        }),
+      ),
     );
   }
 }
