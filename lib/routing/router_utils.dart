@@ -3,7 +3,9 @@ enum AppRoutes {
   signup,
   home,
   incomes,
+  addIncome,
   expenses,
+  addExpense,
   budgets,
   addBudget,
   profile,
@@ -28,8 +30,12 @@ extension AppRouteExtension on AppRoutes {
         return "/";
       case AppRoutes.incomes:
         return "/incomes";
+      case AppRoutes.addIncome:
+        return "/add/incomes";
       case AppRoutes.expenses:
         return "/expenses";
+      case AppRoutes.addExpense:
+        return "/add/expenses";
       case AppRoutes.budgets:
         return "/budgets";
       case AppRoutes.addBudget:
@@ -51,8 +57,12 @@ extension AppRouteExtension on AppRoutes {
         return "home";
       case AppRoutes.incomes:
         return "incomes";
+      case AppRoutes.addIncome:
+        return "addIncome";
       case AppRoutes.expenses:
         return "expenses";
+      case AppRoutes.addExpense:
+        return "addExpense";
       case AppRoutes.budgets:
         return "budgets";
       case AppRoutes.addBudget:

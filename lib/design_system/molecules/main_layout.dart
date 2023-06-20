@@ -5,7 +5,7 @@ import 'package:yafta/design_system/molecules/yafta_app_bar.dart';
 import 'package:yafta/design_system/molecules/yafta_navigation_bar.dart';
 import 'package:yafta/routing/router_utils.dart';
 import 'package:yafta/services/auth_provider.dart';
-import 'package:yafta/services/income_provider.dart';
+import 'package:yafta/services/movement_provider.dart';
 
 import '../../services/app_navigation.dart';
 import '../../utils/analytics.dart';

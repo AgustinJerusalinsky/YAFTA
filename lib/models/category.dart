@@ -13,12 +13,16 @@ class Category {
     this.categoryId,
   });
 
-  Map<String, dynamic> toMap() {
-    return {
+  Map<String, dynamic> toMap({bool withId = false}) {
+    Map<String, dynamic> map = {
       'name': name,
       'amount': amount,
       'type': type.toString(),
     };
+    if (withId) {
+      map['category_id'] = categoryId;
+    }
+    return map;
   }
 
   factory Category.fromMap(Map<String, dynamic> map) {

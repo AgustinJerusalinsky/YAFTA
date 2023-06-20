@@ -18,9 +18,6 @@ class FirestoreService {
 
   // add a movement
   Future<void> addMovement(String userId, Movement movement) {
-    //add date to movement
-    movement.date = DateTime.now();
-
     // add movement to firestore
     return firestore
         .collection('users')

@@ -11,7 +11,7 @@ import 'package:yafta/services/app_navigation.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:yafta/services/budget_provider.dart';
 import 'package:yafta/utils/remote_config.dart';
-import 'package:yafta/services/income_provider.dart';
+import 'package:yafta/services/movement_provider.dart';
 import 'models/user.dart';
 import 'services/auth_provider.dart';
 
@@ -55,7 +55,7 @@ class _MyAppState extends State<MyApp> {
           ChangeNotifierProvider<AuthProvider>(
               create: (context) => AuthProvider()),
           Provider<AppRouter>(create: (context) => AppRouter(authProvider)),
-          ChangeNotifierProvider(create: (context) => IncomeProvider()),
+          ChangeNotifierProvider(create: (context) => MovementProvider()),
           ChangeNotifierProvider(create: (context) => BudgetProvider())
         ],
         child: Builder(builder: (context) {

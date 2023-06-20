@@ -15,7 +15,9 @@ class YaftaTextField extends StatelessWidget {
       this.hintText,
       this.keyboardType = TextInputType.text,
       this.inputFormatters,
-      this.validator});
+      this.validator,
+      this.onTap,
+      this.readOnly = false});
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final String label;
@@ -26,6 +28,8 @@ class YaftaTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
   final Function(String)? validator;
+  final GestureTapCallback? onTap;
+  final bool? readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +41,8 @@ class YaftaTextField extends StatelessWidget {
         keyboardType: keyboardType,
         inputFormatters: inputFormatters,
         validator: (value) => validator!(value!),
+        readOnly: readOnly!,
+        onTap: onTap,
         decoration: InputDecoration(
           prefixIcon: prefixIcon,
           suffixIcon: suffixIcon,

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:yafta/design_system/molecules/button.dart';
 import 'package:yafta/design_system/molecules/main_layout.dart';
+import 'package:yafta/models/movement_type.dart';
 import 'package:yafta/routing/router_utils.dart';
 import 'package:yafta/screens/auth/login.dart';
 import 'package:yafta/screens/auth/signup.dart';
 import 'package:yafta/screens/budgets/add_budget.dart';
 import 'package:yafta/screens/dashboard/home.dart';
 import 'package:yafta/screens/expenses/expenses.dart';
+import 'package:yafta/screens/add_movement.dart';
 import 'package:yafta/screens/profile/profile.dart';
 import 'package:yafta/services/auth_provider.dart';
-import 'package:provider/provider.dart';
 
 import '../screens/budgets/budgets.dart';
 import '../screens/error_screen.dart';
@@ -86,6 +86,40 @@ class AppRouter {
                               ),
                               child: child),
                 )),
+        GoRoute(
+            parentNavigatorKey: _rootNavigator,
+            path: AppRoutes.addIncome.path,
+            name: AppRoutes.addIncome.name,
+            pageBuilder: (context, state) => CustomTransitionPage(
+                  child: const AddMovementScreen(type: MovementType.income),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) =>
+                          SlideTransition(
+                              position: animation.drive(
+                                Tween<Offset>(
+                                  begin: const Offset(1, 0),
+                                  end: Offset.zero,
+                                ),
+                              ),
+                              child: child),
+                )),
+        GoRoute(
+            parentNavigatorKey: _rootNavigator,
+            path: AppRoutes.addExpense.path,
+            name: AppRoutes.addExpense.name,
+            pageBuilder: (context, state) => CustomTransitionPage(
+                  child: const AddMovementScreen(type: MovementType.expense),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) =>
+                          SlideTransition(
+                              position: animation.drive(
+                                Tween<Offset>(
+                                  begin: const Offset(1, 0),
+                                  end: Offset.zero,
+                                ),
+                              ),
+                              child: child),
+                )),
         ShellRoute(
             navigatorKey: _shellNavigator,
             builder: (context, state, child) => MainLayout(body: child),
@@ -110,7 +144,7 @@ Page<dynamic> _getShellPageBuilder(
     case AppRoutes.expenses:
       return const NoTransitionPage(child: ExpensesScreen());
     case AppRoutes.budgets:
-      return NoTransitionPage(child: BudgetsScreen());
+      return const NoTransitionPage(child: BudgetsScreen());
     default:
       return const NoTransitionPage(child: ErrorScreen());
   }

@@ -5,46 +5,70 @@ import 'package:provider/provider.dart';
 import 'package:yafta/design_system/molecules/button.dart';
 import 'package:yafta/design_system/molecules/text_field.dart';
 import 'package:yafta/design_system/molecules/yafta_app_bar.dart';
+import 'package:yafta/models/category.dart';
 import 'package:yafta/models/movement_type.dart';
 import 'package:yafta/services/auth_provider.dart';
 import 'package:yafta/services/budget_provider.dart';
+import 'package:yafta/services/movement_provider.dart';
 
-const List<DropdownMenuItem> items = [
-  DropdownMenuItem(value: MovementType.income, child: Text("Ingreso")),
-  DropdownMenuItem(value: MovementType.expense, child: Text("Gasto"))
-];
-
-class AddBudgetScreen extends StatefulWidget {
-  const AddBudgetScreen({Key? key}) : super(key: key);
+class AddMovementScreen extends StatefulWidget {
+  final MovementType type;
+  const AddMovementScreen({Key? key, required this.type}) : super(key: key);
   @override
-  State<AddBudgetScreen> createState() => AddBudgetScreenState();
+  State<AddMovementScreen> createState() => AddMovementScreenState();
 }
 
-class AddBudgetScreenState extends State<AddBudgetScreen> {
-  final TextEditingController _categoryController = TextEditingController();
+class AddMovementScreenState extends State<AddMovementScreen> {
+  final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
-  MovementType? dropdownValue;
+  final TextEditingController _dateController = TextEditingController();
+
+  Category? category;
+
+  bool loading = true;
+  List<Category> categories = [];
+
+  Future<void> loadCategories() async {
+    final String userId = context.read<AuthProvider>().user!.uid;
+    final List<Category> categories =
+        await context.read<BudgetProvider>().getCategories(userId);
+    setState(() {
+      this.categories = categories;
+      loading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadCategories();
+  }
+
   final _formKey = GlobalKey<FormState>();
   void _handleSubmit() async {
     //validate form
 
     if (!_formKey.currentState!.validate()) return;
 
-    final categoryName = _categoryController.text.trim();
+    final description = _descriptionController.text.trim();
     final amount = _amountController.text.trim();
-
-    final MovementType type = dropdownValue!;
+    final date = _dateController.text.trim();
 
     final String userId = context.read<AuthProvider>().user!.uid;
-    await context
-        .read<BudgetProvider>()
-        .addCategory(userId, categoryName, int.parse(amount), type);
+    await context.read<MovementProvider>().addMovement(
+        userId,
+        int.parse(amount),
+        category!,
+        description,
+        widget.type,
+        DateTime.parse(date));
     context.pop();
+    // Navigate to home without context
   }
 
   void onChanged(dynamic value) {
     setState(() {
-      dropdownValue = value;
+      category = value;
     });
   }
 
@@ -66,12 +90,12 @@ class AddBudgetScreenState extends State<AddBudgetScreen> {
                 YaftaTextField(
                     validator: (value) =>
                         value.isEmpty ? 'Campo requerido' : null,
-                    label: "Categoria",
-                    textController: _categoryController),
+                    label: "Descripción",
+                    textController: _descriptionController),
                 YaftaTextField(
                   validator: (value) =>
                       value.isEmpty ? 'Campo requerido' : null,
-                  label: "Monto",
+                  label: "Valor",
                   textController: _amountController,
                   keyboardType: TextInputType.number,
                   inputFormatters: [
@@ -84,12 +108,35 @@ class AddBudgetScreenState extends State<AddBudgetScreen> {
                       validator: (value) =>
                           value == null ? 'Campo requerido' : null,
                       borderRadius: BorderRadius.circular(10),
-                      value: dropdownValue,
+                      value: category,
                       isExpanded: true,
-                      hint: const Text("Tipo de movimiento"),
-                      items: items,
+                      hint: const Text("Categoria"),
+                      items: categories
+                          .map((category) => DropdownMenuItem(
+                                value: category,
+                                child: Text(category.name),
+                              ))
+                          .toList(),
                       onChanged: onChanged),
-                )
+                ),
+                YaftaTextField(
+                  label: "Fecha",
+                  textController: _dateController,
+                  readOnly: true,
+                  validator: (value) =>
+                      value.isEmpty ? 'Campo requerido' : null,
+                  onTap: () async {
+                    final DateTime? date = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1900),
+                      lastDate: DateTime.now(),
+                    );
+                    if (date != null) {
+                      _dateController.text = date.toString().split(' ')[0];
+                    }
+                  },
+                ),
               ]),
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Expanded(

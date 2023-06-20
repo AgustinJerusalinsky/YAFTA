@@ -21,10 +21,7 @@ class Movement {
   Map<String, dynamic> toMap() {
     return {
       'amount': amount,
-      'category': {
-        'name': category.name,
-        'category_id': category.categoryId,
-      },
+      'category': category.toMap(withId: true),
       'type': type.toString(),
       'description': description,
       'date': date,
@@ -36,7 +33,7 @@ class Movement {
       amount: map['amount'],
       category: Category.fromMap(map['category']),
       type: MovementType.values.firstWhere((e) => e.toString() == map['type']),
-      date: map['date'],
+      date: map['date']?.toDate(),
     );
   }
 }
