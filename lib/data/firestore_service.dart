@@ -160,4 +160,34 @@ class FirestoreService {
             .map((document) => categoryFromDocument(document))
             .toList());
   }
+
+  Future<void> updateCategory(
+      uid, String categoryId, String name, double amount) async {
+    //update category
+    await firestore
+        .collection('users')
+        .doc(uid)
+        .collection('categories')
+        .doc(categoryId)
+        .update({'name': name, 'amount': amount})
+        .then((value) => log.info("Category Updated"))
+        .catchError(
+            (error) => log.warning("Failed to update category: $error"));
+
+    //update category in movements
+    return firestore
+        .collection('users')
+        .doc(uid)
+        .collection('movements')
+        .where('category.category_id', isEqualTo: categoryId)
+        .get()
+        .then((snapshot) {
+          for (DocumentSnapshot ds in snapshot.docs) {
+            ds.reference.update({'category.name': name});
+          }
+        })
+        .then((value) => log.info("Category Updated"))
+        .catchError(
+            (error) => log.warning("Failed to update category: $error"));
+  }
 }

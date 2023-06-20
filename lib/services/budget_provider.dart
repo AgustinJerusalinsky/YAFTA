@@ -85,12 +85,39 @@ class BudgetProvider extends ChangeNotifier {
 
   // add category
   Future<void> addCategory(
-      String userId, String name, int amount, MovementType type) {
+      String userId, String name, double amount, MovementType type) {
     Category category = Category(name: name, amount: amount, type: type);
 
     return firestoreService.addCategory(userId, category).then((value) {
       budgetDirty = true;
       categoryDirty = true;
+      return value;
+    });
+  }
+
+  Future<Category> getCategory(String categoryId) async {
+    if (_categoryDirty) {
+      _categories = await _getFirestoreCategories(authProvider.user.uid);
+      categoryDirty = false;
+    }
+    return _categories
+        .firstWhere((category) => category.categoryId == categoryId);
+  }
+
+  // update category
+  Future<void> updateCategory(String categoryId, String name, double amount) {
+    return firestoreService
+        .updateCategory(
+      authProvider.user.uid,
+      categoryId,
+      name,
+      amount,
+    )
+        .then((value) {
+      budgetDirty = true;
+      categoryDirty = true;
+      movementProvider.incomeDirty = true;
+      movementProvider.expenseDirty = true;
       return value;
     });
   }

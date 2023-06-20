@@ -6,6 +6,7 @@ import 'package:yafta/design_system/molecules/button.dart';
 import 'package:yafta/design_system/molecules/text_field.dart';
 import 'package:yafta/design_system/molecules/yafta_app_bar.dart';
 import 'package:yafta/design_system/molecules/yafta_overlay_loading.dart';
+import 'package:yafta/models/category.dart';
 import 'package:yafta/models/movement_type.dart';
 import 'package:yafta/services/auth_provider.dart';
 import 'package:yafta/services/budget_provider.dart';
@@ -16,45 +17,61 @@ const List<DropdownMenuItem> items = [
   DropdownMenuItem(value: MovementType.expense, child: Text("Gasto"))
 ];
 
-class AddBudgetScreen extends StatefulWidget {
-  const AddBudgetScreen({Key? key}) : super(key: key);
+class EditBudgetScreen extends StatefulWidget {
+  final String id;
+  const EditBudgetScreen({Key? key, required this.id}) : super(key: key);
   @override
-  State<AddBudgetScreen> createState() => AddBudgetScreenState();
+  State<EditBudgetScreen> createState() => EditBudgetScreenState();
 }
 
-class AddBudgetScreenState extends State<AddBudgetScreen> {
+class EditBudgetScreenState extends State<EditBudgetScreen> {
   final TextEditingController _categoryController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
-  bool submitting = false;
-  MovementType? dropdownValue;
+  bool loading = true;
   final _formKey = GlobalKey<FormState>();
+  Category? category;
+
   void _handleSubmit() async {
     //validate form
 
     if (!_formKey.currentState!.validate()) return;
     setState(() {
-      submitting = true;
+      loading = true;
     });
 
     final categoryName = _categoryController.text.trim();
     final amount = _amountController.text.trim();
 
-    final MovementType type = dropdownValue!;
-
-    final String userId = context.read<AuthProvider>().user!.uid;
     await context
         .read<BudgetProvider>()
-        .addCategory(userId, categoryName, double.parse(amount), type);
+        .updateCategory(widget.id, categoryName, double.parse(amount));
     await AnalyticsHandler.logNewBudget(
         budgetName: categoryName, budgetAmount: amount);
     context.pop();
   }
 
+  void loadCategory() async {
+    final category = await context
+        .read<BudgetProvider>()
+        .getCategory(widget.id)
+        .then((value) => setState(() {
+              this.category = value;
+              _categoryController.text = value.name;
+              _amountController.text = value.amount.toString();
+              loading = false;
+            }));
+  }
+
   void onChanged(dynamic value) {
     setState(() {
-      dropdownValue = value;
-      submitting = false;
+      loading = false;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadCategory();
   }
 
   @override
@@ -66,7 +83,7 @@ class AddBudgetScreenState extends State<AddBudgetScreen> {
         showBrand: true,
       ),
       body: YaftaOverlayLoading(
-        isLoading: submitting,
+        isLoading: loading,
         child: Form(
           key: _formKey,
           child: Padding(
@@ -90,18 +107,6 @@ class AddBudgetScreenState extends State<AddBudgetScreen> {
                       FilteringTextInputFormatter.digitsOnly,
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: DropdownButtonFormField(
-                        validator: (value) =>
-                            value == null ? 'Campo requerido' : null,
-                        borderRadius: BorderRadius.circular(10),
-                        value: dropdownValue,
-                        isExpanded: true,
-                        hint: const Text("Tipo de movimiento"),
-                        items: items,
-                        onChanged: onChanged),
-                  )
                 ]),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -2,8 +2,8 @@ import 'package:yafta/models/category.dart';
 
 class Budget {
   final Category category;
-  final int total;
-  int amount;
+  final double total;
+  double amount;
 
   Budget({
     required this.category,

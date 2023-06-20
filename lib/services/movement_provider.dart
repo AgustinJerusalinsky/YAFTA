@@ -194,7 +194,7 @@ class MovementProvider extends ChangeNotifier {
   }
 
   // add movement
-  Future<void> addMovement(String userId, int amount, Category category,
+  Future<void> addMovement(String userId, double amount, Category category,
       String description, MovementType type, DateTime date) {
     //add date to movement
     Movement movement = Movement(

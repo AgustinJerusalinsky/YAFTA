@@ -52,13 +52,13 @@ class AddMovementScreenState extends State<AddMovementScreen> {
     final String userId = context.read<AuthProvider>().user!.uid;
     await context.read<MovementProvider>().addMovement(
         userId,
-        int.parse(amount),
+        double.parse(amount),
         category!,
         description,
         widget.type,
         DateTime.parse(date));
     await AnalyticsHandler.logMovement(
-        movementType: widget.type, value: int.parse(amount));
+        movementType: widget.type, value: double.parse(amount));
     context.pop();
 
     // Navigate to home without context

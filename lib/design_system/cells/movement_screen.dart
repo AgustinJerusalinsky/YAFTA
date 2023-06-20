@@ -97,7 +97,7 @@ class _MovementScreenState extends State<MovementScreen> {
             style: Theme.of(context).textTheme.titleLarge,
           ),
           trailing: Text(
-            "${widget.type == MovementType.income ? "+" : "-"}\$${filteredMovements.fold(0, (total, movement) => total + movement.amount)}",
+            "${widget.type == MovementType.income ? "+" : "-"}\$${filteredMovements.fold(0.0, (total, movement) => total + movement.amount)}",
             style: Theme.of(context).textTheme.titleLarge,
           ),
           tileColor: Theme.of(context).colorScheme.tertiaryContainer,

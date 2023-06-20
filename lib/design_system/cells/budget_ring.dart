@@ -124,6 +124,11 @@ class BudgetRing extends StatelessWidget {
                     child: const Text("Eliminar"),
                     onTap: () => showAlertDialog(context),
                   ),
+                  PopupMenuItem(
+                    child: const Text("Editar"),
+                    onTap: () =>
+                        context.push('/edit/budgets/${category.categoryId}'),
+                  )
                 ];
               },
               icon: const Icon(Icons.more_vert),

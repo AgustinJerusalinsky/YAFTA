@@ -24,7 +24,7 @@ class AnalyticsHandler {
 
   static Future<void> logMovement(
       {required final MovementType movementType,
-      required final int value}) async {
+      required final double value}) async {
     await _analytics.logEvent(
       name: movementType == MovementType.expense
           ? EventType.add_expense.name

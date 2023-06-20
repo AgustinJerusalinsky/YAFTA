@@ -7,6 +7,7 @@ import 'package:yafta/screens/add.dart';
 import 'package:yafta/screens/auth/login.dart';
 import 'package:yafta/screens/auth/signup.dart';
 import 'package:yafta/screens/budgets/add_budget.dart';
+import 'package:yafta/screens/budgets/edit_budget.dart';
 import 'package:yafta/screens/dashboard/home.dart';
 import 'package:yafta/screens/expenses/expenses.dart';
 import 'package:yafta/screens/add_movement.dart';
@@ -127,6 +128,23 @@ class AppRouter {
             name: AppRoutes.add.name,
             pageBuilder: (context, state) => CustomTransitionPage(
                   child: const AddScreen(),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) =>
+                          SlideTransition(
+                              position: animation.drive(
+                                Tween<Offset>(
+                                  begin: const Offset(1, 0),
+                                  end: Offset.zero,
+                                ),
+                              ),
+                              child: child),
+                )),
+        GoRoute(
+            parentNavigatorKey: _rootNavigator,
+            path: AppRoutes.editBudget.path,
+            name: AppRoutes.editBudget.name,
+            pageBuilder: (context, state) => CustomTransitionPage(
+                  child: EditBudgetScreen(id: state.pathParameters['id']!),
                   transitionsBuilder:
                       (context, animation, secondaryAnimation, child) =>
                           SlideTransition(

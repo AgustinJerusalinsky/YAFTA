@@ -3,7 +3,7 @@ import 'package:yafta/models/category.dart';
 import 'movement_type.dart';
 
 class Movement {
-  final int amount;
+  final double amount;
   final Category category;
   final MovementType type;
   String description;

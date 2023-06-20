@@ -2,7 +2,7 @@ import 'package:yafta/models/movement_type.dart';
 
 class Category {
   final String name;
-  final int amount;
+  final double amount;
   final MovementType type;
   String? categoryId;
   final DateTime? creationDate;
