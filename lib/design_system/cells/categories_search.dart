@@ -20,10 +20,10 @@ class _CategoriesSearchBarState extends State<CategoriesSearchBar> {
   List<String> items = [];
   bool loading = true;
 
-  Future<void> loadCategories() async {
-    String userId = context.read<AuthProvider>().user!.uid;
+  Future<void> loadCategories(BuildContext ctx) async {
+    String userId = ctx.read<AuthProvider>().user!.uid;
     List<Category> categories =
-        await context.read<BudgetProvider>().getCategories(userId);
+        await ctx.read<BudgetProvider>().getCategories(userId);
     setState(() {
       items = categories.map((e) => e.name).toList();
       loading = false;
@@ -33,18 +33,17 @@ class _CategoriesSearchBarState extends State<CategoriesSearchBar> {
   @override
   void initState() {
     super.initState();
-    loadCategories();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (loading) {
-      return const Center(child: LinearProgressIndicator());
-    }
     return SearchBar(
       label: "Categorías",
+      emptyLabel: "Mostrando todas las cetegorías",
       items: items,
       onSelectedItemsChange: widget.onSelectedItemsChange,
+      loading: loading,
+      loadData: loadCategories,
     );
   }
 }
