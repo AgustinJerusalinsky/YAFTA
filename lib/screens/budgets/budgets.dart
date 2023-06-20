@@ -79,8 +79,13 @@ class _BudgetsScreenState extends State<BudgetsScreen> {
                       ),
                       Expanded(
                         child: ListView.builder(
-                          itemCount: categoryBudgets.length,
+                          itemCount: categoryBudgets.length + 1,
                           itemBuilder: (context, index) {
+                            if (index == categoryBudgets.length) {
+                              return const SizedBox(
+                                height: 80,
+                              );
+                            }
                             return Padding(
                               padding:
                                   const EdgeInsets.symmetric(vertical: 4.0),
@@ -97,7 +102,7 @@ class _BudgetsScreenState extends State<BudgetsScreen> {
                             );
                           },
                         ),
-                      )
+                      ),
                     ],
                   );
                 }),
