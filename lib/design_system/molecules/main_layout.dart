@@ -16,8 +16,9 @@ class MainLayout extends StatelessWidget {
     final appNavigation = Provider.of<AppNavigation>(context);
 
     return Scaffold(
-      appBar: const YaftaAppBar(
-        title: "Home",
+      appBar: YaftaAppBar(
+        title:
+            "${AppNavigation.navigationItems[appNavigation.currentIndex]["label"]}",
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 15.0),

@@ -11,6 +11,7 @@ import 'package:yafta/screens/profile/profile.dart';
 import 'package:yafta/services/auth_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../screens/budgets/budgets.dart';
 import '../screens/error_screen.dart';
 import '../screens/incomes/incomes.dart';
 
@@ -91,7 +92,7 @@ Page<dynamic> _getShellPageBuilder(
     case AppRoutes.expenses:
       return const NoTransitionPage(child: ExpensesScreen());
     case AppRoutes.budgets:
-      return NoTransitionPage(child: Container(color: Colors.yellow));
+      return NoTransitionPage(child: BudgetsScreen());
     default:
       return const NoTransitionPage(child: ErrorScreen());
   }

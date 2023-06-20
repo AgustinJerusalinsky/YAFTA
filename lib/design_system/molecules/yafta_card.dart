@@ -17,18 +17,23 @@ class YaftaCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (title != null) title!,
-            if (title != null) const SizedBox(height: 20),
-            if (mainSection != null) mainSection!,
-            if (footer != null) const SizedBox(height: 20),
-            if (footer != null) footer!,
-          ],
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(
+          color: Theme.of(context).colorScheme.surfaceVariant,
+          width: 1,
         ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (title != null) title!,
+          if (title != null) const SizedBox(height: 20),
+          if (mainSection != null)
+            Padding(padding: const EdgeInsets.all(16.0), child: mainSection!),
+          if (footer != null) const SizedBox(height: 20),
+          if (footer != null) footer!,
+        ],
       ),
     );
   }
