@@ -45,6 +45,22 @@ class FirestoreService {
             .toList());
   }
 
+  // get movements from user month to date
+  Future<List<Movement>> getMovementsMTD(String userId,
+      {List<MovementType>? types = MovementType.values}) {
+    DateTime now = DateTime.now();
+    return firestore
+        .collection('users')
+        .doc(userId)
+        .collection('movements')
+        .where('type', whereIn: types!.map((e) => e.toString()).toList())
+        .where('date', isGreaterThanOrEqualTo: DateTime(now.year, now.month))
+        .get()
+        .then((snapshot) => snapshot.docs
+            .map((document) => Movement.fromMap(document.data()))
+            .toList());
+  }
+
   Future<void> addCategory(String userId, Category category) {
     return firestore
         .collection('users')
@@ -55,6 +71,13 @@ class FirestoreService {
         .catchError((error) => log.warning("Failed to add category: $error"));
   }
 
+  Category categoryFromDocument(
+      QueryDocumentSnapshot<Map<String, dynamic>> document) {
+    Category c = Category.fromMap(document.data());
+    c.categoryId = document.id;
+    return c;
+  }
+
   // get categories from user
   Future<List<Category>> getCategories(String userId) {
     return firestore
@@ -63,7 +86,7 @@ class FirestoreService {
         .collection('categories')
         .get()
         .then((snapshot) => snapshot.docs
-            .map((document) => Category.fromMap(document.data()))
+            .map((document) => categoryFromDocument(document))
             .toList());
   }
 }

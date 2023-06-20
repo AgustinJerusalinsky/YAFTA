@@ -9,7 +9,7 @@ import 'package:yafta/design_system/molecules/yafta_app_bar.dart';
 import 'package:yafta/models/movement.dart';
 import 'package:yafta/models/movement_type.dart';
 import 'package:yafta/services/auth_provider.dart';
-import 'package:yafta/services/category_provider.dart';
+import 'package:yafta/services/budget_provider.dart';
 
 const List<DropdownMenuItem> items = [
   DropdownMenuItem(value: MovementType.income, child: Text("Ingreso")),
@@ -39,7 +39,7 @@ class AddBudgetScreenState extends State<AddBudgetScreen> {
 
     final String userId = context.read<AuthProvider>().user!.uid;
     final response = await context
-        .read<CategoryProvider>()
+        .read<BudgetProvider>()
         .addCategory(userId, categoryName, int.parse(amount), type);
     context.pop();
     // Navigate to home without context

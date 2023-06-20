@@ -9,7 +9,7 @@ import 'package:yafta/design_system/tokens/theme_data.dart';
 import 'package:yafta/routing/router_provider.dart';
 import 'package:yafta/services/app_navigation.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:yafta/services/category_provider.dart';
+import 'package:yafta/services/budget_provider.dart';
 import 'package:yafta/utils/remote_config.dart';
 import 'package:yafta/services/income_provider.dart';
 import 'models/user.dart';
@@ -56,7 +56,7 @@ class _MyAppState extends State<MyApp> {
               create: (context) => AuthProvider()),
           Provider<AppRouter>(create: (context) => AppRouter(authProvider)),
           ChangeNotifierProvider(create: (context) => IncomeProvider()),
-          ChangeNotifierProvider(create: (context) => CategoryProvider())
+          ChangeNotifierProvider(create: (context) => BudgetProvider())
         ],
         child: Builder(builder: (context) {
           final GoRouter goRouter = Provider.of<AppRouter>(context).router;

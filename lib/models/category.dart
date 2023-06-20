@@ -4,7 +4,7 @@ class Category {
   final String name;
   final int amount;
   final MovementType type;
-  final String? categoryId;
+  String? categoryId;
 
   Category({
     required this.name,
