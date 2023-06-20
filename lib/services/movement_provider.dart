@@ -90,6 +90,15 @@ class MovementProvider extends ChangeNotifier {
     });
   }
 
+  // delete movement
+  Future<void> deleteMovement(String userId, String movementId) {
+    return _firestoreService.deleteMovement(userId, movementId).then((value) {
+      incomeDirty = true;
+      expenseDirty = true;
+      return value;
+    });
+  }
+
   // get incomes
   Future<List<Movement>> _getFirestoreIncomes(userId) {
     return _firestoreService.getMovements(userId, types: [MovementType.income]);

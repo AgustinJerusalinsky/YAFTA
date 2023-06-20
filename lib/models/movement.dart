@@ -8,6 +8,7 @@ class Movement {
   final MovementType type;
   String description;
   DateTime? date;
+  String? id;
 
   Movement({
     required this.amount,
@@ -15,6 +16,7 @@ class Movement {
     required this.type,
     this.description = '',
     this.date,
+    this.id,
   });
 
   //add toMap and fromMap methods
