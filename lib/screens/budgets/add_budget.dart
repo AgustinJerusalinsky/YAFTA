@@ -57,6 +57,7 @@ class AddBudgetScreenState extends State<AddBudgetScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: const YaftaAppBar(
         back: true,
         showBrand: true,

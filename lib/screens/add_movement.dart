@@ -69,6 +69,7 @@ class AddMovementScreenState extends State<AddMovementScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: const YaftaAppBar(
         back: true,
         showBrand: true,
