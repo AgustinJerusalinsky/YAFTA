@@ -6,7 +6,7 @@ class Movement {
   final int amount;
   final Category category;
   final MovementType type;
-  String? description;
+  String description;
   DateTime? date;
 
   Movement({
@@ -31,6 +31,7 @@ class Movement {
   factory Movement.fromMap(Map<String, dynamic> map) {
     return Movement(
       amount: map['amount'],
+      description: map['description'],
       category: Category.fromMap(map['category']),
       type: MovementType.values.firstWhere((e) => e.toString() == map['type']),
       date: map['date']?.toDate(),

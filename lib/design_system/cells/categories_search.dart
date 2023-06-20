@@ -17,33 +17,18 @@ class CategoriesSearchBar extends StatefulWidget {
 }
 
 class _CategoriesSearchBarState extends State<CategoriesSearchBar> {
-  List<String> items = [];
-  bool loading = true;
-
-  Future<void> loadCategories(BuildContext ctx) async {
-    String userId = ctx.read<AuthProvider>().user!.uid;
-    List<Category> categories =
-        await ctx.read<BudgetProvider>().getCategories(userId);
-    setState(() {
-      items = categories.map((e) => e.name).toList();
-      loading = false;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return SearchBar(
-      label: "Categorías",
-      emptyLabel: "Mostrando todas las cetegorías",
-      items: items,
-      onSelectedItemsChange: widget.onSelectedItemsChange,
-      loading: loading,
-      loadData: loadCategories,
+    return Consumer<BudgetProvider>(
+      builder: (context, provider, _) {
+        return SearchBar(
+          label: "Categorías",
+          emptyLabel: "Mostrando todas las cetegorías",
+          items: provider.categories.map((e) => e.name).toList(),
+          onSelectedItemsChange: widget.onSelectedItemsChange,
+          loading: provider.categoriesShouldFetch,
+        );
+      },
     );
   }
 }

@@ -11,7 +11,7 @@ class MovementRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text("movement.description"),
+      title: Text(movement.description),
       subtitle: Align(
           alignment: Alignment.topLeft,
           child: Chip(

@@ -6,10 +6,15 @@ import 'package:yafta/models/movement.dart';
 import 'package:yafta/models/movement_type.dart';
 
 class MovementScreen extends StatefulWidget {
-  const MovementScreen({Key? key, required this.movements, required this.type})
+  const MovementScreen(
+      {Key? key,
+      required this.movements,
+      required this.type,
+      required this.loading})
       : super(key: key);
   final List<Movement> movements;
   final MovementType type;
+  final bool loading;
   @override
   _MovementScreenState createState() => _MovementScreenState();
 }
@@ -17,6 +22,7 @@ class MovementScreen extends StatefulWidget {
 class _MovementScreenState extends State<MovementScreen> {
   List<String> selectedCategories = [];
   List<Movement> filteredMovements = [];
+  List<Movement> _movements = [];
 
   void filterMovements() {
     if (selectedCategories.isEmpty) {
@@ -35,7 +41,18 @@ class _MovementScreenState extends State<MovementScreen> {
   @override
   void initState() {
     super.initState();
-    filteredMovements = List.from(widget.movements);
+    _movements = widget.movements;
+    filteredMovements = List.from(_movements);
+  }
+
+  @override
+  void didUpdateWidget(covariant MovementScreen oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.movements != widget.movements) {
+      _movements = widget.movements;
+      filterMovements();
+    }
   }
 
   @override
@@ -67,19 +84,34 @@ class _MovementScreenState extends State<MovementScreen> {
           contentPadding: EdgeInsets.symmetric(horizontal: 16),
         ),
         SizedBox(height: 16),
-        Expanded(
-          child: ListView.separated(
-            separatorBuilder: (context, index) => Divider(
-              height: 1,
-              thickness: 1,
-              color: Theme.of(context).colorScheme.surfaceVariant,
-            ),
-            itemCount: filteredMovements.length,
-            itemBuilder: (context, index) {
-              return MovementRow(movement: filteredMovements[index]);
-            },
-          ),
-        ),
+        widget.loading
+            ? Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 60,
+                      width: 60,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 5,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            : Expanded(
+                child: ListView.separated(
+                  separatorBuilder: (context, index) => Divider(
+                    height: 1,
+                    thickness: 1,
+                    color: Theme.of(context).colorScheme.surfaceVariant,
+                  ),
+                  itemCount: filteredMovements.length,
+                  itemBuilder: (context, index) {
+                    return MovementRow(movement: filteredMovements[index]);
+                  },
+                ),
+              ),
       ],
     );
   }

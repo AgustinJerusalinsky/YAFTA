@@ -49,14 +49,17 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = AuthProvider();
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => AppNavigation()),
           ChangeNotifierProvider<AuthProvider>(
-              create: (context) => AuthProvider()),
+              create: (context) => authProvider),
           Provider<AppRouter>(create: (context) => AppRouter(authProvider)),
-          ChangeNotifierProvider(create: (context) => MovementProvider()),
-          ChangeNotifierProvider(create: (context) => BudgetProvider())
+          ChangeNotifierProvider(
+              create: (context) => MovementProvider(authProvider)),
+          ChangeNotifierProvider(
+              create: (context) => BudgetProvider(authProvider))
         ],
         child: Builder(builder: (context) {
           final GoRouter goRouter = Provider.of<AppRouter>(context).router;

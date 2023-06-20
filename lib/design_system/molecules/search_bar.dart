@@ -6,7 +6,6 @@ class SearchBar extends StatefulWidget {
   final String emptyLabel;
   final Function(List<String>) onSelectedItemsChange;
   final bool loading;
-  final Function loadData;
 
   const SearchBar(
       {Key? key,
@@ -14,7 +13,6 @@ class SearchBar extends StatefulWidget {
       required this.label,
       required this.onSelectedItemsChange,
       required this.loading,
-      required this.loadData,
       required this.emptyLabel})
       : super(key: key);
 
@@ -31,7 +29,6 @@ class SearchBarState extends State<SearchBar> {
       builder: (BuildContext context) {
         return DialogContent(
           loading: widget.loading,
-          loadData: widget.loadData,
           allItems: widget.items,
           selectedItems: selectedItems,
           onItemTapped: (item) {
@@ -120,7 +117,6 @@ class DialogContent extends StatefulWidget {
   final List<String> selectedItems;
   final Function(String) onItemTapped;
   final bool loading;
-  final Function loadData;
 
   const DialogContent({
     Key? key,
@@ -128,7 +124,6 @@ class DialogContent extends StatefulWidget {
     required this.selectedItems,
     required this.onItemTapped,
     required this.loading,
-    required this.loadData,
   }) : super(key: key);
 
   @override
@@ -136,13 +131,6 @@ class DialogContent extends StatefulWidget {
 }
 
 class _DialogContentState extends State<DialogContent> {
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-    widget.loadData(context);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Dialog(

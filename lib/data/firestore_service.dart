@@ -4,7 +4,7 @@ import 'package:yafta/models/movement.dart';
 import 'package:logging/logging.dart';
 import 'package:yafta/models/movement_type.dart';
 
-final log = Logger('ExampleLogger');
+final log = Logger('Logger');
 
 //singleton class
 class FirestoreService {

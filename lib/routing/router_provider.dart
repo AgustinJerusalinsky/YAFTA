@@ -144,7 +144,7 @@ Page<dynamic> _getShellPageBuilder(
     case AppRoutes.expenses:
       return const NoTransitionPage(child: ExpensesScreen());
     case AppRoutes.budgets:
-      return const NoTransitionPage(child: BudgetsScreen());
+      return NoTransitionPage(child: BudgetsScreen());
     default:
       return const NoTransitionPage(child: ErrorScreen());
   }
