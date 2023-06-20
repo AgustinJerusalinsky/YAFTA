@@ -4,6 +4,7 @@ import 'package:yafta/design_system/molecules/button.dart';
 import 'package:yafta/design_system/molecules/text_field.dart';
 import 'package:yafta/design_system/molecules/yafta_app_bar.dart';
 import 'package:yafta/services/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -73,6 +74,9 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         YaftaButton(
                           text: "Cerrar sesión",
+                          onPressed: () {
+                            authProvider.logout();
+                          },
                           textStyle: Theme.of(context)
                               .textTheme
                               .labelLarge!
