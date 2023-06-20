@@ -79,6 +79,11 @@ Para este proyecto decidimos la siguiente estructura de archivos y directorios:
 ├── lib
 │   ├── main.dart
 │   ├── firebase_options.dart
+|   ├── design_system
+│   │   ├── tokens
+│   │   ├── atoms
+│   │   ├── molecules
+│   │   └── cells
 │   ├── models
 │   │   ├── user.dart
 │   │   ...

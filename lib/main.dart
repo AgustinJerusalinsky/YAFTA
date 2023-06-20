@@ -25,7 +25,7 @@ void main() async {
     return true;
   };
 
-  RemoteConfigHandler.initializeDefaults();
+  await RemoteConfigHandler.initialize();
 
   runApp(MyApp());
 }
