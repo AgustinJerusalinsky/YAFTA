@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class SearchBar extends StatefulWidget {
+class YaftaSearchBar extends StatefulWidget {
   final List<String> items;
   final String label;
   final String emptyLabel;
   final Function(List<String>) onSelectedItemsChange;
   final bool loading;
 
-  const SearchBar(
+  const YaftaSearchBar(
       {Key? key,
       required this.items,
       required this.label,
@@ -17,10 +17,10 @@ class SearchBar extends StatefulWidget {
       : super(key: key);
 
   @override
-  SearchBarState createState() => SearchBarState();
+  YaftaSearchBarState createState() => YaftaSearchBarState();
 }
 
-class SearchBarState extends State<SearchBar> {
+class YaftaSearchBarState extends State<YaftaSearchBar> {
   List<String> selectedItems = [];
 
   void openModal() {
