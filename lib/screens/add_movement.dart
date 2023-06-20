@@ -64,6 +64,7 @@ class AddMovementScreenState extends State<AddMovementScreen> {
       appBar: const YaftaAppBar(
         back: true,
         showBrand: true,
+        showProfile: false,
       ),
       body: Consumer<BudgetProvider>(builder: (context, provider, _) {
         return Form(

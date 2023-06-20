@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:yafta/design_system/molecules/main_layout.dart';
 import 'package:yafta/models/movement_type.dart';
 import 'package:yafta/routing/router_utils.dart';
+import 'package:yafta/screens/add.dart';
 import 'package:yafta/screens/auth/login.dart';
 import 'package:yafta/screens/auth/signup.dart';
 import 'package:yafta/screens/budgets/add_budget.dart';
@@ -109,6 +110,23 @@ class AppRouter {
             name: AppRoutes.addExpense.name,
             pageBuilder: (context, state) => CustomTransitionPage(
                   child: const AddMovementScreen(type: MovementType.expense),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) =>
+                          SlideTransition(
+                              position: animation.drive(
+                                Tween<Offset>(
+                                  begin: const Offset(1, 0),
+                                  end: Offset.zero,
+                                ),
+                              ),
+                              child: child),
+                )),
+        GoRoute(
+            parentNavigatorKey: _rootNavigator,
+            path: AppRoutes.add.path,
+            name: AppRoutes.add.name,
+            pageBuilder: (context, state) => CustomTransitionPage(
+                  child: const AddScreen(),
                   transitionsBuilder:
                       (context, animation, secondaryAnimation, child) =>
                           SlideTransition(

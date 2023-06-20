@@ -4,11 +4,16 @@ import 'package:yafta/design_system/atoms/yafta_logo.dart';
 
 class YaftaAppBar extends StatelessWidget implements PreferredSizeWidget {
   const YaftaAppBar(
-      {super.key, this.title = "", this.back = false, this.showBrand = false});
+      {super.key,
+      this.title = "",
+      this.back = false,
+      this.showBrand = false,
+      this.showProfile = true});
 
   final String title;
   final bool back;
   final bool showBrand;
+  final bool showProfile;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +50,7 @@ class YaftaAppBar extends StatelessWidget implements PreferredSizeWidget {
         ],
       ),
       centerTitle: false,
-      actions: GoRouter.of(context).location != "/profile"
+      actions: showProfile
           ? [
               IconButton(
                 icon: const Icon(

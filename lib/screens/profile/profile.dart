@@ -12,6 +12,7 @@ class ProfileScreen extends StatelessWidget {
       appBar: const YaftaAppBar(
         back: true,
         showBrand: true,
+        showProfile: false,
       ),
       body: Container(
         padding: EdgeInsets.only(top: 30),
