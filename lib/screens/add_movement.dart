@@ -37,7 +37,6 @@ class AddMovementScreenState extends State<AddMovementScreen> {
   final _formKey = GlobalKey<FormState>();
   void _handleSubmit() async {
     //validate form
-    print(_descriptionController.text.trim());
     if (!_formKey.currentState!.validate()) return;
 
     setState(() {

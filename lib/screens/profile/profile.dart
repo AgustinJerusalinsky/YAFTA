@@ -14,18 +14,18 @@ class ProfileScreen extends StatelessWidget {
         showBrand: true,
         showProfile: false,
       ),
-      body: Container(
-        padding: EdgeInsets.only(top: 30),
-        alignment: Alignment.center,
-        child: Column(
-          children: [
-            CircleAvatar(
-              radius: 83.5,
-              backgroundImage: NetworkImage(
-                  "https://avatars.githubusercontent.com/u/26574372?v=4"),
-            ),
-            SingleChildScrollView(
-              child: Padding(
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.only(top: 30),
+          alignment: Alignment.center,
+          child: Column(
+            children: [
+              CircleAvatar(
+                radius: 83.5,
+                backgroundImage: NetworkImage(
+                    "https://avatars.githubusercontent.com/u/26574372?v=4"),
+              ),
+              Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 35, vertical: 45),
                 child: Wrap(
@@ -66,9 +66,9 @@ class ProfileScreen extends StatelessWidget {
                     )
                   ],
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
