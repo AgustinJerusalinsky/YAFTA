@@ -6,44 +6,46 @@ import 'package:yafta/models/movement_type.dart';
 
 import '../../design_system/cells/movement_screen.dart';
 
-final List<Movement> incomeMovements = [
-  Movement(
-      userId: "id",
-      amount: 1000,
-      category: "Comida",
-      type: MovementType.income,
-      date: DateTime.now()),
-  Movement(
-      userId: "id",
-      amount: 1000,
-      category: "Comida",
-      type: MovementType.income,
-      date: DateTime.now()),
-  Movement(
-      userId: "id",
-      amount: 1000,
-      category: "Comida",
-      type: MovementType.income,
-      date: DateTime.now()),
-  Movement(
-      userId: "id",
-      amount: 1000,
-      category: "Comida",
-      type: MovementType.income,
-      date: DateTime.now()),
-  Movement(
-      userId: "id",
-      amount: 1000,
-      category: "Comida",
-      type: MovementType.income,
-      date: DateTime.now()),
-  Movement(
-      userId: "id",
-      amount: 1000,
-      category: "Comida",
-      type: MovementType.income,
-      date: DateTime.now()),
-];
+// final List<Movement> incomeMovements = [
+//   Movement(
+//       userId: "id",
+//       amount: 1000,
+//       category: "Comida",
+//       type: MovementType.income,
+//       date: DateTime.now()),
+//   Movement(
+//       userId: "id",
+//       amount: 1000,
+//       category: "Comida",
+//       type: MovementType.income,
+//       date: DateTime.now()),
+//   Movement(
+//       userId: "id",
+//       amount: 1000,
+//       category: "Comida",
+//       type: MovementType.income,
+//       date: DateTime.now()),
+//   Movement(
+//       userId: "id",
+//       amount: 1000,
+//       category: "Comida",
+//       type: MovementType.income,
+//       date: DateTime.now()),
+//   Movement(
+//       userId: "id",
+//       amount: 1000,
+//       category: "Comida",
+//       type: MovementType.income,
+//       date: DateTime.now()),
+//   Movement(
+//       userId: "id",
+//       amount: 1000,
+//       category: "Comida",
+//       type: MovementType.income,
+//       date: DateTime.now()),
+// ];
+
+final List<Movement> incomeMovements = [];
 
 class IncomesScreen extends StatelessWidget {
   const IncomesScreen({Key? key}) : super(key: key);

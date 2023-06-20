@@ -5,6 +5,7 @@ import 'package:yafta/design_system/molecules/main_layout.dart';
 import 'package:yafta/routing/router_utils.dart';
 import 'package:yafta/screens/auth/login.dart';
 import 'package:yafta/screens/auth/signup.dart';
+import 'package:yafta/screens/budgets/add_budget.dart';
 import 'package:yafta/screens/dashboard/home.dart';
 import 'package:yafta/screens/expenses/expenses.dart';
 import 'package:yafta/screens/profile/profile.dart';
@@ -57,6 +58,23 @@ class AppRouter {
             name: AppRoutes.profile.name,
             pageBuilder: (context, state) => CustomTransitionPage(
                   child: const ProfileScreen(),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) =>
+                          SlideTransition(
+                              position: animation.drive(
+                                Tween<Offset>(
+                                  begin: const Offset(1, 0),
+                                  end: Offset.zero,
+                                ),
+                              ),
+                              child: child),
+                )),
+        GoRoute(
+            parentNavigatorKey: _rootNavigator,
+            path: AppRoutes.addBudget.path,
+            name: AppRoutes.addBudget.name,
+            pageBuilder: (context, state) => CustomTransitionPage(
+                  child: const AddBudgetScreen(),
                   transitionsBuilder:
                       (context, animation, secondaryAnimation, child) =>
                           SlideTransition(

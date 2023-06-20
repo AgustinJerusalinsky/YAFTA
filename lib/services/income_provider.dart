@@ -7,17 +7,21 @@ class IncomeProvider extends ChangeNotifier {
   // FirestoreService instance
   final FirestoreService firestoreService = FirestoreService.instance;
 
-  // add movement
-  Future<void> addIncome(userId, amount, category) {
-    //add date to movement
+  // add income
+  Future<void> addIncome(userId, amount, category, description) {
+    //add date to income
     Movement movement = Movement(
-      userId: userId,
       amount: amount,
       category: category,
       type: MovementType.income,
     );
 
     // add movement to firestore
-    return firestoreService.addMovement(movement);
+    return firestoreService.addMovement(userId, movement);
+  }
+
+  // get incomes
+  Future<List<Movement>> getIncomes(userId) {
+    return firestoreService.getMovements(userId, types: [MovementType.income]);
   }
 }

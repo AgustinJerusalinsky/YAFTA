@@ -16,7 +16,7 @@ class MovementRow extends StatelessWidget {
           alignment: Alignment.topLeft,
           child: Chip(
             padding: EdgeInsets.symmetric(horizontal: 8),
-            label: Text(movement.category,
+            label: Text(movement.category.name,
                 style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500)),
             side: BorderSide(
                 color: Theme.of(context).colorScheme.secondaryContainer,

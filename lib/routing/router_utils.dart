@@ -5,6 +5,7 @@ enum AppRoutes {
   incomes,
   expenses,
   budgets,
+  addBudget,
   profile,
   error
 }
@@ -31,6 +32,8 @@ extension AppRouteExtension on AppRoutes {
         return "/expenses";
       case AppRoutes.budgets:
         return "/budgets";
+      case AppRoutes.addBudget:
+        return "/add/budgets";
       case AppRoutes.profile:
         return "/profile";
       default:
@@ -52,6 +55,8 @@ extension AppRouteExtension on AppRoutes {
         return "expenses";
       case AppRoutes.budgets:
         return "budgets";
+      case AppRoutes.addBudget:
+        return "addBudget";
       case AppRoutes.profile:
         return "profile";
       default:
