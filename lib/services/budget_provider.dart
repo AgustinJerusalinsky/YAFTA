@@ -87,8 +87,10 @@ class BudgetProvider extends ChangeNotifier {
   }
 
   //delete category
-  Future<void> deleteCategory(String userId, String categoryId) {
-    return firestoreService.deleteCategory(userId, categoryId).then((value) {
+  Future<void> deleteCategory(String categoryId) {
+    return firestoreService
+        .deleteCategory(authProvider.user.uid, categoryId)
+        .then((value) {
       budgetDirty = true;
       categoryDirty = true;
       return value;

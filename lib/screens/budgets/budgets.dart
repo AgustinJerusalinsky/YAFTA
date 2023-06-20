@@ -97,7 +97,7 @@ class _BudgetsScreenState extends State<BudgetsScreen> {
                                     .total
                                     .toDouble(), //TODO change this to double
                                 spent: categoryBudgets[index].amount.toDouble(),
-                                category: categoryBudgets[index].category.name,
+                                category: categoryBudgets[index].category,
                               ),
                             );
                           },
