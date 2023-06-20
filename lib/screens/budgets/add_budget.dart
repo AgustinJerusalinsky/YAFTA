@@ -9,6 +9,7 @@ import 'package:yafta/design_system/molecules/yafta_overlay_loading.dart';
 import 'package:yafta/models/movement_type.dart';
 import 'package:yafta/services/auth_provider.dart';
 import 'package:yafta/services/budget_provider.dart';
+import 'package:yafta/utils/analytics.dart';
 
 const List<DropdownMenuItem> items = [
   DropdownMenuItem(value: MovementType.income, child: Text("Ingreso")),
@@ -44,6 +45,8 @@ class AddBudgetScreenState extends State<AddBudgetScreen> {
     await context
         .read<BudgetProvider>()
         .addCategory(userId, categoryName, int.parse(amount), type);
+    await AnalyticsHandler.logNewBudget(
+        budgetName: categoryName, budgetAmount: amount);
     context.pop();
   }
 

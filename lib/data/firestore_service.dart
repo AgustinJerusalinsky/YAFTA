@@ -46,7 +46,7 @@ class FirestoreService {
         .collection('users')
         .doc(userId)
         .collection('movements')
-        .where('category.id', isEqualTo: categoryId)
+        .where('category.category_id', isEqualTo: categoryId)
         .get()
         .then((snapshot) {
           for (DocumentSnapshot ds in snapshot.docs) {

@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pie_chart/pie_chart.dart';
+import 'package:provider/provider.dart';
+import 'package:yafta/design_system/molecules/button.dart';
 import 'package:yafta/design_system/molecules/pie_chart.dart';
 import 'package:yafta/design_system/molecules/yafta_card.dart';
 import 'package:yafta/utils/text.dart';
+import 'package:yafta/models/category.dart';
+import 'package:yafta/services/budget_provider.dart';
 
 class BudgetRing extends StatelessWidget {
   const BudgetRing(
@@ -14,7 +19,47 @@ class BudgetRing extends StatelessWidget {
 
   final double budget;
   final double spent;
-  final String category;
+  final Category category;
+
+  Future<void> deleteBudget(BuildContext context) async {
+    final budgetProvider = context.read<BudgetProvider>();
+    await budgetProvider.deleteCategory(category.categoryId!);
+  }
+
+  void showAlertDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Eliminar Presupuesto"),
+            content: const Text(
+                "Esta acción es irreversible y eliminará todos los movimientos asociados"),
+            actions: [
+              TextButton(
+                child: const Text("Close"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.red)),
+                  onPressed: () {
+                    deleteBudget(context).then((value) {
+                      //show snackbar
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          duration: Duration(seconds: 1),
+                          backgroundColor: Colors.red,
+                          content: Text("Presupuesto eliminado")));
+                      Navigator.of(context).pop();
+                    });
+                  },
+                  child: const Text("Eliminar",
+                      style: TextStyle(color: Colors.white)))
+            ],
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +111,7 @@ class BudgetRing extends StatelessWidget {
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
               child: Text(
-                category,
+                category.name,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
@@ -75,8 +120,9 @@ class BudgetRing extends StatelessWidget {
               surfaceTintColor: Theme.of(context).colorScheme.surface,
               itemBuilder: (context) {
                 return [
-                  const PopupMenuItem(
-                    child: Text("Eliminar"),
+                  PopupMenuItem(
+                    child: const Text("Eliminar"),
+                    onTap: () => showAlertDialog(context),
                   ),
                 ];
               },
@@ -102,7 +148,7 @@ class BudgetRing extends StatelessWidget {
                 noAnimation: true,
               ),
             ),
-            SizedBox(width: 50),
+            const SizedBox(width: 50),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
