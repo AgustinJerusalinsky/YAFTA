@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:yafta/design_system/tokens/theme_data.dart';
+import 'package:yafta/firebase_options.dart';
 import 'package:yafta/routing/router_provider.dart';
 import 'package:yafta/services/app_navigation.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,7 +18,7 @@ import 'services/auth_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
   PlatformDispatcher.instance.onError = (error, stack) {
