@@ -86,10 +86,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     editingController: _passwordController,
                   ),
                   YaftaButton(
+                      variant: 'text',
                       text: "Olvidé mi contraseña",
-                      onPressed: () {
-                        context.go(AppRoutes.forgotPassword.path);
-                      }),
+                      onPressed: () =>
+                          context.go(AppRoutes.forgotPassword.path)),
                   const SizedBox(height: 32),
                   if (_errorMessage.isNotEmpty)
                     Padding(

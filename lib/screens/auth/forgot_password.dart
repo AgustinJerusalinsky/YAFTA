@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:yafta/design_system/molecules/text_field.dart';
 import 'package:yafta/design_system/molecules/yafta_overlay_loading.dart';
 import 'package:yafta/routing/router_utils.dart';
+import 'package:yafta/services/auth_provider.dart';
 import 'package:yafta/utils/errors.dart';
 import 'package:yafta/utils/validators.dart';
+import 'package:provider/provider.dart';
 
 import '../../design_system/atoms/yafta_logo.dart';
 import '../../design_system/molecules/button.dart';
@@ -31,8 +33,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       });
       try {
         final email = _emailController.text.trim();
-
-        // await context.read<AuthProvider>().login(email, password);
+        await context.read<AuthProvider>().resetPassword(email);
         setState(() {
           _submitting = false;
           _success = true;
@@ -49,6 +50,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          leading: const BackButton(),
+          title: const Text("Recuperar contraseña"),
+        ),
         resizeToAvoidBottomInset: false,
         body: YaftaOverlayLoading(
             isLoading: _submitting,
@@ -62,11 +67,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 },
                 key: _formKey,
                 child: ListView(children: [
-                  if (_success) ...[
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                      child: YaftaLogo.imagotype(),
-                    ),
+                  if (!_success) ...[
                     YaftaTextField(
                       label: "Email",
                       textController: _emailController,
@@ -90,8 +91,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         secondary: true,
                         text: "Recuperar contraseña"),
                   ] else ...[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      child: Image.asset(
+                        'assets/auth/email_sent.png',
+                        width: 30,
+                      ),
+                    ),
                     Text(
-                        "Se envió un email a ${_emailController.text.trim()} con las instrucciones para recuperar tu contraseña.}")
+                        "Se envió un email a ${_emailController.text.trim()} con las instrucciones para recuperar tu contraseña.")
                   ],
                   YaftaButton(
                       variant: "text",

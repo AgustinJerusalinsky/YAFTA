@@ -40,8 +40,8 @@ class AuthProvider extends ChangeNotifier {
     await _auth.sendPasswordResetEmail(email: email);
   }
 
-  void resetPassword(String email) async {
-    await _auth.sendPasswordResetEmail(email: email);
+  Future<void> resetPassword(String email) async {
+    return await _auth.sendPasswordResetEmail(email: email);
   }
 
   User? _userFromFirebase(auth.User? user) {
