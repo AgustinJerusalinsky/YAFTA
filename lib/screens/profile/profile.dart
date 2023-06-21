@@ -3,18 +3,40 @@ import 'package:provider/provider.dart';
 import 'package:yafta/design_system/molecules/button.dart';
 import 'package:yafta/design_system/molecules/text_field.dart';
 import 'package:yafta/design_system/molecules/yafta_app_bar.dart';
+import 'package:yafta/design_system/molecules/yafta_overlay_loading.dart';
 import 'package:yafta/services/auth_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:yafta/utils/analytics.dart';
 import 'package:yafta/utils/remote_config.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  bool _submitting = false;
 
   void onChangePassword(BuildContext context, AuthProvider authProvider) async {
     await authProvider.changePassword();
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        duration: Duration(seconds: 1),
+        duration: const Duration(seconds: 1),
         backgroundColor: Colors.green.shade300,
-        content: Text("Se ha enviado un correo para modificar la contraseña")));
+        content: const Text(
+            "Se ha enviado un correo para modificar la contraseña")));
+  }
+
+  void _handleToggleChange(bool value) async {
+    context
+        .read<AuthProvider>()
+        .toggleTheme(value ? AppTheme.dark : AppTheme.light)
+        .then((_) {
+      if (value) {
+        AnalyticsHandler.logThemeToggle();
+      }
+    });
   }
 
   @override
@@ -29,70 +51,91 @@ class ProfileScreen extends StatelessWidget {
             showProfile: false,
             showThemeSwitch: true,
             useDarkTheme: authProvider.theme == AppTheme.dark,
-            onThemeSwitchChange: (value) {
-              print("callback" + value.toString());
-              authProvider.toggleDarkTheme();
-            },
+            onThemeSwitchChange: _handleToggleChange,
           ),
-          body: SingleChildScrollView(
-            child: Container(
-              padding: EdgeInsets.only(top: 30),
-              alignment: Alignment.center,
-              child: Column(
-                children: [
-                  CircleAvatar(
-                    radius: 83.5,
-                    backgroundImage: NetworkImage(
-                        "https://avatars.githubusercontent.com/u/26574372?v=4"),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 35, vertical: 45),
-                    child: Wrap(
-                      runSpacing: 24,
-                      children: [
-                        YaftaTextField(
-                          label: "Nombre completo",
-                          readOnly: true,
-                          initialValue: authProvider.user?.fullName ?? "",
-                        ),
-                        YaftaTextField(
-                          label: "Email",
-                          readOnly: true,
-                          initialValue: authProvider.user?.email ?? "",
-                        ),
-                        YaftaTextField(
-                          label: "Usuario",
-                          readOnly: true,
-                          initialValue: authProvider.user?.userName ?? "",
-                        ),
-                        YaftaButton(
-                          text: "Cambiar contraseña",
-                          color:
-                              Theme.of(context).colorScheme.secondaryContainer,
-                          textStyle:
-                              Theme.of(context).textTheme.labelLarge!.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSecondaryContainer,
-                                  ),
-                          onPressed: () =>
-                              onChangePassword(context, authProvider),
-                        ),
-                        YaftaButton(
-                          text: "Cerrar sesión",
-                          textStyle: Theme.of(context)
-                              .textTheme
-                              .labelLarge!
-                              .copyWith(
-                                color: Theme.of(context).colorScheme.onSurface,
-                              ),
-                          variant: "outlined",
-                        )
-                      ],
+          body: YaftaOverlayLoading(
+            isLoading: _submitting,
+            child: SingleChildScrollView(
+              child: Container(
+                padding: const EdgeInsets.only(top: 30),
+                alignment: Alignment.center,
+                child: Column(
+                  children: [
+                    const CircleAvatar(
+                      radius: 60,
+                      backgroundImage: NetworkImage(
+                          "https://avatars.githubusercontent.com/u/26574372?v=4"),
                     ),
-                  )
-                ],
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 35, vertical: 45),
+                      child: Wrap(
+                        runSpacing: 24,
+                        children: [
+                          // if (RemoteConfigHandler.getAppThemeToggle()) ...[
+                          //   Column(
+                          //     children: [
+                          //       const Text("Dark theme"),
+                          //       Switch(
+                          //           // This bool value toggles the switch.
+                          //           value: context
+                          //                       .watch<AuthProvider>()
+                          //                       .user
+                          //                       ?.theme ==
+                          //                   AppTheme.light
+                          //               ? false
+                          //               : true,
+                          //           onChanged: _handleToggleChange),
+                          //     ],
+                          //   ),
+                          // ],
+                          YaftaTextField(
+                            label: "Nombre completo",
+                            readOnly: true,
+                            initialValue: authProvider.user?.fullName ?? "",
+                          ),
+                          YaftaTextField(
+                            label: "Email",
+                            readOnly: true,
+                            initialValue: authProvider.user?.email ?? "",
+                          ),
+                          YaftaTextField(
+                            label: "Usuario",
+                            readOnly: true,
+                            initialValue: authProvider.user?.userName ?? "",
+                          ),
+                          YaftaButton(
+                            text: "Cambiar contraseña",
+                            color: Theme.of(context)
+                                .colorScheme
+                                .secondaryContainer,
+                            textStyle: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSecondaryContainer,
+                                ),
+                            onPressed: () =>
+                                onChangePassword(context, authProvider),
+                          ),
+                          YaftaButton(
+                            text: "Cerrar sesión",
+                            textStyle: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface,
+                                ),
+                            variant: "outlined",
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),

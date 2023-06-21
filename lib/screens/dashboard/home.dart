@@ -87,14 +87,6 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         }
 
-        if (expensesByCategory.isEmpty) {
-          expensesByCategory[''] = 0;
-        }
-
-        if (incomesByCategory.isEmpty) {
-          incomesByCategory[''] = 0;
-        }
-
         return Column(
           children: [
             const SizedBox(
@@ -122,7 +114,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  if (RemoteConfigHandler.getBudgets())
+                  if (RemoteConfigHandler.getBudgets() &&
+                      (expensesByCategory.isNotEmpty &&
+                          incomesByCategory.isNotEmpty))
                     Column(
                       children: [
                         Text(

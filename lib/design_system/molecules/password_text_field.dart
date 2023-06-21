@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:yafta/design_system/molecules/text_field.dart';
+import 'package:yafta/utils/validators.dart';
 
 class YaftaPasswordTextField extends StatefulWidget {
   YaftaPasswordTextField(
-      {Key? key, this.editingController, this.label = "Password"})
+      {Key? key, this.editingController, this.label = "Contraseña"})
       : super(key: key);
 
   final TextEditingController? editingController;
@@ -19,6 +20,7 @@ class _YaftaPasswordTextFieldState extends State<YaftaPasswordTextField> {
   @override
   Widget build(BuildContext context) {
     return YaftaTextField(
+      validator: requiredValidator,
       textController: widget.editingController,
       suffixIcon: IconButton(
         icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),

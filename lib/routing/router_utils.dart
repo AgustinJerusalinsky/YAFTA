@@ -3,6 +3,7 @@ import '../utils/remote_config.dart';
 enum AppRoutes {
   login,
   signup,
+  forgotPassword,
   home,
   incomes,
   addIncome,
@@ -30,6 +31,8 @@ extension AppRouteExtension on AppRoutes {
         return "/login";
       case AppRoutes.signup:
         return "/signup";
+      case AppRoutes.forgotPassword:
+        return "/forgotPassword";
       case AppRoutes.home:
         return "/";
       case AppRoutes.incomes:
@@ -61,6 +64,8 @@ extension AppRouteExtension on AppRoutes {
         return "login";
       case AppRoutes.signup:
         return "signup";
+      case AppRoutes.forgotPassword:
+        return "forgotPassword";
       case AppRoutes.home:
         return "home";
       case AppRoutes.incomes:
@@ -92,6 +97,8 @@ extension AppRouteExtension on AppRoutes {
         return "Iniciar sesión";
       case AppRoutes.signup:
         return "Registrarse";
+      case AppRoutes.forgotPassword:
+        return "Recuperar contraseña";
       case AppRoutes.home:
         return "Inicio";
       case AppRoutes.incomes:

@@ -50,4 +50,10 @@ class AnalyticsHandler {
   static Future<void> logSignup() async {
     await _analytics.logSignUp(signUpMethod: 'email');
   }
+
+  static Future<void> logThemeToggle() async {
+    await _analytics.logEvent(
+      name: 'app_theme_toggle',
+    );
+  }
 }

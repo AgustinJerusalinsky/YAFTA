@@ -4,6 +4,7 @@ import 'package:yafta/design_system/molecules/main_layout.dart';
 import 'package:yafta/models/movement_type.dart';
 import 'package:yafta/routing/router_utils.dart';
 import 'package:yafta/screens/add.dart';
+import 'package:yafta/screens/auth/forgot_password.dart';
 import 'package:yafta/screens/auth/login.dart';
 import 'package:yafta/screens/auth/signup.dart';
 import 'package:yafta/screens/budgets/add_budget.dart';
@@ -38,7 +39,12 @@ class AppRouter {
         final isLoggedIn = authProvider.user != null;
         final isGoingToLogin = state.location == AppRoutes.login.path;
         final isGoingToSignUp = state.location == AppRoutes.signup.path;
-        if (!isLoggedIn && !isGoingToLogin && !isGoingToSignUp) {
+        final isResetingPassword =
+            state.location == AppRoutes.forgotPassword.path;
+        if (!isLoggedIn &&
+            !isGoingToLogin &&
+            !isGoingToSignUp &&
+            !isResetingPassword) {
           return AppRoutes.login.path;
         } else {
           return null;
@@ -55,6 +61,22 @@ class AppRouter {
             name: AppRoutes.signup.name,
             pageBuilder: (context, state) =>
                 const NoTransitionPage(child: SignupScreen())),
+        GoRoute(
+            path: AppRoutes.forgotPassword.path,
+            name: AppRoutes.forgotPassword.name,
+            pageBuilder: (context, state) => CustomTransitionPage(
+                  child: const ForgotPasswordScreen(),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) =>
+                          SlideTransition(
+                              position: animation.drive(
+                                Tween<Offset>(
+                                  begin: const Offset(1, 0),
+                                  end: Offset.zero,
+                                ),
+                              ),
+                              child: child),
+                )),
         GoRoute(
             parentNavigatorKey: _rootNavigator,
             path: AppRoutes.profile.path,

@@ -66,9 +66,9 @@ class _MyAppState extends State<MyApp> {
           final GoRouter goRouter = Provider.of<AppRouter>(context).router;
           return MaterialApp.router(
             title: 'Yafta',
-            theme: Provider.of<AuthProvider>(context).theme == AppTheme.light
-                ? lightTheme
-                : darkTheme,
+            theme: context.watch<AuthProvider>().theme == AppTheme.dark
+                ? darkTheme
+                : lightTheme,
             routerConfig: goRouter,
           );
         }));

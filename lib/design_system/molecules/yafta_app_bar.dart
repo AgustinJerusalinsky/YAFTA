@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:yafta/design_system/atoms/yafta_logo.dart';
 import 'package:yafta/services/auth_provider.dart';
 
+import '../../utils/remote_config.dart';
+
 class YaftaAppBar extends StatelessWidget implements PreferredSizeWidget {
   const YaftaAppBar(
       {super.key,
@@ -82,7 +84,7 @@ class YaftaAppBar extends StatelessWidget implements PreferredSizeWidget {
                 },
               ),
             ]
-          : showThemeSwitch
+          : showThemeSwitch && RemoteConfigHandler.getAppThemeToggle()
               ? [
                   Switch(
                     value: useDarkTheme,
