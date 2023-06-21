@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 //reference: https://dartling.dev/displaying-a-loading-overlay-or-progress-hud-in-flutter
 class YaftaOverlayLoading extends StatelessWidget {
-  YaftaOverlayLoading({Key? key, required this.child, required this.isLoading})
+  const YaftaOverlayLoading(
+      {Key? key, required this.child, required this.isLoading})
       : super(key: key);
 
   final bool isLoading;

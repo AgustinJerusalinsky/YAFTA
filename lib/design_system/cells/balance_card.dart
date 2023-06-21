@@ -44,7 +44,7 @@ class BalanceCard extends StatelessWidget {
                         child: CircularProgressIndicator(),
                       )
                     : Text(
-                        '\$ ' + total,
+                        '\$ $total',
                         style: TextStyle(
                             fontSize: getTextSizeBig(total),
                             fontWeight: FontWeight.w700,
@@ -64,7 +64,7 @@ class BalanceCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     loadingIncomes
-                        ? CircularProgressIndicator()
+                        ? const CircularProgressIndicator()
                         : Text(
                             income,
                             style: TextStyle(
@@ -95,7 +95,7 @@ class BalanceCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     loadingExpenses
-                        ? CircularProgressIndicator()
+                        ? const CircularProgressIndicator()
                         : Text(
                             expenses,
                             style: TextStyle(

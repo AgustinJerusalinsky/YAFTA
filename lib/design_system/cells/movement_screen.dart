@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:yafta/design_system/cells/categories_search.dart';
 import 'package:yafta/design_system/cells/movement_row.dart';
 import 'package:yafta/models/movement.dart';
@@ -34,9 +33,9 @@ class _MovementScreenState extends State<MovementScreen> {
   }
 
   void filterMovements() {
-    final dateToCompare;
+    final DateTime dateToCompare;
     if (selectedFilter == filterOptions[0]) {
-      dateToCompare = DateTime.now().subtract(Duration(days: 7));
+      dateToCompare = DateTime.now().subtract(const Duration(days: 7));
     } else if (selectedFilter == filterOptions[1]) {
       dateToCompare = DateTime(DateTime.now().year, DateTime.now().month);
     } else {
@@ -69,7 +68,6 @@ class _MovementScreenState extends State<MovementScreen> {
 
   @override
   void didUpdateWidget(covariant MovementScreen oldWidget) {
-    // TODO: implement didUpdateWidget
     super.didUpdateWidget(oldWidget);
     if (oldWidget.movements != widget.movements) {
       _movements = widget.movements;
@@ -82,7 +80,7 @@ class _MovementScreenState extends State<MovementScreen> {
     return Column(
       children: [
         if (RemoteConfigHandler.getBudgets())
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
         CategoriesSearchBar(
@@ -96,7 +94,7 @@ class _MovementScreenState extends State<MovementScreen> {
             });
           },
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         ListTile(
           title: Text("Total",
               style: Theme.of(context).textTheme.titleLarge!.copyWith(
@@ -112,11 +110,11 @@ class _MovementScreenState extends State<MovementScreen> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
-          contentPadding: EdgeInsets.symmetric(horizontal: 16),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         widget.loading
-            ? Expanded(
+            ? const Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

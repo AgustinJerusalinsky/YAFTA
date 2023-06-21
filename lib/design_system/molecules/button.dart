@@ -45,13 +45,13 @@ class YaftaButton extends StatelessWidget {
         }
         return FilledButton(
           onPressed: onPressed,
+          style: color != null
+              ? ButtonStyle(backgroundColor: MaterialStatePropertyAll(color))
+              : null,
           child: Text(
             text,
             style: textStyle,
           ),
-          style: color != null
-              ? ButtonStyle(backgroundColor: MaterialStatePropertyAll(color))
-              : null,
         );
       case 'outlined':
         return OutlinedButton(

@@ -55,12 +55,15 @@ class YaftaTextField extends StatelessWidget {
               TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
           hintText: hintText,
           errorText: errorText,
-          floatingLabelStyle: readOnly ? TextStyle(color: Colors.grey) : null,
+          floatingLabelStyle:
+              readOnly ? const TextStyle(color: Colors.grey) : null,
           focusedBorder: readOnly
-              ? OutlineInputBorder(borderSide: BorderSide(color: Colors.grey))
+              ? const OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey))
               : null,
           enabledBorder: readOnly
-              ? OutlineInputBorder(borderSide: BorderSide(color: Colors.grey))
+              ? const OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey))
               : null,
           border: const OutlineInputBorder(),
         ),

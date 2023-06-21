@@ -8,7 +8,6 @@ import 'package:yafta/design_system/molecules/yafta_app_bar.dart';
 import 'package:yafta/design_system/molecules/yafta_overlay_loading.dart';
 import 'package:yafta/models/category.dart';
 import 'package:yafta/models/movement_type.dart';
-import 'package:yafta/services/auth_provider.dart';
 import 'package:yafta/services/budget_provider.dart';
 import 'package:yafta/utils/analytics.dart';
 
@@ -51,11 +50,11 @@ class EditBudgetScreenState extends State<EditBudgetScreen> {
   }
 
   void loadCategory() async {
-    final category = await context
+    await context
         .read<BudgetProvider>()
         .getCategory(widget.id)
         .then((value) => setState(() {
-              this.category = value;
+              category = value;
               _categoryController.text = value.name;
               _amountController.text = value.amount.toString();
               loading = false;

@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yafta/design_system/molecules/search_bar.dart';
 import 'package:yafta/models/movement_type.dart';
-import 'package:yafta/services/auth_provider.dart';
 import 'package:yafta/services/budget_provider.dart';
-
-import '../../models/category.dart';
 
 final filterOptions = [
   "Esta semana",

@@ -102,10 +102,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Expanded(
               child: ListView(
-                padding: EdgeInsets.only(bottom: 26.0),
+                padding: const EdgeInsets.only(bottom: 26.0),
                 children: [
                   BalanceCard(
-                    total: '${(totalIncome - totalExpense).toStringAsFixed(2)}',
+                    total: (totalIncome - totalExpense).toStringAsFixed(2),
                     income: '\$ ${totalIncome.toStringAsFixed(2)}',
                     expenses: '\$ ${totalExpense.toStringAsFixed(2)}',
                     loadingExpenses: loadingExpenses,
@@ -139,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-                  SizedBox(
+                  const SizedBox(
                     height: 60,
                   )
                 ],

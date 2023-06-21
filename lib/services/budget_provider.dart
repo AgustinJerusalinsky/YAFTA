@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
-import 'package:provider/provider.dart';
 import 'package:yafta/models/budget.dart';
 import 'package:yafta/models/category.dart';
 import 'package:yafta/models/movement.dart';
 import 'package:yafta/models/movement_type.dart';
-import 'package:yafta/screens/budgets/budgets.dart';
 import 'package:yafta/services/auth_provider.dart';
 import 'package:yafta/services/movement_provider.dart';
 
@@ -110,7 +108,6 @@ class BudgetProvider extends ChangeNotifier {
       _categories = await _getFirestoreCategories(authProvider.user!.uid);
       categoryDirty = false;
     }
-    print(_categories.map((e) => e.name));
     return _categories.firstWhere(
         (category) => category.name == name && category.type == type);
   }

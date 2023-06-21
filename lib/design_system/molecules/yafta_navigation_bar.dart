@@ -9,8 +9,8 @@ class YaftaNavigationBar extends StatelessWidget {
     required this.onDestinationSelected,
   }) : super(key: key);
 
-  final currentIndex;
-  final onDestinationSelected;
+  final int currentIndex;
+  final void Function(int) onDestinationSelected;
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:yafta/design_system/molecules/pie_chart.dart';
 
@@ -47,10 +46,10 @@ class BalanceGraph extends StatelessWidget {
                                   .onSurfaceVariant)),
                   const SizedBox(height: 20),
                   expenseLoading
-                      ? SizedBox(
-                          child: Center(child: CircularProgressIndicator()),
+                      ? const SizedBox(
                           height: 215,
-                          width: 200)
+                          width: 200,
+                          child: Center(child: CircularProgressIndicator()))
                       : YaftaPieChart(
                           data: expenseData,
                         ),
@@ -82,13 +81,13 @@ class BalanceGraph extends StatelessWidget {
                                   .onSurfaceVariant)),
                   const SizedBox(height: 20),
                   incomeLoading
-                      ? SizedBox(
-                          child: Center(child: CircularProgressIndicator()),
+                      ? const SizedBox(
                           height: 215,
-                          width: 200)
+                          width: 200,
+                          child: Center(child: CircularProgressIndicator()))
                       : YaftaPieChart(
                           data: incomeData,
-                          colorList: [
+                          colorList: const [
                             Color(0xFF74b9ff),
                             Color(0xFF00b894),
                             Color(0xFF55efc4),

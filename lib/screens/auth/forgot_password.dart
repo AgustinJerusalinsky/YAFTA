@@ -8,7 +8,6 @@ import 'package:yafta/utils/errors.dart';
 import 'package:yafta/utils/validators.dart';
 import 'package:provider/provider.dart';
 
-import '../../design_system/atoms/yafta_logo.dart';
 import '../../design_system/molecules/button.dart';
 import 'package:go_router/go_router.dart';
 
@@ -104,7 +103,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   YaftaButton(
                       variant: "text",
                       text: "Volver",
-                      child: Row(
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [Icon(Icons.arrow_back_ios), Text("Volver")],
                       ),

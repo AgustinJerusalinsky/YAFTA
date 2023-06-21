@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:provider/provider.dart';
-import 'package:yafta/design_system/molecules/button.dart';
 import 'package:yafta/design_system/molecules/pie_chart.dart';
 import 'package:yafta/design_system/molecules/yafta_card.dart';
 import 'package:yafta/models/movement_type.dart';
@@ -63,7 +62,7 @@ class BudgetRing extends StatelessWidget {
                     deleteBudget(context).then((value) {
                       //show snackbar
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          duration: Duration(seconds: 1),
+                          duration: const Duration(seconds: 1),
                           backgroundColor:
                               Theme.of(context).colorScheme.errorContainer,
                           content: Text(

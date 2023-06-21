@@ -3,8 +3,6 @@ import 'package:yafta/data/firestore_service.dart';
 import 'package:yafta/models/category.dart';
 import 'package:yafta/models/movement.dart';
 import 'package:yafta/models/movement_type.dart';
-import 'package:yafta/utils/analytics.dart';
-import 'package:yafta/utils/remote_config.dart';
 
 import 'auth_provider.dart';
 

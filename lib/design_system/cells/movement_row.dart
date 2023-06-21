@@ -20,7 +20,7 @@ class MovementRow extends StatelessWidget {
           ? Align(
               alignment: Alignment.topLeft,
               child: Chip(
-                padding: EdgeInsets.symmetric(horizontal: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 8),
                 label: Text(movement.category.name,
                     style: TextStyle(
                         fontSize: 12,
@@ -33,7 +33,7 @@ class MovementRow extends StatelessWidget {
                     width: 1),
                 backgroundColor:
                     Theme.of(context).colorScheme.secondaryContainer,
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(5))),
               ))
           : null,

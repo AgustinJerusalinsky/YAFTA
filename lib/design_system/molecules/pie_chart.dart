@@ -50,8 +50,9 @@ class YaftaPieChart extends StatelessWidget {
             : defaultDarkColorList;
     return PieChart(
       dataMap: data,
-      animationDuration:
-          noAnimation ? Duration(milliseconds: 0) : Duration(milliseconds: 800),
+      animationDuration: noAnimation
+          ? const Duration(milliseconds: 0)
+          : const Duration(milliseconds: 800),
       chartLegendSpacing: 25,
       chartRadius: chartRadius ?? MediaQuery.of(context).size.width / 2,
       initialAngleInDegree: initialAngleInDegree ?? 0,

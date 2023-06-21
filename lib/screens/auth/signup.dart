@@ -69,7 +69,7 @@ class _SignupScreenState extends State<SignupScreen> {
         final fullName = _fullNameController.text.trim();
         final username = _usernameController.text.trim();
 
-        final response = await context
+        await context
             .read<AuthProvider>()
             .signup(email, password, fullName, username);
         AnalyticsHandler.logSignup();
@@ -125,10 +125,10 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               if (_errorMessage.isNotEmpty)
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: Text(
                     _errorMessage,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.red,
                       fontWeight: FontWeight.bold,
                     ),

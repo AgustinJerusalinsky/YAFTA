@@ -7,7 +7,6 @@ import 'package:yafta/design_system/molecules/text_field.dart';
 import 'package:yafta/design_system/molecules/yafta_app_bar.dart';
 import 'package:yafta/design_system/molecules/yafta_overlay_loading.dart';
 import 'package:yafta/models/movement_type.dart';
-import 'package:yafta/services/auth_provider.dart';
 import 'package:yafta/services/budget_provider.dart';
 import 'package:yafta/utils/analytics.dart';
 

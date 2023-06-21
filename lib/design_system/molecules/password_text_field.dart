@@ -3,7 +3,7 @@ import 'package:yafta/design_system/molecules/text_field.dart';
 import 'package:yafta/utils/validators.dart';
 
 class YaftaPasswordTextField extends StatefulWidget {
-  YaftaPasswordTextField(
+  const YaftaPasswordTextField(
       {Key? key, this.editingController, this.label = "Contraseña"})
       : super(key: key);
 

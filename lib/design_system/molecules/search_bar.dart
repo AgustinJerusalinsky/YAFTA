@@ -80,8 +80,8 @@ class YaftaSearchBarState extends State<YaftaSearchBar> {
                 itemBuilder: (context) {
                   return widget.filterOptions.map((option) {
                     return PopupMenuItem(
-                      child: Text(option),
                       value: option,
+                      child: Text(option),
                     );
                   }).toList();
                 },
@@ -90,8 +90,8 @@ class YaftaSearchBarState extends State<YaftaSearchBar> {
                     color: Theme.of(context).colorScheme.onSurface))
           ],
         ),
-        SizedBox(height: 16),
-        selectedItems.length > 0
+        const SizedBox(height: 16),
+        selectedItems.isNotEmpty
             ? Align(
                 alignment: Alignment.topLeft,
                 child: SingleChildScrollView(
@@ -134,7 +134,7 @@ class YaftaSearchBarState extends State<YaftaSearchBar> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       color: Theme.of(context).colorScheme.secondaryContainer),
-                  padding: EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(8),
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(

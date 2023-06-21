@@ -5,7 +5,6 @@ import 'package:yafta/design_system/molecules/text_field.dart';
 import 'package:yafta/design_system/molecules/yafta_app_bar.dart';
 import 'package:yafta/design_system/molecules/yafta_overlay_loading.dart';
 import 'package:yafta/services/auth_provider.dart';
-import 'package:provider/provider.dart';
 import 'package:yafta/utils/analytics.dart';
 import 'package:yafta/utils/remote_config.dart';
 
@@ -17,7 +16,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  bool _submitting = false;
+  final bool _submitting = false;
 
   void onChangePassword(BuildContext context, AuthProvider authProvider) async {
     await authProvider.changePassword();

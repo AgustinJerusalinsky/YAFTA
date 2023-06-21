@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yafta/design_system/cells/budget_ring.dart';
 import 'package:yafta/design_system/molecules/yafta_segmented_button.dart';
-import 'package:yafta/models/budget.dart';
 import 'package:yafta/models/movement_type.dart';
-import 'package:yafta/screens/dashboard/home.dart';
-import 'package:yafta/services/auth_provider.dart';
 import 'package:yafta/services/budget_provider.dart';
 
 import '../../models/segment.dart';
@@ -16,6 +13,8 @@ final List<Segment> segments = [
 ];
 
 class BudgetsScreen extends StatefulWidget {
+  const BudgetsScreen({super.key});
+
   @override
   State<BudgetsScreen> createState() => _BudgetsScreenState();
 }
@@ -41,7 +40,7 @@ class _BudgetsScreenState extends State<BudgetsScreen> {
       }
       return Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           YaftaSegmentedButton(
@@ -49,7 +48,7 @@ class _BudgetsScreenState extends State<BudgetsScreen> {
             segments: segments,
             currentIndex: _currentPage,
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Expanded(
