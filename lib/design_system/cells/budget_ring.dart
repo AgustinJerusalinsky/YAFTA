@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:yafta/design_system/molecules/button.dart';
 import 'package:yafta/design_system/molecules/pie_chart.dart';
 import 'package:yafta/design_system/molecules/yafta_card.dart';
+import 'package:yafta/models/movement_type.dart';
 import 'package:yafta/utils/text.dart';
 import 'package:yafta/models/category.dart';
 import 'package:yafta/services/budget_provider.dart';
@@ -13,12 +14,12 @@ class BudgetRing extends StatelessWidget {
   const BudgetRing(
       {Key? key,
       required this.budget,
-      required this.spent,
+      required this.totalMovement,
       required this.category})
       : super(key: key);
 
   final double budget;
-  final double spent;
+  final double totalMovement;
   final Category category;
 
   Future<void> deleteBudget(BuildContext context) async {
@@ -63,16 +64,19 @@ class BudgetRing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double percentage = spent / budget * 100;
+    final double percentage = totalMovement / budget * 100;
     final overBudgetPercentage = percentage - 100;
     final moreThan100percertOverbudget = overBudgetPercentage > 100;
     final bool showOverBudget = overBudgetPercentage > 0;
 
     final List<Color> colorList;
     final Map<String, double> data;
+    final MovementType movementType = category.type;
     if (showOverBudget) {
       colorList = [
-        Colors.red,
+        (movementType == MovementType.expense
+            ? Colors.red
+            : Colors.green.shade300),
         Theme.of(context).colorScheme.primary,
       ];
       data = {
@@ -90,7 +94,6 @@ class BudgetRing extends StatelessWidget {
         "Restante": 100 - percentage,
       };
     }
-
     return YaftaCard(
       title: Container(
         decoration: BoxDecoration(
@@ -159,14 +162,18 @@ class BudgetRing extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Utilizado",
+                    movementType == MovementType.expense
+                        ? "Utilizado"
+                        : "Ingresado",
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   Text(
                     "${percentage.toStringAsFixed(0)}%",
                     style: Theme.of(context).textTheme.displayMedium!.copyWith(
                         color: showOverBudget
-                            ? Colors.red
+                            ? (movementType == MovementType.expense
+                                ? Colors.red
+                                : Colors.green.shade300)
                             : Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.w800,
                         fontSize: getTextSizeBig(
@@ -178,8 +185,8 @@ class BudgetRing extends StatelessWidget {
                   ),
                   Text(
                       showOverBudget
-                          ? "\$${spent - budget} sobre el presupuesto"
-                          : "\$${budget - spent} restantes",
+                          ? "\$${totalMovement - budget} sobre el presupuesto"
+                          : "\$${budget - totalMovement} restantes",
                       style: Theme.of(context).textTheme.labelLarge),
                 ],
               ),
