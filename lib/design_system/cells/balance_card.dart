@@ -43,47 +43,58 @@ class BalanceCard extends StatelessWidget {
                         padding: EdgeInsets.only(right: 75.0),
                         child: CircularProgressIndicator(),
                       )
-                    : Text(
-                        '\$ $total',
-                        style: TextStyle(
-                            fontSize: getTextSizeBig(total),
-                            fontWeight: FontWeight.w700,
-                            color:
-                                Theme.of(context).colorScheme.onSurfaceVariant),
+                    : Expanded(
+                        child: Text(
+                          '\$ $total',
+                          softWrap: false,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: getTextSizeBig(total),
+                              fontWeight: FontWeight.w700,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurfaceVariant),
+                        ),
                       ),
               ],
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Flex(
-              direction: Axis.horizontal,
+            child: Row(
+              //direction: Axis.horizontal,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    loadingIncomes
-                        ? const CircularProgressIndicator()
-                        : Text(
-                            income,
-                            style: TextStyle(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onSurfaceVariant,
-                              fontSize: getTextSize(income),
-                              fontWeight: FontWeight.w400,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      loadingIncomes
+                          ? const CircularProgressIndicator()
+                          : Text(
+                              income,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSurfaceVariant,
+                                fontSize: getTextSize(income),
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
-                          ),
-                    Text(
-                      "Ingresos",
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.onSurfaceVariant,
-                          fontSize:
-                              Theme.of(context).textTheme.bodyMedium!.fontSize,
-                          fontWeight: FontWeight.w400),
-                    )
-                  ],
+                      Text(
+                        "Ingresos",
+                        style: TextStyle(
+                            color:
+                                Theme.of(context).colorScheme.onSurfaceVariant,
+                            fontSize: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .fontSize,
+                            fontWeight: FontWeight.w400),
+                      )
+                    ],
+                  ),
                 ),
                 //Separator
                 Container(
@@ -91,29 +102,35 @@ class BalanceCard extends StatelessWidget {
                   width: 1,
                   color: Theme.of(context).colorScheme.outlineVariant,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    loadingExpenses
-                        ? const CircularProgressIndicator()
-                        : Text(
-                            expenses,
-                            style: TextStyle(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .onSurfaceVariant,
-                                fontSize: getTextSize(expenses),
-                                fontWeight: FontWeight.w400),
-                          ),
-                    Text(
-                      "Gastos",
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.onSurfaceVariant,
-                          fontSize:
-                              Theme.of(context).textTheme.bodyMedium!.fontSize,
-                          fontWeight: FontWeight.w400),
-                    )
-                  ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      loadingExpenses
+                          ? const CircularProgressIndicator()
+                          : Text(
+                              expenses,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSurfaceVariant,
+                                  fontSize: getTextSize(expenses),
+                                  fontWeight: FontWeight.w400),
+                            ),
+                      Text(
+                        "Gastos",
+                        style: TextStyle(
+                            color:
+                                Theme.of(context).colorScheme.onSurfaceVariant,
+                            fontSize: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .fontSize,
+                            fontWeight: FontWeight.w400),
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),
