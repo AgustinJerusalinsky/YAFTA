@@ -84,7 +84,7 @@ class YaftaAppBar extends StatelessWidget implements PreferredSizeWidget {
                 },
               ),
             ]
-          : showThemeSwitch && RemoteConfigHandler.getAppThemeToggle()
+          : showThemeSwitch && RemoteConfigHandler.instance!.getAppThemeToggle()
               ? [
                   Switch(
                     value: useDarkTheme,

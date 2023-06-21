@@ -87,7 +87,8 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final signInWithGoogleEnabled = RemoteConfigHandler.getSignInWithGoogle();
+    final signInWithGoogleEnabled =
+        RemoteConfigHandler.instance!.getSignInWithGoogle();
     return Scaffold(
       body: YaftaOverlayLoading(
         isLoading: _submitting,

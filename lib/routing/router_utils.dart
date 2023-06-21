@@ -21,7 +21,7 @@ final shellRoutes = [
   AppRoutes.home,
   AppRoutes.incomes,
   AppRoutes.expenses,
-  if (RemoteConfigHandler.getBudgets()) AppRoutes.budgets
+  if (RemoteConfigHandler.instance!.getBudgets()) AppRoutes.budgets
 ];
 int getShellRouteIndex(String? path) {
   if (path == null) {

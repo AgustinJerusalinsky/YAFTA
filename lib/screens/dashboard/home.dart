@@ -114,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  if (RemoteConfigHandler.getBudgets() &&
+                  if (RemoteConfigHandler.instance!.getBudgets() &&
                       (expensesByCategory.isNotEmpty &&
                           incomesByCategory.isNotEmpty))
                     Column(

@@ -36,9 +36,17 @@ extension AppThemeExtension on AppTheme {
 const String noCategoryName = "No category";
 
 class RemoteConfigHandler {
-  static final _remoteConfig = FirebaseRemoteConfig.instance;
+  final _remoteConfig = FirebaseRemoteConfig.instance;
+  static RemoteConfigHandler? instance;
 
-  static Future<void> _setDefaults() async =>
+  static Future<void> initialize() async {
+    instance = RemoteConfigHandler();
+    await instance!._setConfigSettings();
+    await instance!._setDefaults();
+    await instance!._fetchAndActivate();
+  }
+
+  Future<void> _setDefaults() async =>
       _remoteConfig.setDefaults(<String, dynamic>{
         Config.appTheme.name: "dark",
         Config.budgets.name: true,
@@ -46,22 +54,15 @@ class RemoteConfigHandler {
         Config.appThemeToggle.name: true,
       });
 
-  static Future<void> initialize() async {
-    await _setConfigSettings();
-    await _setDefaults();
-    await _fetchAndActivate();
-  }
+  Future<void> _fetchAndActivate() async => _remoteConfig.fetchAndActivate();
 
-  static Future<void> _fetchAndActivate() async =>
-      _remoteConfig.fetchAndActivate();
-
-  static Future<void> _setConfigSettings() async =>
+  Future<void> _setConfigSettings() async =>
       _remoteConfig.setConfigSettings(RemoteConfigSettings(
         fetchTimeout: const Duration(seconds: 10),
         minimumFetchInterval: const Duration(minutes: 1),
       ));
 
-  static AppTheme getTheme() {
+  AppTheme getTheme() {
     final theme = _remoteConfig.getString(Config.appTheme.name);
     if (theme == "light") {
       return AppTheme.light;
@@ -70,15 +71,15 @@ class RemoteConfigHandler {
     }
   }
 
-  static bool getBudgets() {
+  bool getBudgets() {
     return _remoteConfig.getBool(Config.budgets.name);
   }
 
-  static bool getSignInWithGoogle() {
+  bool getSignInWithGoogle() {
     return _remoteConfig.getBool(Config.signInWithGoogle.name);
   }
 
-  static bool getAppThemeToggle() {
+  bool getAppThemeToggle() {
     return _remoteConfig.getBool(Config.appThemeToggle.name);
   }
 }

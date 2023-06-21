@@ -94,7 +94,7 @@ class AppRouter {
                               ),
                               child: child),
                 )),
-        if (RemoteConfigHandler.getBudgets())
+        if (RemoteConfigHandler.instance!.getBudgets())
           GoRoute(
               parentNavigatorKey: _rootNavigator,
               path: AppRoutes.addBudget.path,
@@ -179,7 +179,7 @@ class AppRouter {
                               ),
                               child: child),
                 )),
-        if (RemoteConfigHandler.getBudgets())
+        if (RemoteConfigHandler.instance!.getBudgets())
           GoRoute(
               parentNavigatorKey: _rootNavigator,
               path: AppRoutes.editBudget.path,

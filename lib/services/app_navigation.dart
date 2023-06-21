@@ -25,7 +25,7 @@ class AppNavigation extends ChangeNotifier {
       "fabLabel": "Gasto",
       "fabRoute": "/add/expenses"
     },
-    if (RemoteConfigHandler.getBudgets())
+    if (RemoteConfigHandler.instance!.getBudgets())
       {
         "icon": Icons.savings_outlined,
         "label": "Presupuestos",

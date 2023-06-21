@@ -66,7 +66,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final signInWithGoogleEnabled = RemoteConfigHandler.getSignInWithGoogle();
+    final signInWithGoogleEnabled =
+        RemoteConfigHandler.instance!.getSignInWithGoogle();
 
     return Scaffold(
         resizeToAvoidBottomInset: false,

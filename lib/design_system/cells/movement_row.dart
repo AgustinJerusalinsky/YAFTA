@@ -16,7 +16,7 @@ class MovementRow extends StatelessWidget {
           style: TextStyle(
             color: Theme.of(context).colorScheme.onSurface,
           )),
-      subtitle: RemoteConfigHandler.getBudgets()
+      subtitle: RemoteConfigHandler.instance!.getBudgets()
           ? Align(
               alignment: Alignment.topLeft,
               child: Chip(

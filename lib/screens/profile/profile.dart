@@ -71,7 +71,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Wrap(
                         runSpacing: 24,
                         children: [
-                          // if (RemoteConfigHandler.getAppThemeToggle()) ...[
+                          // if (RemoteConfigHandler.instance!.getAppThemeToggle()) ...[
                           //   Column(
                           //     children: [
                           //       const Text("Dark theme"),

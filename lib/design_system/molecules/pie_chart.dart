@@ -45,7 +45,7 @@ class YaftaPieChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Color> defaultColors =
-        RemoteConfigHandler.getTheme() == AppTheme.light
+        RemoteConfigHandler.instance!.getTheme() == AppTheme.light
             ? defaultColorList
             : defaultDarkColorList;
     return PieChart(

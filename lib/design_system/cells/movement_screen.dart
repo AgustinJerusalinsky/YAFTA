@@ -79,7 +79,7 @@ class _MovementScreenState extends State<MovementScreen> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        if (RemoteConfigHandler.getBudgets())
+        if (RemoteConfigHandler.instance!.getBudgets())
           const SizedBox(
             height: 16,
           ),

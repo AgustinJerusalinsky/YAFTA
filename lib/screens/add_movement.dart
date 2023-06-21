@@ -59,7 +59,7 @@ class AddMovementScreenState extends State<AddMovementScreen> {
     final amount = _amountController.text.trim();
     final date = _dateController.text.trim();
 
-    if (!RemoteConfigHandler.getBudgets()) {
+    if (!RemoteConfigHandler.instance!.getBudgets()) {
       BudgetProvider budgetProvider = context.read<BudgetProvider>();
       bool categoryExists =
           await budgetProvider.categoryExists(noCategoryName, widget.type);
@@ -124,7 +124,7 @@ class AddMovementScreenState extends State<AddMovementScreen> {
                         FilteringTextInputFormatter.digitsOnly,
                       ],
                     ),
-                    if (RemoteConfigHandler.getBudgets())
+                    if (RemoteConfigHandler.instance!.getBudgets())
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: DropdownButtonFormField(
