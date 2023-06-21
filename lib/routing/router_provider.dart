@@ -13,6 +13,7 @@ import 'package:yafta/screens/expenses/expenses.dart';
 import 'package:yafta/screens/add_movement.dart';
 import 'package:yafta/screens/profile/profile.dart';
 import 'package:yafta/services/auth_provider.dart';
+import 'package:yafta/utils/remote_config.dart';
 
 import '../screens/budgets/budgets.dart';
 import '../screens/error_screen.dart';
@@ -71,23 +72,24 @@ class AppRouter {
                               ),
                               child: child),
                 )),
-        GoRoute(
-            parentNavigatorKey: _rootNavigator,
-            path: AppRoutes.addBudget.path,
-            name: AppRoutes.addBudget.name,
-            pageBuilder: (context, state) => CustomTransitionPage(
-                  child: const AddBudgetScreen(),
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) =>
-                          SlideTransition(
-                              position: animation.drive(
-                                Tween<Offset>(
-                                  begin: const Offset(1, 0),
-                                  end: Offset.zero,
+        if (RemoteConfigHandler.getBudgets())
+          GoRoute(
+              parentNavigatorKey: _rootNavigator,
+              path: AppRoutes.addBudget.path,
+              name: AppRoutes.addBudget.name,
+              pageBuilder: (context, state) => CustomTransitionPage(
+                    child: const AddBudgetScreen(),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) =>
+                            SlideTransition(
+                                position: animation.drive(
+                                  Tween<Offset>(
+                                    begin: const Offset(1, 0),
+                                    end: Offset.zero,
+                                  ),
                                 ),
-                              ),
-                              child: child),
-                )),
+                                child: child),
+                  )),
         GoRoute(
             parentNavigatorKey: _rootNavigator,
             path: AppRoutes.addIncome.path,
@@ -139,23 +141,24 @@ class AppRouter {
                               ),
                               child: child),
                 )),
-        GoRoute(
-            parentNavigatorKey: _rootNavigator,
-            path: AppRoutes.editBudget.path,
-            name: AppRoutes.editBudget.name,
-            pageBuilder: (context, state) => CustomTransitionPage(
-                  child: EditBudgetScreen(id: state.pathParameters['id']!),
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) =>
-                          SlideTransition(
-                              position: animation.drive(
-                                Tween<Offset>(
-                                  begin: const Offset(1, 0),
-                                  end: Offset.zero,
+        if (RemoteConfigHandler.getBudgets())
+          GoRoute(
+              parentNavigatorKey: _rootNavigator,
+              path: AppRoutes.editBudget.path,
+              name: AppRoutes.editBudget.name,
+              pageBuilder: (context, state) => CustomTransitionPage(
+                    child: EditBudgetScreen(id: state.pathParameters['id']!),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) =>
+                            SlideTransition(
+                                position: animation.drive(
+                                  Tween<Offset>(
+                                    begin: const Offset(1, 0),
+                                    end: Offset.zero,
+                                  ),
                                 ),
-                              ),
-                              child: child),
-                )),
+                                child: child),
+                  )),
         ShellRoute(
             navigatorKey: _shellNavigator,
             builder: (context, state, child) => MainLayout(body: child),

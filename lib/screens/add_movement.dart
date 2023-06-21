@@ -11,6 +11,7 @@ import 'package:yafta/models/movement_type.dart';
 import 'package:yafta/services/auth_provider.dart';
 import 'package:yafta/services/budget_provider.dart';
 import 'package:yafta/services/movement_provider.dart';
+import 'package:yafta/utils/remote_config.dart';
 
 import '../utils/analytics.dart';
 
@@ -48,6 +49,10 @@ class AddMovementScreenState extends State<AddMovementScreen> {
     final description = _descriptionController.text.trim();
     final amount = _amountController.text.trim();
     final date = _dateController.text.trim();
+
+    if (!RemoteConfigHandler.getBudgets()) {
+      category = Category(name: "No category", amount: 0, type: widget.type);
+    }
 
     await context.read<MovementProvider>().addMovement(double.parse(amount),
         category!, description, widget.type, DateTime.parse(date));
@@ -100,24 +105,25 @@ class AddMovementScreenState extends State<AddMovementScreen> {
                         FilteringTextInputFormatter.digitsOnly,
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: DropdownButtonFormField(
-                          validator: (value) =>
-                              value == null ? 'Campo requerido' : null,
-                          borderRadius: BorderRadius.circular(10),
-                          value: category,
-                          isExpanded: true,
-                          hint: const Text("Categoria"),
-                          items: provider.categories
-                              .where((element) => element.type == widget.type)
-                              .map((category) => DropdownMenuItem(
-                                    value: category,
-                                    child: Text(category.name),
-                                  ))
-                              .toList(),
-                          onChanged: onChanged),
-                    ),
+                    if (RemoteConfigHandler.getBudgets())
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: DropdownButtonFormField(
+                            validator: (value) =>
+                                value == null ? 'Campo requerido' : null,
+                            borderRadius: BorderRadius.circular(10),
+                            value: category,
+                            isExpanded: true,
+                            hint: const Text("Categoria"),
+                            items: provider.categories
+                                .where((element) => element.type == widget.type)
+                                .map((category) => DropdownMenuItem(
+                                      value: category,
+                                      child: Text(category.name),
+                                    ))
+                                .toList(),
+                            onChanged: onChanged),
+                      ),
                     YaftaTextField(
                       label: "Fecha",
                       textController: _dateController,

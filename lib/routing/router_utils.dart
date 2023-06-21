@@ -1,3 +1,5 @@
+import '../utils/remote_config.dart';
+
 enum AppRoutes {
   login,
   signup,
@@ -18,7 +20,7 @@ final shellRoutes = [
   AppRoutes.home,
   AppRoutes.incomes,
   AppRoutes.expenses,
-  AppRoutes.budgets
+  if (RemoteConfigHandler.getBudgets()) AppRoutes.budgets
 ];
 
 extension AppRouteExtension on AppRoutes {
