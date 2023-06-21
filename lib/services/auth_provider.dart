@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:yafta/utils/remote_config.dart';
 
 import '../models/user.dart';
 
@@ -48,11 +49,28 @@ class AuthProvider extends ChangeNotifier {
     if (user == null) {
       return null;
     }
+    //split the photoURL to get username, theme
+    final parts = user.photoURL?.split('THEME#');
+
     return User(
         email: user.email,
         uid: user.uid,
         fullName: user.displayName,
-        userName: user.photoURL ?? user.displayName?.split(' ').join("_"));
+        userName: parts?[0],
+        theme: _getAppTheme(parts));
+  }
+
+  AppTheme _getAppTheme(List<String>? parsedURL) {
+    if (parsedURL == null || parsedURL.length < 2) {
+      return AppTheme.light;
+    }
+    final theme = parsedURL[1];
+
+    if (theme == 'light') {
+      return AppTheme.light;
+    } else {
+      return AppTheme.dark;
+    }
   }
 
   // Login method
@@ -64,6 +82,14 @@ class AuthProvider extends ChangeNotifier {
     final firebaseUser = _userFromFirebase(result.user);
     // _user = firebaseUser;
     return firebaseUser;
+  }
+
+  Future<void> toggleTheme(AppTheme theme) async {
+    final photoURL = '${_user?.userName}THEME#${theme.name}';
+    await _auth.currentUser?.updatePhotoURL(photoURL);
+    final user = _userFromFirebase(_auth.currentUser);
+    _user = user;
+    notifyListeners();
   }
 
   Future<User?> signInWithGoogle() async {
@@ -81,7 +107,13 @@ class AuthProvider extends ChangeNotifier {
 
         final auth.UserCredential userCredential =
             await _auth.signInWithCredential(credential);
-        return _userFromFirebase(userCredential.user);
+
+        final firebaseUser = userCredential.user;
+        final username = googleSignInAccount.email.split('@')[0];
+        await firebaseUser?.updateDisplayName(googleSignInAccount.displayName);
+        await firebaseUser?.updatePhotoURL('${username}THEME#light');
+
+        return _userFromFirebase(_auth.currentUser);
       } else {
         return null;
       }
@@ -101,7 +133,7 @@ class AuthProvider extends ChangeNotifier {
       final firebaseUser = result.user;
 
       await firebaseUser?.updateDisplayName(fullname);
-      await firebaseUser?.updatePhotoURL(username);
+      await firebaseUser?.updatePhotoURL('${username}THEME#light');
       final user = _userFromFirebase(_auth.currentUser);
       // _user = firebaseUser;
       return user;

@@ -1,6 +1,6 @@
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 
-enum Config { appTheme, budgets, signInWithGoogle }
+enum Config { appTheme, budgets, signInWithGoogle, appThemeToggle }
 
 extension AppConfig on Config {
   String get name {
@@ -11,6 +11,8 @@ extension AppConfig on Config {
         return "budgets";
       case Config.signInWithGoogle:
         return "sign_in_with_google";
+      case Config.appThemeToggle:
+        return "app_theme_toggle";
     }
   }
 }
@@ -18,6 +20,17 @@ extension AppConfig on Config {
 enum AppTheme {
   light,
   dark,
+}
+
+extension AppThemeExtension on AppTheme {
+  String get name {
+    switch (this) {
+      case AppTheme.light:
+        return "light";
+      case AppTheme.dark:
+        return "dark";
+    }
+  }
 }
 
 const String noCategoryName = "No category";
@@ -29,7 +42,8 @@ class RemoteConfigHandler {
       _remoteConfig.setDefaults(<String, dynamic>{
         Config.appTheme.name: "light",
         Config.budgets.name: true,
-        Config.signInWithGoogle.name: true,
+        Config.signInWithGoogle.name: false,
+        Config.appThemeToggle.name: false,
       });
 
   static Future<void> initialize() async {
@@ -62,5 +76,9 @@ class RemoteConfigHandler {
 
   static bool getSignInWithGoogle() {
     return _remoteConfig.getBool(Config.signInWithGoogle.name);
+  }
+
+  static bool getAppThemeToggle() {
+    return _remoteConfig.getBool(Config.appThemeToggle.name);
   }
 }
