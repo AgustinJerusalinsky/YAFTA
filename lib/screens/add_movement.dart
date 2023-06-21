@@ -82,6 +82,7 @@ class AddMovementScreenState extends State<AddMovementScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
       resizeToAvoidBottomInset: false,
       appBar: const YaftaAppBar(
         back: true,
@@ -123,12 +124,25 @@ class AddMovementScreenState extends State<AddMovementScreen> {
                             borderRadius: BorderRadius.circular(10),
                             value: category,
                             isExpanded: true,
-                            hint: const Text("Categoria"),
+                            dropdownColor:
+                                Theme.of(context).colorScheme.surfaceVariant,
+                            hint: Text(
+                              "Categoria",
+                              style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface),
+                            ),
                             items: provider.categories
-                                .where((element) => element.type == widget.type)
+                                .where((element) =>
+                                    element.type == widget.type &&
+                                    element.name != noCategoryName)
                                 .map((category) => DropdownMenuItem(
                                       value: category,
-                                      child: Text(category.name),
+                                      child: Text(category.name,
+                                          style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onSurface)),
                                     ))
                                 .toList(),
                             onChanged: onChanged),
@@ -174,6 +188,13 @@ class AddMovementScreenState extends State<AddMovementScreen> {
                               text: 'Guardar',
                               fullWidth: true,
                               variant: 'filled',
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer,
+                              textStyle: TextStyle(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onPrimaryContainer),
                               onPressed: _handleSubmit,
                             ),
                           ),

@@ -1,6 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:pie_chart/src/utils.dart';
+import 'package:yafta/utils/remote_config.dart';
+
+const List<Color> defaultDarkColorList = [
+  Color(0xFFe74c3c), // Dark Red
+  Color(0xFF3498db), // Dark Blue
+  Color(0xFF00b894), // Dark Green
+  Color(0xFFf1c40f), // Dark Yellow
+  Color(0xFF8e44ad), // Dark Purple
+  Color(0xFFd63031), // Dark Pink
+  Color(0xFFc0392b), // Dark Orange
+  Color(0xFF00cec9), // Dark Cyan
+];
 
 class YaftaPieChart extends StatelessWidget {
   const YaftaPieChart(
@@ -32,6 +44,10 @@ class YaftaPieChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<Color> defaultColors =
+        RemoteConfigHandler.getTheme() == AppTheme.light
+            ? defaultColorList
+            : defaultDarkColorList;
     return PieChart(
       dataMap: data,
       animationDuration:
@@ -41,7 +57,7 @@ class YaftaPieChart extends StatelessWidget {
       initialAngleInDegree: initialAngleInDegree ?? 0,
       chartType: chartType ?? ChartType.disc,
       ringStrokeWidth: 32,
-      colorList: colorList ?? defaultColorList,
+      colorList: colorList ?? defaultColors,
       centerText: centerText,
       centerTextStyle: centerTextStyle,
       legendOptions: LegendOptions(
@@ -49,12 +65,16 @@ class YaftaPieChart extends StatelessWidget {
         legendPosition: LegendPosition.bottom,
         showLegends: showLegends ?? (data[''] == null ? true : false),
         legendShape: BoxShape.circle,
-        legendTextStyle: Theme.of(context).textTheme.labelLarge!,
+        legendTextStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
+              color: Theme.of(context).colorScheme.onSecondaryContainer,
+            ),
       ),
       chartValuesOptions: ChartValuesOptions(
         showChartValues: showChartValues ?? (data[''] == null ? true : false),
         decimalPlaces: 2,
-        chartValueStyle: Theme.of(context).textTheme.labelSmall!,
+        chartValueStyle: Theme.of(context).textTheme.labelSmall!.copyWith(
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
         showChartValueBackground: showChartValueBackground ?? true,
         chartValueBackgroundColor: Theme.of(context).colorScheme.surface,
       ),

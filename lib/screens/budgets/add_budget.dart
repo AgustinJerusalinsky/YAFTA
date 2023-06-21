@@ -11,11 +11,6 @@ import 'package:yafta/services/auth_provider.dart';
 import 'package:yafta/services/budget_provider.dart';
 import 'package:yafta/utils/analytics.dart';
 
-const List<DropdownMenuItem> items = [
-  DropdownMenuItem(value: MovementType.income, child: Text("Ingreso")),
-  DropdownMenuItem(value: MovementType.expense, child: Text("Gasto"))
-];
-
 class AddBudgetScreen extends StatefulWidget {
   const AddBudgetScreen({Key? key}) : super(key: key);
   @override
@@ -58,11 +53,28 @@ class AddBudgetScreenState extends State<AddBudgetScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final List<DropdownMenuItem> items = [
+      DropdownMenuItem(
+          value: MovementType.income,
+          child: Text(
+            "Ingreso",
+            style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+          )),
+      DropdownMenuItem(
+          value: MovementType.expense,
+          child: Text(
+            "Gasto",
+            style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+          ))
+    ];
+
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
       resizeToAvoidBottomInset: false,
       appBar: const YaftaAppBar(
         back: true,
         showBrand: true,
+        showProfile: false,
       ),
       body: YaftaOverlayLoading(
         isLoading: submitting,
@@ -95,9 +107,14 @@ class AddBudgetScreenState extends State<AddBudgetScreen> {
                         validator: (value) =>
                             value == null ? 'Campo requerido' : null,
                         borderRadius: BorderRadius.circular(10),
+                        dropdownColor:
+                            Theme.of(context).colorScheme.surfaceVariant,
                         value: dropdownValue,
                         isExpanded: true,
-                        hint: const Text("Tipo de movimiento"),
+                        hint: Text("Tipo de movimiento",
+                            style: TextStyle(
+                                color:
+                                    Theme.of(context).colorScheme.onSurface)),
                         items: items,
                         onChanged: onChanged),
                   )
@@ -125,6 +142,12 @@ class AddBudgetScreenState extends State<AddBudgetScreen> {
                             fullWidth: true,
                             variant: 'filled',
                             onPressed: _handleSubmit,
+                            color:
+                                Theme.of(context).colorScheme.primaryContainer,
+                            textStyle: TextStyle(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onPrimaryContainer),
                           ),
                         ),
                       )

@@ -46,10 +46,13 @@ class YaftaTextField extends StatelessWidget {
         readOnly: readOnly,
         onTap: onTap,
         initialValue: initialValue,
+        style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
         decoration: InputDecoration(
           prefixIcon: prefixIcon,
           suffixIcon: suffixIcon,
           labelText: label,
+          labelStyle:
+              TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
           hintText: hintText,
           errorText: errorText,
           floatingLabelStyle: readOnly ? TextStyle(color: Colors.grey) : null,

@@ -127,7 +127,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Text(
                           "Categorias",
-                          style: Theme.of(context).textTheme.headlineLarge,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineLarge!
+                              .copyWith(
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
                         ),
                         const SizedBox(
                           height: 20,

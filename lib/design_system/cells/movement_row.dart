@@ -12,15 +12,22 @@ class MovementRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(movement.description),
+      title: Text(movement.description,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onSurface,
+          )),
       subtitle: RemoteConfigHandler.getBudgets()
           ? Align(
               alignment: Alignment.topLeft,
               child: Chip(
                 padding: EdgeInsets.symmetric(horizontal: 8),
                 label: Text(movement.category.name,
-                    style:
-                        TextStyle(fontSize: 12, fontWeight: FontWeight.w500)),
+                    style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSecondaryContainer)),
                 side: BorderSide(
                     color: Theme.of(context).colorScheme.secondaryContainer,
                     width: 1),
@@ -36,9 +43,15 @@ class MovementRow extends StatelessWidget {
           children: [
             Text(
                 '${movement.type == MovementType.income ? "+" : "-"}\$${movement.amount}',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Theme.of(context).colorScheme.onSurface)),
             Text(DateFormat('dd/MM/yyyy').format(movement.date!),
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400)),
+                style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                    color: Theme.of(context).colorScheme.onSurface)),
           ],
         ),
       ),

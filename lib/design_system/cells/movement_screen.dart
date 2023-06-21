@@ -82,26 +82,31 @@ class _MovementScreenState extends State<MovementScreen> {
     return Column(
       children: [
         if (RemoteConfigHandler.getBudgets())
-          CategoriesSearchBar(
-            onFilterChange: onSelectedFilterChange,
-            selectedFilter: selectedFilter,
-            type: widget.type,
-            onSelectedItemsChange: (selectedCategories) {
-              setState(() {
-                this.selectedCategories = selectedCategories;
-                filterMovements();
-              });
-            },
+          SizedBox(
+            height: 16,
           ),
+        CategoriesSearchBar(
+          onFilterChange: onSelectedFilterChange,
+          selectedFilter: selectedFilter,
+          type: widget.type,
+          onSelectedItemsChange: (selectedCategories) {
+            setState(() {
+              this.selectedCategories = selectedCategories;
+              filterMovements();
+            });
+          },
+        ),
         SizedBox(height: 16),
         ListTile(
-          title: Text(
-            "Total",
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
+          title: Text("Total",
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                    color: Theme.of(context).colorScheme.onTertiaryContainer,
+                  )),
           trailing: Text(
             "${widget.type == MovementType.income ? "+" : "-"}\$${filteredMovements.fold(0.0, (total, movement) => total + movement.amount)}",
-            style: Theme.of(context).textTheme.titleLarge,
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                  color: Theme.of(context).colorScheme.onTertiaryContainer,
+                ),
           ),
           tileColor: Theme.of(context).colorScheme.tertiaryContainer,
           shape: RoundedRectangleBorder(
@@ -130,7 +135,7 @@ class _MovementScreenState extends State<MovementScreen> {
                   separatorBuilder: (context, index) => Divider(
                     height: 1,
                     thickness: 1,
-                    color: Theme.of(context).colorScheme.surfaceVariant,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                   itemCount: filteredMovements.length,
                   itemBuilder: (context, index) {

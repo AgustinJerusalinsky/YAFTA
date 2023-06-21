@@ -39,7 +39,8 @@ class YaftaButton extends StatelessWidget {
               onPressed: onPressed,
               child: Text(
                 text,
-                style: theme,
+                style: theme!.copyWith(
+                    color: Theme.of(context).colorScheme.onSecondaryContainer),
               ));
         }
         return FilledButton(

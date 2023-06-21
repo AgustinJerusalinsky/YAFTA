@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+import 'package:yafta/services/auth_provider.dart';
+
+import '../../utils/remote_config.dart';
 
 class YaftaLogo extends StatelessWidget {
   const YaftaLogo({Key? key, this.height, this.width, required this.name})
@@ -26,10 +30,18 @@ class YaftaLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SvgPicture.asset(
-      'assets/brand/$name',
-      height: height,
-      width: width,
+    return Consumer<AuthProvider>(
+      builder: (ctx, provider, _) {
+        return SvgPicture.asset(
+          'assets/brand/$name',
+          height: height,
+          width: width,
+          theme: SvgTheme(
+              currentColor: provider.theme == AppTheme.light
+                  ? const Color(0xFF1A1A1A)
+                  : const Color(0xFFBFC8CA)),
+        );
+      },
     );
   }
 }

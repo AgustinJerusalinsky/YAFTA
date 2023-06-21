@@ -10,6 +10,7 @@ class AddScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: const YaftaAppBar(
         back: true,
         showBrand: true,
@@ -23,9 +24,9 @@ class AddScreen extends StatelessWidget {
             children: [
               YaftaButton(
                 text: "Ingreso",
-                color: Theme.of(context).colorScheme.primary,
+                color: Theme.of(context).colorScheme.primaryContainer,
                 textStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimary,
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
                     fontWeight: FontWeight.w500),
                 onPressed: () => context.pushReplacement('/add/incomes'),
               ),
@@ -35,7 +36,7 @@ class AddScreen extends StatelessWidget {
                 variant: "outlined",
                 color: Theme.of(context).colorScheme.outline,
                 textStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
+                    color: Theme.of(context).colorScheme.onSurface,
                     fontWeight: FontWeight.w500),
                 onPressed: () => context.pushReplacement("/add/expenses"),
               ),

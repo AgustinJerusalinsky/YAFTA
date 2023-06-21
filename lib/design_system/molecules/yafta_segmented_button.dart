@@ -58,6 +58,14 @@ class _YaftaSegmentedButtonState extends State<YaftaSegmentedButton> {
                     ))
                 .toList(),
             selected: <int>{_currentSegment},
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.resolveWith((states) {
+                if (states.contains(MaterialState.selected)) {
+                  return Theme.of(context).colorScheme.secondaryContainer;
+                }
+                return Theme.of(context).colorScheme.surface;
+              }),
+            ),
             onSelectionChanged: onSelectionChanged,
           ),
         )

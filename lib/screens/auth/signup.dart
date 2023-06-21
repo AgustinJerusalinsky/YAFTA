@@ -6,6 +6,7 @@ import 'package:yafta/design_system/molecules/text_field.dart';
 import 'package:yafta/services/auth_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yafta/utils/analytics.dart';
+import 'package:yafta/utils/remote_config.dart';
 
 import '../../design_system/molecules/password_text_field.dart';
 
@@ -45,7 +46,7 @@ class _SignupScreenState extends State<SignupScreen> {
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 52),
         child: Column(children: [
-          const YaftaLogo.isologo(),
+          YaftaLogo.isologo(),
           const YaftaTextField(label: "Full name"),
           const YaftaTextField(label: "Username"),
           YaftaTextField(label: "Email", textController: _emailController),

@@ -63,14 +63,19 @@ class YaftaSearchBarState extends State<YaftaSearchBar> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25),
                 ),
-                title: Text(widget.label),
-                leading: Icon(Icons.menu),
+                title: Text(
+                  widget.label,
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                ),
+                leading: Icon(Icons.menu,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant),
                 onTap: openModal,
               ),
             ),
             PopupMenuButton(
                 onSelected: widget.onFilterChange,
-                surfaceTintColor: Theme.of(context).colorScheme.surface,
                 initialValue: widget.selectedFilter,
                 itemBuilder: (context) {
                   return widget.filterOptions.map((option) {
@@ -81,7 +86,8 @@ class YaftaSearchBarState extends State<YaftaSearchBar> {
                   }).toList();
                 },
                 position: PopupMenuPosition.under,
-                icon: Icon(Icons.filter_list))
+                icon: Icon(Icons.filter_list,
+                    color: Theme.of(context).colorScheme.onSurface))
           ],
         ),
         SizedBox(height: 16),
@@ -94,13 +100,22 @@ class YaftaSearchBarState extends State<YaftaSearchBar> {
                       spacing: 5,
                       children: selectedItems.map((item) {
                         return Chip(
+                          deleteIconColor: Theme.of(context)
+                              .colorScheme
+                              .onSecondaryContainer,
                           side: BorderSide(
                             color: Theme.of(context)
                                 .colorScheme
                                 .secondaryContainer,
                           ),
                           label: Text(item,
-                              style: Theme.of(context).textTheme.bodyMedium),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSecondaryContainer)),
                           backgroundColor:
                               Theme.of(context).colorScheme.secondaryContainer,
                           onDeleted: () {
@@ -124,7 +139,11 @@ class YaftaSearchBarState extends State<YaftaSearchBar> {
                     alignment: Alignment.center,
                     child: Text(
                       widget.emptyLabel,
-                      style: Theme.of(context).textTheme.bodyMedium,
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSecondaryContainer,
+                          ),
                     ),
                   ),
                 ),
@@ -156,6 +175,7 @@ class _DialogContentState extends State<DialogContent> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -171,7 +191,14 @@ class _DialogContentState extends State<DialogContent> {
                     final item = widget.allItems[index];
 
                     return ListTile(
-                      title: Text(item),
+                      title: Text(
+                        item,
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurfaceVariant,
+                            ),
+                      ),
                       trailing: Icon(
                         widget.selectedItems.contains(item)
                             ? Icons.check
@@ -190,7 +217,12 @@ class _DialogContentState extends State<DialogContent> {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text('Volver'),
+            child: Text(
+              'Volver',
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+            ),
           ),
         ],
       ),

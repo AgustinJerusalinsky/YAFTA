@@ -20,12 +20,13 @@ class YaftaNavigationBar extends StatelessWidget {
               icon: Icon(
                 e["icon"] as IconData,
                 size: 24,
-                color: Theme.of(context).colorScheme.onBackground,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
               label: e["label"] as String,
             ))
         .toList();
     return NavigationBar(
+        backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
         elevation: 5,
         onDestinationSelected: onDestinationSelected,
         selectedIndex: appNavigation.currentIndex,

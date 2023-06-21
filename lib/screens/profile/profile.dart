@@ -4,6 +4,7 @@ import 'package:yafta/design_system/molecules/button.dart';
 import 'package:yafta/design_system/molecules/text_field.dart';
 import 'package:yafta/design_system/molecules/yafta_app_bar.dart';
 import 'package:yafta/services/auth_provider.dart';
+import 'package:yafta/utils/remote_config.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -21,10 +22,17 @@ class ProfileScreen extends StatelessWidget {
     return Consumer<AuthProvider>(
       builder: (context, authProvider, _) {
         return Scaffold(
-          appBar: const YaftaAppBar(
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          appBar: YaftaAppBar(
             back: true,
             showBrand: true,
             showProfile: false,
+            showThemeSwitch: true,
+            useDarkTheme: authProvider.theme == AppTheme.dark,
+            onThemeSwitchChange: (value) {
+              print("callback" + value.toString());
+              authProvider.toggleDarkTheme();
+            },
           ),
           body: SingleChildScrollView(
             child: Container(
@@ -77,7 +85,7 @@ class ProfileScreen extends StatelessWidget {
                               .textTheme
                               .labelLarge!
                               .copyWith(
-                                color: Theme.of(context).colorScheme.primary,
+                                color: Theme.of(context).colorScheme.onSurface,
                               ),
                           variant: "outlined",
                         )

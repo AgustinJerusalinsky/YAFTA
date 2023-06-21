@@ -8,19 +8,24 @@ class YaftaCard extends StatelessWidget {
     this.title,
     this.mainSection,
     this.footer,
+    this.color,
+    this.borderColor,
   }) : super(key: key);
 
   final Widget? title;
   final Widget? mainSection;
   final Widget? footer;
+  final Color? color;
+  final Color? borderColor;
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: color ?? Theme.of(context).colorScheme.surfaceVariant,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
         side: BorderSide(
-          color: Theme.of(context).colorScheme.surfaceVariant,
+          color: borderColor ?? Theme.of(context).colorScheme.surfaceVariant,
           width: 1,
         ),
       ),

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:yafta/utils/remote_config.dart';
 
 import '../models/user.dart';
 
@@ -11,6 +12,8 @@ class AuthProvider extends ChangeNotifier {
   late User? _user;
   late StreamSubscription<auth.User?> _authStateChangesSubscription;
 
+  late AppTheme _theme;
+
   AuthProvider() {
     _user =
         _auth.currentUser != null ? _userFromFirebase(_auth.currentUser) : null;
@@ -18,9 +21,13 @@ class AuthProvider extends ChangeNotifier {
       _user = _userFromFirebase(event);
       notifyListeners();
     });
+    _theme = RemoteConfigHandler.getTheme();
+    notifyListeners();
   }
 
   User? get user => _user;
+
+  AppTheme get theme => _theme;
 
   @override
   void dispose() {
@@ -35,6 +42,11 @@ class AuthProvider extends ChangeNotifier {
 
   void resetPassword(String email) async {
     await _auth.sendPasswordResetEmail(email: email);
+  }
+
+  void toggleDarkTheme() {
+    _theme = _theme == AppTheme.light ? AppTheme.dark : AppTheme.light;
+    notifyListeners();
   }
 
   User? _userFromFirebase(auth.User? user) {

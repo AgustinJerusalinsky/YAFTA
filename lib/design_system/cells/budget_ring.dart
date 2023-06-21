@@ -32,31 +32,54 @@ class BudgetRing extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text("Eliminar Presupuesto"),
-            content: const Text(
-                "Esta acción es irreversible y eliminará todos los movimientos asociados"),
+            title: Text(
+              "Eliminar Presupuesto",
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+            ),
+            backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
+            content: Text(
+              "Esta acción es irreversible y eliminará todos los movimientos asociados",
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+            ),
             actions: [
               TextButton(
-                child: const Text("Close"),
+                child: Text("Close",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    )),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
               ),
               TextButton(
                   style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.red)),
+                      backgroundColor: MaterialStateProperty.all(
+                          Theme.of(context).colorScheme.errorContainer)),
                   onPressed: () {
                     deleteBudget(context).then((value) {
                       //show snackbar
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           duration: Duration(seconds: 1),
-                          backgroundColor: Colors.red,
-                          content: Text("Presupuesto eliminado")));
+                          backgroundColor:
+                              Theme.of(context).colorScheme.errorContainer,
+                          content: Text(
+                            "Presupuesto eliminado",
+                            style: TextStyle(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onErrorContainer),
+                          )));
                       Navigator.of(context).pop();
                     });
                   },
-                  child: const Text("Eliminar",
-                      style: TextStyle(color: Colors.white)))
+                  child: Text("Eliminar",
+                      style: TextStyle(
+                          color:
+                              Theme.of(context).colorScheme.onErrorContainer)))
             ],
           );
         });
@@ -87,7 +110,7 @@ class BudgetRing extends StatelessWidget {
     } else {
       colorList = [
         Theme.of(context).colorScheme.primary,
-        Theme.of(context).colorScheme.surfaceVariant,
+        Theme.of(context).colorScheme.surface,
       ];
       data = {
         "Gastado": percentage,
@@ -95,15 +118,17 @@ class BudgetRing extends StatelessWidget {
       };
     }
     return YaftaCard(
+      color: Theme.of(context).colorScheme.secondaryContainer,
+      borderColor: Theme.of(context).colorScheme.onSecondaryContainer,
       title: Container(
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(16.0),
             topRight: Radius.circular(16.0),
           ),
-          color: Theme.of(context).colorScheme.surface,
+          color: Theme.of(context).colorScheme.secondaryContainer,
           border: Border.all(
-            color: Theme.of(context).colorScheme.surfaceVariant,
+            color: Theme.of(context).colorScheme.onSecondaryContainer,
             width: 1,
           ),
         ),
@@ -115,12 +140,14 @@ class BudgetRing extends StatelessWidget {
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
               child: Text(
                 category.name,
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color: Theme.of(context).colorScheme.onSecondaryContainer,
+                    ),
               ),
             ),
             const Spacer(),
             PopupMenuButton(
-              surfaceTintColor: Theme.of(context).colorScheme.surface,
+              color: Theme.of(context).colorScheme.surfaceVariant,
               itemBuilder: (context) {
                 return [
                   PopupMenuItem(
@@ -134,13 +161,14 @@ class BudgetRing extends StatelessWidget {
                   )
                 ];
               },
-              icon: const Icon(Icons.more_vert),
+              icon: Icon(Icons.more_vert,
+                  color: Theme.of(context).colorScheme.onSecondaryContainer),
             )
           ],
         ),
       ),
       mainSection: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0.0),
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
         child: Row(
           children: [
             Expanded(
@@ -165,7 +193,11 @@ class BudgetRing extends StatelessWidget {
                     movementType == MovementType.expense
                         ? "Utilizado"
                         : "Ingresado",
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSecondaryContainer,
+                        ),
                   ),
                   Text(
                     "${percentage.toStringAsFixed(0)}%",
@@ -180,14 +212,18 @@ class BudgetRing extends StatelessWidget {
                             "${percentage.toStringAsFixed(0)}%")),
                   ),
                   Divider(
-                    color: Theme.of(context).colorScheme.surfaceVariant,
+                    color: Theme.of(context).colorScheme.onSecondaryContainer,
                     thickness: 3,
                   ),
                   Text(
                       showOverBudget
                           ? "\$${totalMovement - budget} sobre el presupuesto"
                           : "\$${budget - totalMovement} restantes",
-                      style: Theme.of(context).textTheme.labelLarge),
+                      style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSecondaryContainer,
+                          )),
                 ],
               ),
             ),

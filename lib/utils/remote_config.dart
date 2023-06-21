@@ -27,7 +27,7 @@ class RemoteConfigHandler {
 
   static Future<void> _setDefaults() async =>
       _remoteConfig.setDefaults(<String, dynamic>{
-        Config.appTheme.name: "light",
+        Config.appTheme.name: "dark",
         Config.budgets.name: true,
         Config.signInWithGoogle.name: true,
       });

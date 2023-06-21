@@ -71,11 +71,17 @@ class _BudgetsScreenState extends State<BudgetsScreen> {
                     children: [
                       Text(
                         index == 0 ? 'Gastos' : 'Ingresos',
-                        style: Theme.of(context).textTheme.displaySmall,
+                        style: Theme.of(context)
+                            .textTheme
+                            .displaySmall!
+                            .copyWith(
+                                color: Theme.of(context).colorScheme.onSurface),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(right: 10),
-                        child: Divider(),
+                        child: Divider(
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
                       ),
                       Expanded(
                         child: ListView.builder(

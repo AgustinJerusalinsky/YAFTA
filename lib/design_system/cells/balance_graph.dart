@@ -24,13 +24,27 @@ class BalanceGraph extends StatelessWidget {
         spacing: 10,
         children: [
           Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+              side: BorderSide(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                width: 1,
+              ),
+            ),
+            color: Theme.of(context).colorScheme.secondaryContainer,
             child: Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
               child: Column(
                 children: [
                   Text("Gastos",
-                      style: Theme.of(context).textTheme.headlineMedium),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineMedium!
+                          .copyWith(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurfaceVariant)),
                   const SizedBox(height: 20),
                   expenseLoading
                       ? SizedBox(
@@ -45,13 +59,27 @@ class BalanceGraph extends StatelessWidget {
             ),
           ),
           Card(
+            color: Theme.of(context).colorScheme.secondaryContainer,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+              side: BorderSide(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                width: 1,
+              ),
+            ),
             child: Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
               child: Column(
                 children: [
                   Text("Ingresos",
-                      style: Theme.of(context).textTheme.headlineMedium),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineMedium!
+                          .copyWith(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurfaceVariant)),
                   const SizedBox(height: 20),
                   incomeLoading
                       ? SizedBox(

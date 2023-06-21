@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:yafta/design_system/atoms/yafta_logo.dart';
+import 'package:yafta/services/auth_provider.dart';
 
 class YaftaAppBar extends StatelessWidget implements PreferredSizeWidget {
   const YaftaAppBar(
@@ -8,12 +10,24 @@ class YaftaAppBar extends StatelessWidget implements PreferredSizeWidget {
       this.title = "",
       this.back = false,
       this.showBrand = false,
-      this.showProfile = true});
+      this.showProfile = true,
+      this.showThemeSwitch = false,
+      this.useDarkTheme = false,
+      this.onThemeSwitchChange});
 
   final String title;
   final bool back;
   final bool showBrand;
   final bool showProfile;
+  final bool showThemeSwitch;
+  final bool useDarkTheme;
+  final Function(bool)? onThemeSwitchChange;
+
+  void onThemeSwitch(bool value) {
+    if (onThemeSwitchChange != null) {
+      onThemeSwitchChange!(value);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +35,13 @@ class YaftaAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: title != ""
           ? Text(
               title,
-              style: Theme.of(context).textTheme.titleLarge,
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
             )
           : null,
       scrolledUnderElevation: 0.0,
+      backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
       leading: Wrap(
         direction: Axis.vertical,
         children: [
@@ -40,8 +57,12 @@ class YaftaAppBar extends StatelessWidget implements PreferredSizeWidget {
             padding:
                 const EdgeInsets.symmetric(vertical: 8.0, horizontal: 18.0),
             child: showBrand
-                ? const YaftaLogo.isologo(
-                    width: 90,
+                ? Consumer<AuthProvider>(
+                    builder: (ctx, provider, _) {
+                      return const YaftaLogo.isologo(
+                        width: 90,
+                      );
+                    },
                   )
                 : const YaftaLogo.isotype(
                     height: 35,
@@ -61,7 +82,15 @@ class YaftaAppBar extends StatelessWidget implements PreferredSizeWidget {
                 },
               ),
             ]
-          : null,
+          : showThemeSwitch
+              ? [
+                  Switch(
+                    value: useDarkTheme,
+                    onChanged: onThemeSwitch,
+                    activeColor: Theme.of(context).colorScheme.secondary,
+                  )
+                ]
+              : null,
     );
   }
 

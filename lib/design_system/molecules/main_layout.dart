@@ -22,6 +22,7 @@ class MainLayout extends StatelessWidget {
         title:
             "${AppNavigation.navigationItems[appNavigation.currentIndex]["label"]}",
       ),
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 15.0),
         child: body,
@@ -34,10 +35,13 @@ class MainLayout extends StatelessWidget {
           // context.go(
           //     "${AppNavigation.navigationItems[appNavigation.currentIndex]["fabRoute"]}");
         },
-        icon: const Icon(Icons.add),
+        icon: Icon(Icons.add,
+            color: Theme.of(context).colorScheme.onTertiaryContainer),
         label: Text(
-          "${AppNavigation.navigationItems[appNavigation.currentIndex]["fabLabel"]}",
-        ),
+            "${AppNavigation.navigationItems[appNavigation.currentIndex]["fabLabel"]}",
+            style: Theme.of(context).textTheme.button!.copyWith(
+                  color: Theme.of(context).colorScheme.onTertiaryContainer,
+                )),
       ),
       bottomNavigationBar: YaftaNavigationBar(
         currentIndex: appNavigation.currentIndex,

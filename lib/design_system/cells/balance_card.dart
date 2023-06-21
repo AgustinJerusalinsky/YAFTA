@@ -31,9 +31,12 @@ class BalanceCard extends StatelessWidget {
               direction: Axis.horizontal,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
+                Text(
                   'Total',
-                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.w700),
+                  style: TextStyle(
+                      fontSize: 40,
+                      fontWeight: FontWeight.w700,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant),
                 ),
                 (loadingExpenses || loadingIncomes)
                     ? const Padding(
@@ -44,7 +47,9 @@ class BalanceCard extends StatelessWidget {
                         '\$ ' + total,
                         style: TextStyle(
                             fontSize: getTextSizeBig(total),
-                            fontWeight: FontWeight.w700),
+                            fontWeight: FontWeight.w700,
+                            color:
+                                Theme.of(context).colorScheme.onSurfaceVariant),
                       ),
               ],
             ),
@@ -63,14 +68,17 @@ class BalanceCard extends StatelessWidget {
                         : Text(
                             income,
                             style: TextStyle(
-                                color: Theme.of(context).colorScheme.onSurface,
-                                fontSize: getTextSize(income),
-                                fontWeight: FontWeight.w400),
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurfaceVariant,
+                              fontSize: getTextSize(income),
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                     Text(
                       "Ingresos",
                       style: TextStyle(
-                          color: Theme.of(context).colorScheme.onSurface,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
                           fontSize:
                               Theme.of(context).textTheme.bodyMedium!.fontSize,
                           fontWeight: FontWeight.w400),
@@ -91,14 +99,16 @@ class BalanceCard extends StatelessWidget {
                         : Text(
                             expenses,
                             style: TextStyle(
-                                color: Theme.of(context).colorScheme.onSurface,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSurfaceVariant,
                                 fontSize: getTextSize(expenses),
                                 fontWeight: FontWeight.w400),
                           ),
                     Text(
                       "Gastos",
                       style: TextStyle(
-                          color: Theme.of(context).colorScheme.onSurface,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
                           fontSize:
                               Theme.of(context).textTheme.bodyMedium!.fontSize,
                           fontWeight: FontWeight.w400),
