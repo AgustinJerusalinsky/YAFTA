@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:yafta/design_system/atoms/yafta_logo.dart';
 import 'package:yafta/design_system/molecules/button.dart';
 import 'package:yafta/design_system/molecules/text_field.dart';
+import 'package:yafta/routing/router_utils.dart';
+import 'package:yafta/screens/auth/google_button.dart';
 import 'package:yafta/services/auth_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yafta/utils/analytics.dart';
@@ -26,7 +28,7 @@ class _SignupScreenState extends State<SignupScreen> {
   void _handleGoogleSignup() async {
     final response = await context.read<AuthProvider>().signInWithGoogle();
     AnalyticsHandler.logSignup();
-    context.go('/');
+    context.go(AppRoutes.home.path);
   }
 
   void _handleSignup() async {
@@ -40,7 +42,7 @@ class _SignupScreenState extends State<SignupScreen> {
       final response =
           await context.read<AuthProvider>().signup(email, password);
       AnalyticsHandler.logSignup();
-      context.go('/');
+      context.go(AppRoutes.home.path);
 
       // Navigate to home without context
     }
@@ -71,12 +73,11 @@ class _SignupScreenState extends State<SignupScreen> {
           YaftaButton(
               variant: "text",
               text: "I already have an account",
-              onPressed: () => context.go("/login")),
-          if (signInWithGoogleEnabled)
-            YaftaButton(
-                text: "Sign in with Google",
-                variant: "filled",
-                onPressed: _handleGoogleSignup)
+              onPressed: () => context.go(AppRoutes.login.path)),
+          if (signInWithGoogleEnabled) ...[
+            const Divider(),
+            GoogleButton(onPressed: _handleGoogleSignup)
+          ]
         ]),
       ),
     );

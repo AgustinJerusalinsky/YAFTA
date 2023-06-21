@@ -58,19 +58,13 @@ class AuthProvider extends ChangeNotifier {
 
   // Login method
   Future<User?> login(String email, String password) async {
-    try {
-      final result = await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      final firebaseUser = _userFromFirebase(result.user);
-      // _user = firebaseUser;
-      return firebaseUser;
-    } catch (error) {
-      // Handle authentication errors here
-      _user = null;
-    }
-    return null;
+    final result = await _auth.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    final firebaseUser = _userFromFirebase(result.user);
+    // _user = firebaseUser;
+    return firebaseUser;
   }
 
   Future<User?> signInWithGoogle() async {
