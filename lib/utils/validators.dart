@@ -1,6 +1,6 @@
 bool isEmailValid(String value) {
   final emailRegex =
-      RegExp(r'^[\w-]+(\.[\w-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$');
+      RegExp(r'^[\w-\+\.]+(\.[\w-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$');
   return emailRegex.hasMatch(value);
 }
 

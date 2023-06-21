@@ -31,8 +31,18 @@ class _LoginScreenState extends State<LoginScreen> {
   String _errorMessage = "";
 
   void _handleGoogleSignup() async {
-    await context.read<AuthProvider>().signInWithGoogle();
-    context.go(AppRoutes.home.path);
+    try {
+      setState(() {
+        _submitting = true;
+      });
+      await context.read<AuthProvider>().signInWithGoogle();
+      context.go(AppRoutes.home.path);
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        _submitting = false;
+        _errorMessage = getAuthErrorMessage(e.code);
+      });
+    }
   }
 
   void _handleLogin() async {
@@ -47,7 +57,6 @@ class _LoginScreenState extends State<LoginScreen> {
         context.go(AppRoutes.home.path);
       } on FirebaseAuthException catch (e) {
         setState(() {
-          print("hello");
           _submitting = false;
           _errorMessage = getAuthErrorMessage(e.code);
         });
@@ -93,10 +102,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 32),
                   if (_errorMessage.isNotEmpty)
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
                       child: Text(
                         _errorMessage,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.red,
                           fontWeight: FontWeight.bold,
                         ),

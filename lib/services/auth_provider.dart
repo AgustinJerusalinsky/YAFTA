@@ -48,12 +48,11 @@ class AuthProvider extends ChangeNotifier {
     if (user == null) {
       return null;
     }
-    final userName = user.displayName?.split(' ').join("_");
     return User(
         email: user.email,
         uid: user.uid,
         fullName: user.displayName,
-        userName: userName);
+        userName: user.photoURL ?? user.displayName?.split(' ').join("_"));
   }
 
   // Login method
@@ -87,21 +86,25 @@ class AuthProvider extends ChangeNotifier {
         return null;
       }
     } catch (error) {
-      print(error);
       return null;
     }
   }
 
   // Signup method
-  Future<User?> signup(String email, String password) async {
+  Future<User?> signup(
+      String email, String password, String fullname, String username) async {
     try {
       final result = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      final firebaseUser = _userFromFirebase(result.user);
+      final firebaseUser = result.user;
+
+      await firebaseUser?.updateDisplayName(fullname);
+      await firebaseUser?.updatePhotoURL(username);
+      final user = _userFromFirebase(_auth.currentUser);
       // _user = firebaseUser;
-      return firebaseUser;
+      return user;
     } catch (error) {
       _user = null;
     }
