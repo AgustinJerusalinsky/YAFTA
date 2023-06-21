@@ -69,26 +69,24 @@ class _HomeScreenState extends State<HomeScreen> {
         final Map<String, double> incomesByCategory = {};
 
         expenses.forEach((element) {
-          if (expensesByCategory.containsKey(element.category)) {
+          if (expensesByCategory.containsKey(element.category.name)) {
             expensesByCategory[element.category.name] =
-                expensesByCategory[element.category.name] =
-                    element.amount.toDouble();
+                expensesByCategory[element.category.name]! + element.amount;
           } else {
-            expensesByCategory[element.category.name] =
-                element.amount.toDouble();
+            expensesByCategory[element.category.name] = element.amount;
+          }
+        });
+        print(incomes.map((e) => e.amount).toList());
+        incomes.forEach((element) {
+          if (incomesByCategory.containsKey(element.category.name)) {
+            incomesByCategory[element.category.name] =
+                incomesByCategory[element.category.name]! + element.amount;
+          } else {
+            incomesByCategory[element.category.name] = element.amount;
           }
         });
 
-        incomes.forEach((element) {
-          if (incomesByCategory.containsKey(element.category)) {
-            incomesByCategory[element.category.name] =
-                incomesByCategory[element.category.name] =
-                    element.amount.toDouble();
-          } else {
-            incomesByCategory[element.category.name] =
-                element.amount.toDouble();
-          }
-        });
+        print(incomesByCategory);
 
         if (expensesByCategory.isEmpty) {
           expensesByCategory[''] = 0;
