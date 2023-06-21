@@ -28,7 +28,6 @@ class _LoginScreenState extends State<LoginScreen> {
       final response =
           await context.read<AuthProvider>().login(email, password);
       //TODO: replace with logging framework
-      print(response);
       context.go('/');
       // Navigate to home without context
     }

@@ -33,7 +33,6 @@ class _SignupScreenState extends State<SignupScreen> {
       final response =
           await context.read<AuthProvider>().signup(email, password);
       AnalyticsHandler.logSignup();
-      print(response);
       context.go('/');
 
       // Navigate to home without context

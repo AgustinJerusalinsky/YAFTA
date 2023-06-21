@@ -15,7 +15,6 @@ class IncomesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<MovementProvider>(builder: (context, provider, _) {
       final incomeMovements = provider.totalIncomes;
-      print(incomeMovements);
       return MovementScreen(
         movements: incomeMovements,
         type: MovementType.income,

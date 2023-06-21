@@ -96,7 +96,7 @@ class BudgetProvider extends ChangeNotifier {
 
   Future<Category> getCategory(String categoryId) async {
     if (_categoryDirty) {
-      _categories = await _getFirestoreCategories(authProvider.user.uid);
+      _categories = await _getFirestoreCategories(authProvider.user!.uid);
       categoryDirty = false;
     }
     return _categories
@@ -107,7 +107,7 @@ class BudgetProvider extends ChangeNotifier {
   Future<void> updateCategory(String categoryId, String name, double amount) {
     return firestoreService
         .updateCategory(
-      authProvider.user.uid,
+      authProvider.user!.uid,
       categoryId,
       name,
       amount,
@@ -124,7 +124,7 @@ class BudgetProvider extends ChangeNotifier {
   //delete category
   Future<void> deleteCategory(String categoryId) {
     return firestoreService
-        .deleteCategory(authProvider.user.uid, categoryId)
+        .deleteCategory(authProvider.user!.uid, categoryId)
         .then((value) {
       budgetDirty = true;
       categoryDirty = true;

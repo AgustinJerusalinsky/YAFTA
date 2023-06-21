@@ -15,13 +15,12 @@ class AuthProvider extends ChangeNotifier {
     _user =
         _auth.currentUser != null ? _userFromFirebase(_auth.currentUser) : null;
     _authStateChangesSubscription = _auth.authStateChanges().listen((event) {
-      print(event);
       _user = _userFromFirebase(event);
       notifyListeners();
     });
   }
 
-  get user => _user;
+  User? get user => _user;
 
   @override
   void dispose() {
@@ -29,11 +28,25 @@ class AuthProvider extends ChangeNotifier {
     super.dispose();
   }
 
+  Future<void> changePassword() async {
+    final email = _user!.email!;
+    await _auth.sendPasswordResetEmail(email: email);
+  }
+
+  void resetPassword(String email) async {
+    await _auth.sendPasswordResetEmail(email: email);
+  }
+
   User? _userFromFirebase(auth.User? user) {
     if (user == null) {
       return null;
     }
-    return User(email: user.email, uid: user.uid);
+    final userName = user.displayName?.split(' ').join("_");
+    return User(
+        email: user.email,
+        uid: user.uid,
+        fullName: user.displayName,
+        userName: userName);
   }
 
   // Login method

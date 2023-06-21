@@ -32,7 +32,6 @@ class YaftaButton extends StatelessWidget {
 
   Widget _getButtonVariant(context, variant, onPressed, child, secondary) {
     final theme = Theme.of(context).textTheme.labelLarge;
-    print(theme);
     switch (variant) {
       case 'filled':
         if (secondary) {

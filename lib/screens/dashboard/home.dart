@@ -76,7 +76,6 @@ class _HomeScreenState extends State<HomeScreen> {
             expensesByCategory[element.category.name] = element.amount;
           }
         });
-        print(incomes.map((e) => e.amount).toList());
         incomes.forEach((element) {
           if (incomesByCategory.containsKey(element.category.name)) {
             incomesByCategory[element.category.name] =
@@ -85,8 +84,6 @@ class _HomeScreenState extends State<HomeScreen> {
             incomesByCategory[element.category.name] = element.amount;
           }
         });
-
-        print(incomesByCategory);
 
         if (expensesByCategory.isEmpty) {
           expensesByCategory[''] = 0;
