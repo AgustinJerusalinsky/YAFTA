@@ -93,8 +93,8 @@ class _BudgetsScreenState extends State<BudgetsScreen> {
                                 key: Key(categoryBudgets[index]
                                     .category
                                     .categoryId!),
-                                budget: categoryBudgets[index].total.toDouble(),
-                                spent: categoryBudgets[index].amount.toDouble(),
+                                budget: categoryBudgets[index].total,
+                                totalMovement: categoryBudgets[index].amount,
                                 category: categoryBudgets[index].category,
                               ),
                             );

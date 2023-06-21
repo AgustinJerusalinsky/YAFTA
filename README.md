@@ -84,13 +84,25 @@ Para este proyecto decidimos la siguiente estructura de archivos y directorios:
 │   │   ├── atoms
 │   │   ├── molecules
 │   │   └── cells
-│   ├── models
-│   │   ├── user.dart
-│   │   ...
 │   ├── routing
 │   │   ├── router_provider.dart
 │   │   ...
 │   ├── screens
+│   │   ├── auth
+│   │   ├── budgets
+│   │   ...
+│   ├── models
+│   │   ├── user.dart
+│   │   ...
+│   ├── data
+|   |   └── firestore_service.dart
+│   ├── services
+│   │   ├── auth_provider.dart
+│   │   ...
+│   └── utils
+        ├── analytics.dart
+        ...
+
 
 ```
 

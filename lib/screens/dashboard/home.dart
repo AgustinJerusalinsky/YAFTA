@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:yafta/design_system/cells/balance_graph.dart';
 import 'package:yafta/design_system/molecules/yafta_segmented_button.dart';
 import 'package:yafta/services/movement_provider.dart';
+import 'package:yafta/utils/remote_config.dart';
 
 import '../../design_system/cells/balance_card.dart';
 import '../../models/movement.dart';
@@ -68,34 +69,22 @@ class _HomeScreenState extends State<HomeScreen> {
         final Map<String, double> expensesByCategory = {};
         final Map<String, double> incomesByCategory = {};
 
-        expenses.forEach((element) {
-          if (expensesByCategory.containsKey(element.category)) {
-            expensesByCategory[element.category.name] =
-                expensesByCategory[element.category.name] =
-                    element.amount.toDouble();
+        for (var element in expenses) {
+          if (expensesByCategory.containsKey(element.category.categoryId)) {
+            expensesByCategory[element.category.categoryId!] =
+                expensesByCategory[element.category.categoryId]! +
+                    element.amount;
           } else {
-            expensesByCategory[element.category.name] =
-                element.amount.toDouble();
+            expensesByCategory[element.category.name] = element.amount;
           }
-        });
-
-        incomes.forEach((element) {
-          if (incomesByCategory.containsKey(element.category)) {
-            incomesByCategory[element.category.name] =
-                incomesByCategory[element.category.name] =
-                    element.amount.toDouble();
-          } else {
-            incomesByCategory[element.category.name] =
-                element.amount.toDouble();
-          }
-        });
-
-        if (expensesByCategory.isEmpty) {
-          expensesByCategory[''] = 0;
         }
-
-        if (incomesByCategory.isEmpty) {
-          incomesByCategory[''] = 0;
+        for (var element in incomes) {
+          if (incomesByCategory.containsKey(element.category.name)) {
+            incomesByCategory[element.category.name] =
+                incomesByCategory[element.category.name]! + element.amount;
+          } else {
+            incomesByCategory[element.category.name] = element.amount;
+          }
         }
 
         return Column(
@@ -125,19 +114,26 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Text(
-                    "Categorias",
-                    style: Theme.of(context).textTheme.headlineLarge,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  BalanceGraph(
-                    expenseData: expensesByCategory,
-                    incomeData: incomesByCategory,
-                    incomeLoading: loadingIncomes,
-                    expenseLoading: loadingExpenses,
-                  ),
+                  if (RemoteConfigHandler.getBudgets() &&
+                      (expensesByCategory.isNotEmpty &&
+                          incomesByCategory.isNotEmpty))
+                    Column(
+                      children: [
+                        Text(
+                          "Categorías",
+                          style: Theme.of(context).textTheme.headlineLarge,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        BalanceGraph(
+                          expenseData: expensesByCategory,
+                          incomeData: incomesByCategory,
+                          incomeLoading: loadingIncomes,
+                          expenseLoading: loadingExpenses,
+                        ),
+                      ],
+                    ),
                   SizedBox(
                     height: 60,
                   )

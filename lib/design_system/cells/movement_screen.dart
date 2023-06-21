@@ -4,6 +4,7 @@ import 'package:yafta/design_system/cells/categories_search.dart';
 import 'package:yafta/design_system/cells/movement_row.dart';
 import 'package:yafta/models/movement.dart';
 import 'package:yafta/models/movement_type.dart';
+import 'package:yafta/utils/remote_config.dart';
 
 class MovementScreen extends StatefulWidget {
   const MovementScreen(
@@ -80,16 +81,18 @@ class _MovementScreenState extends State<MovementScreen> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CategoriesSearchBar(
-          onFilterChange: onSelectedFilterChange,
-          selectedFilter: selectedFilter,
-          onSelectedItemsChange: (selectedCategories) {
-            setState(() {
-              this.selectedCategories = selectedCategories;
-              filterMovements();
-            });
-          },
-        ),
+        if (RemoteConfigHandler.getBudgets())
+          CategoriesSearchBar(
+            onFilterChange: onSelectedFilterChange,
+            selectedFilter: selectedFilter,
+            type: widget.type,
+            onSelectedItemsChange: (selectedCategories) {
+              setState(() {
+                this.selectedCategories = selectedCategories;
+                filterMovements();
+              });
+            },
+          ),
         SizedBox(height: 16),
         ListTile(
           title: Text(

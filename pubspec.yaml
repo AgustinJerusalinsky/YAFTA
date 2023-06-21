@@ -48,6 +48,7 @@ dependencies:
   logging: ^1.2.0
   intl: ^0.18.1
   golden_toolkit: ^0.15.0
+  google_sign_in: ^6.1.4
 
 dev_dependencies:
   flutter_test:
@@ -73,6 +74,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/brand/
+    - assets/auth/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

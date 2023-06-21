@@ -60,6 +60,16 @@ class BalanceGraph extends StatelessWidget {
                           width: 200)
                       : YaftaPieChart(
                           data: incomeData,
+                          colorList: [
+                            Color(0xFF74b9ff),
+                            Color(0xFF00b894),
+                            Color(0xFF55efc4),
+                            Color(0xFFe17055),
+                            Color(0xFFff7675),
+                            Color(0xFFa29bfe),
+                            Color(0xFFfd79a8),
+                            Color(0xFFffeaa7),
+                          ],
                         ),
                 ],
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yafta/utils/remote_config.dart';
 
 class AppNavigation extends ChangeNotifier {
   int _currentIndex = 0;
@@ -24,13 +25,14 @@ class AppNavigation extends ChangeNotifier {
       "fabLabel": "Gasto",
       "fabRoute": "/add/expenses"
     },
-    {
-      "icon": Icons.savings_outlined,
-      "label": "Presupuestos",
-      "route": "/budgets",
-      "fabLabel": "Presupuesto",
-      "fabRoute": "/add/budgets"
-    }
+    if (RemoteConfigHandler.getBudgets())
+      {
+        "icon": Icons.savings_outlined,
+        "label": "Presupuestos",
+        "route": "/budgets",
+        "fabLabel": "Presupuesto",
+        "fabRoute": "/add/budgets"
+      }
   ];
   static List<Map<String, dynamic>> get navigationItems => _navigationItems;
   get currentNavigationItem => _navigationItems[_currentIndex];
