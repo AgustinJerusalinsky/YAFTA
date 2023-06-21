@@ -36,24 +36,26 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Container(
-      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 52),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-        const YaftaLogo.imagotype(),
-        YaftaTextField(label: "Email", textController: _emailController),
-        YaftaPasswordTextField(
-          editingController: _passwordController,
-        ),
-        YaftaButton(
-            onPressed: _handleLogin,
-            variant: "filled",
-            secondary: true,
-            text: "Login"),
-        YaftaButton(
-            variant: "text",
-            text: "I don't have an account",
-            onPressed: () => context.go("/signup"))
-      ]),
-    ));
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 52),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+            const YaftaLogo.imagotype(),
+            YaftaTextField(label: "Email", textController: _emailController),
+            YaftaPasswordTextField(
+              editingController: _passwordController,
+            ),
+            YaftaButton(
+                onPressed: _handleLogin,
+                variant: "filled",
+                secondary: true,
+                text: "Login"),
+            YaftaButton(
+                variant: "text",
+                text: "I don't have an account",
+                onPressed: () => context.go("/signup"))
+          ]),
+        ));
   }
 }

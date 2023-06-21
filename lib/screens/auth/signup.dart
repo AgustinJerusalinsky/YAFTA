@@ -6,6 +6,7 @@ import 'package:yafta/design_system/molecules/text_field.dart';
 import 'package:yafta/services/auth_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yafta/utils/analytics.dart';
+import 'package:yafta/utils/remote_config.dart';
 
 import '../../design_system/molecules/password_text_field.dart';
 
@@ -21,6 +22,12 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _passwordConfirmationController =
       TextEditingController();
+
+  void _handleGoogleSignup() async {
+    final response = await context.read<AuthProvider>().signInWithGoogle();
+    AnalyticsHandler.logSignup();
+    context.go('/');
+  }
 
   void _handleSignup() async {
     final email = _emailController.text.trim();
@@ -41,6 +48,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final signInWithGoogleEnabled = RemoteConfigHandler.getSignInWithGoogle();
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 52),
@@ -63,7 +71,12 @@ class _SignupScreenState extends State<SignupScreen> {
           YaftaButton(
               variant: "text",
               text: "I already have an account",
-              onPressed: () => context.go("/login"))
+              onPressed: () => context.go("/login")),
+          if (signInWithGoogleEnabled)
+            YaftaButton(
+                text: "Sign in with Google",
+                variant: "filled",
+                onPressed: _handleGoogleSignup)
         ]),
       ),
     );
