@@ -118,13 +118,17 @@ class FirestoreService {
             .toList());
   }
 
-  Future<void> addCategory(String userId, Category category) {
+  Future<Category> addCategory(String userId, Category category) {
     return firestore
         .collection('users')
         .doc(userId)
         .collection('categories')
         .add(category.toMap(create: true))
-        .then((value) => log.info("Category Added"))
+        .then((value) {
+          log.info("Category Added");
+          return value.get();
+        })
+        .then((value) => categoryFromDocument(value))
         .catchError((error) => log.warning("Failed to add category: $error"));
   }
 
@@ -142,8 +146,8 @@ class FirestoreService {
   }
 
   Category categoryFromDocument(
-      QueryDocumentSnapshot<Map<String, dynamic>> document) {
-    Category c = Category.fromMap(document.data());
+      DocumentSnapshot<Map<String, dynamic>> document) {
+    Category c = Category.fromMap(document.data()!);
     c.categoryId = document.id;
     return c;
   }

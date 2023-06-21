@@ -69,22 +69,23 @@ class _HomeScreenState extends State<HomeScreen> {
         final Map<String, double> expensesByCategory = {};
         final Map<String, double> incomesByCategory = {};
 
-        expenses.forEach((element) {
-          if (expensesByCategory.containsKey(element.category.name)) {
-            expensesByCategory[element.category.name] =
-                expensesByCategory[element.category.name]! + element.amount;
+        for (var element in expenses) {
+          if (expensesByCategory.containsKey(element.category.categoryId)) {
+            expensesByCategory[element.category.categoryId!] =
+                expensesByCategory[element.category.categoryId]! +
+                    element.amount;
           } else {
             expensesByCategory[element.category.name] = element.amount;
           }
-        });
-        incomes.forEach((element) {
+        }
+        for (var element in incomes) {
           if (incomesByCategory.containsKey(element.category.name)) {
             incomesByCategory[element.category.name] =
                 incomesByCategory[element.category.name]! + element.amount;
           } else {
             incomesByCategory[element.category.name] = element.amount;
           }
-        });
+        }
 
         if (expensesByCategory.isEmpty) {
           expensesByCategory[''] = 0;

@@ -85,6 +85,7 @@ class _MovementScreenState extends State<MovementScreen> {
           CategoriesSearchBar(
             onFilterChange: onSelectedFilterChange,
             selectedFilter: selectedFilter,
+            type: widget.type,
             onSelectedItemsChange: (selectedCategories) {
               setState(() {
                 this.selectedCategories = selectedCategories;

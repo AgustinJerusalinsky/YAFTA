@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yafta/design_system/molecules/search_bar.dart';
+import 'package:yafta/models/movement_type.dart';
 import 'package:yafta/services/auth_provider.dart';
 import 'package:yafta/services/budget_provider.dart';
 
@@ -17,12 +18,14 @@ class CategoriesSearchBar extends StatefulWidget {
       {Key? key,
       required this.onSelectedItemsChange,
       required this.onFilterChange,
-      required this.selectedFilter})
+      required this.selectedFilter,
+      required this.type})
       : super(key: key);
 
   final Function(List<String>) onSelectedItemsChange;
   final Function(String) onFilterChange;
   final String selectedFilter;
+  final MovementType type;
 
   @override
   State<CategoriesSearchBar> createState() => _CategoriesSearchBarState();
@@ -41,7 +44,10 @@ class _CategoriesSearchBarState extends State<CategoriesSearchBar> {
                 onFilterChange: widget.onFilterChange,
                 selectedFilter: widget.selectedFilter,
                 emptyLabel: "Mostrando todas las cetegorías",
-                items: provider.categories.map((e) => e.name).toList(),
+                items: provider.categories
+                    .where((element) => element.type == widget.type)
+                    .map((e) => e.name)
+                    .toList(),
                 onSelectedItemsChange: widget.onSelectedItemsChange,
                 loading: provider.categoriesShouldFetch,
                 filterOptions: filterOptions,

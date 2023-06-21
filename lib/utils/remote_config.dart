@@ -20,6 +20,8 @@ enum AppTheme {
   dark,
 }
 
+const String noCategoryName = "No category";
+
 class RemoteConfigHandler {
   static final _remoteConfig = FirebaseRemoteConfig.instance;
 

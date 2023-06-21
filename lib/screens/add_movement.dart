@@ -51,7 +51,16 @@ class AddMovementScreenState extends State<AddMovementScreen> {
     final date = _dateController.text.trim();
 
     if (!RemoteConfigHandler.getBudgets()) {
-      category = Category(name: "No category", amount: 0, type: widget.type);
+      BudgetProvider budgetProvider = context.read<BudgetProvider>();
+      bool categoryExists =
+          await budgetProvider.categoryExists(noCategoryName, widget.type);
+      if (!categoryExists) {
+        category =
+            await budgetProvider.addCategory(noCategoryName, 0, widget.type);
+      } else {
+        category = await budgetProvider.getCategoryByNameAndType(
+            noCategoryName, widget.type);
+      }
     }
 
     await context.read<MovementProvider>().addMovement(double.parse(amount),

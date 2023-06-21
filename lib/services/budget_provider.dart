@@ -10,6 +10,7 @@ import 'package:yafta/services/auth_provider.dart';
 import 'package:yafta/services/movement_provider.dart';
 
 import '../data/firestore_service.dart';
+import '../utils/remote_config.dart';
 
 final log = Logger('BudgetProvider');
 
@@ -84,7 +85,7 @@ class BudgetProvider extends ChangeNotifier {
   }
 
   // add category
-  Future<void> addCategory(String name, double amount, MovementType type) {
+  Future<Category> addCategory(String name, double amount, MovementType type) {
     Category category = Category(name: name, amount: amount, type: type);
     String userId = authProvider.user!.uid;
     return firestoreService.addCategory(userId, category).then((value) {
@@ -101,6 +102,17 @@ class BudgetProvider extends ChangeNotifier {
     }
     return _categories
         .firstWhere((category) => category.categoryId == categoryId);
+  }
+
+  Future<Category> getCategoryByNameAndType(
+      String name, MovementType type) async {
+    if (_categoryDirty) {
+      _categories = await _getFirestoreCategories(authProvider.user!.uid);
+      categoryDirty = false;
+    }
+    print(_categories.map((e) => e.name));
+    return _categories.firstWhere(
+        (category) => category.name == name && category.type == type);
   }
 
   // update category
@@ -134,6 +146,15 @@ class BudgetProvider extends ChangeNotifier {
     });
   }
 
+  Future<bool> categoryExists(String name, MovementType type) async {
+    String userId = authProvider.user!.uid;
+
+    final firestoreCategories = await _getFirestoreCategories(userId);
+
+    return firestoreCategories
+        .any((category) => category.name == name && category.type == type);
+  }
+
   // get categories
   Future<List<Category>> _getFirestoreCategories(String userId) {
     return firestoreService.getCategories(userId);
@@ -146,7 +167,9 @@ class BudgetProvider extends ChangeNotifier {
     List<Category> firestoreCategories =
         await firestoreService.getCategories(userId);
 
-    firestoreCategories.forEach((category) {
+    firestoreCategories
+        .where((element) => element.name != noCategoryName)
+        .forEach((category) {
       budgetsMap[category.categoryId!] = Budget(
         category: category,
         total: category.amount,
@@ -155,7 +178,9 @@ class BudgetProvider extends ChangeNotifier {
 
     List<Movement> movements = await firestoreService.getMovementsMTD(userId);
 
-    movements.forEach((movement) {
+    movements
+        .where((element) => element.category.name != noCategoryName)
+        .forEach((movement) {
       budgetsMap[movement.category.categoryId]!.amount += movement.amount;
     });
 
