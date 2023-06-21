@@ -23,6 +23,17 @@ final shellRoutes = [
   AppRoutes.expenses,
   if (RemoteConfigHandler.getBudgets()) AppRoutes.budgets
 ];
+int getShellRouteIndex(String? path) {
+  if (path == null) {
+    return 0;
+  }
+  for (var r in shellRoutes) {
+    if (r.path == path) {
+      return shellRoutes.indexOf(r);
+    }
+  }
+  return 0;
+}
 
 extension AppRouteExtension on AppRoutes {
   String get path {

@@ -116,36 +116,52 @@ class AppRouter {
             parentNavigatorKey: _rootNavigator,
             path: AppRoutes.addIncome.path,
             name: AppRoutes.addIncome.name,
-            pageBuilder: (context, state) => CustomTransitionPage(
-                  child: const AddMovementScreen(type: MovementType.income),
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) =>
-                          SlideTransition(
-                              position: animation.drive(
-                                Tween<Offset>(
-                                  begin: const Offset(1, 0),
-                                  end: Offset.zero,
-                                ),
+            pageBuilder: (context, state) {
+              final amount = state.queryParameters['amount'];
+              final description = state.queryParameters['description'];
+              return CustomTransitionPage(
+                child: AddMovementScreen(
+                  type: MovementType.income,
+                  amount: amount,
+                  description: description,
+                ),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) =>
+                        SlideTransition(
+                            position: animation.drive(
+                              Tween<Offset>(
+                                begin: const Offset(1, 0),
+                                end: Offset.zero,
                               ),
-                              child: child),
-                )),
+                            ),
+                            child: child),
+              );
+            }),
         GoRoute(
             parentNavigatorKey: _rootNavigator,
             path: AppRoutes.addExpense.path,
             name: AppRoutes.addExpense.name,
-            pageBuilder: (context, state) => CustomTransitionPage(
-                  child: const AddMovementScreen(type: MovementType.expense),
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) =>
-                          SlideTransition(
-                              position: animation.drive(
-                                Tween<Offset>(
-                                  begin: const Offset(1, 0),
-                                  end: Offset.zero,
-                                ),
+            pageBuilder: (context, state) {
+              final amount = state.queryParameters['amount'];
+              final description = state.queryParameters['description'];
+              return CustomTransitionPage(
+                child: AddMovementScreen(
+                  type: MovementType.expense,
+                  amount: amount,
+                  description: description,
+                ),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) =>
+                        SlideTransition(
+                            position: animation.drive(
+                              Tween<Offset>(
+                                begin: const Offset(1, 0),
+                                end: Offset.zero,
                               ),
-                              child: child),
-                )),
+                            ),
+                            child: child),
+              );
+            }),
         GoRoute(
             parentNavigatorKey: _rootNavigator,
             path: AppRoutes.add.path,

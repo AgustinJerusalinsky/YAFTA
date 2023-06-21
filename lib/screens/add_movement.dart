@@ -16,7 +16,11 @@ import '../utils/analytics.dart';
 
 class AddMovementScreen extends StatefulWidget {
   final MovementType type;
-  const AddMovementScreen({Key? key, required this.type}) : super(key: key);
+  final String? amount;
+  final String? description;
+  const AddMovementScreen(
+      {Key? key, required this.type, this.amount, this.description})
+      : super(key: key);
   @override
   State<AddMovementScreen> createState() => AddMovementScreenState();
 }
@@ -34,6 +38,12 @@ class AddMovementScreenState extends State<AddMovementScreen> {
   void initState() {
     super.initState();
     _dateController.text = DateTime.now().toString().split(' ')[0];
+    if (widget.amount != null) {
+      _amountController.text = widget.amount!;
+    }
+    if (widget.description != null) {
+      _descriptionController.text = widget.description!;
+    }
   }
 
   final _formKey = GlobalKey<FormState>();
