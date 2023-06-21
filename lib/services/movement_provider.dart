@@ -216,7 +216,8 @@ class MovementProvider extends ChangeNotifier {
   }
 
   // delete movement
-  Future<void> deleteMovement(String userId, String movementId) {
+  Future<void> deleteMovement(String movementId) {
+    String userId = _authProvider.user!.uid;
     return _firestoreService.deleteMovement(userId, movementId).then((value) {
       incomeDirty = true;
       expenseDirty = true;

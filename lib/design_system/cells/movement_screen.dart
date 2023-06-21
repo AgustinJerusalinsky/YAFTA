@@ -133,7 +133,13 @@ class _MovementScreenState extends State<MovementScreen> {
                   separatorBuilder: (context, index) => Divider(
                     height: 1,
                     thickness: 1,
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: Theme.of(context)
+                        .colorScheme
+                        .copyWith(
+                          brightness: Brightness.dark,
+                        )
+                        .onSurface
+                        .withOpacity(0.3),
                   ),
                   itemCount: filteredMovements.length,
                   itemBuilder: (context, index) {
