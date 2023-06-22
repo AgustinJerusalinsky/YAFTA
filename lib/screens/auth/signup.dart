@@ -41,7 +41,10 @@ class _SignupScreenState extends State<SignupScreen> {
         _submitting = true;
       });
       await context.read<AuthProvider>().signInWithGoogle();
-      AnalyticsHandler.logSignup();
+      //If platform is android send analytics event
+      if (Theme.of(context).platform == TargetPlatform.android) {
+        AnalyticsHandler.logSignup();
+      }
       context.go(AppRoutes.home.path);
     } on FirebaseAuthException catch (e) {
       setState(() {
@@ -72,7 +75,9 @@ class _SignupScreenState extends State<SignupScreen> {
         await context
             .read<AuthProvider>()
             .signup(email, password, fullName, username);
-        AnalyticsHandler.logSignup();
+        if (Theme.of(context).platform == TargetPlatform.android) {
+          AnalyticsHandler.logSignup();
+        }
         context.go(AppRoutes.home.path);
       } on FirebaseAuthException catch (e) {
         setState(() {
