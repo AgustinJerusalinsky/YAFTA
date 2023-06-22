@@ -79,7 +79,7 @@ class _SignupScreenState extends State<SignupScreen> {
           AnalyticsHandler.logSignup();
         }
         context.go(AppRoutes.home.path);
-      } on FirebaseAuthException catch (e) {
+      } on FirebaseException catch (e) {
         setState(() {
           _submitting = false;
           _errorMessage = getAuthErrorMessage(e.code);
