@@ -161,6 +161,12 @@ Dentro de la configuración del test puede especificarse los dispositivos para l
 
 Esto nos permitió durante el desarrollo identificar _overflows_ o problemas visuales que un testing manual no hubiera detectado, porque hace pruebas rápido sobre múltiples dispositivos.
 
+Para correr todos los tests unitarios y golden tests ejecutamos el siguiente comando:
+
+```
+flutter test
+```
+
 ---
 
 ### **Routing**
@@ -274,5 +280,9 @@ Por último definimos un evento para medir la cantidad de usuarios que se regist
 ---
 
 ### **Seguridad**
+
+Respecto a las apiKeys utilizadas en el proyecto, para los servicios de Firebase, éste brinda (para Android) un archivo `google-services.json` que contiene identificadores únicos de aplicación, configuración y claves. Indagando, encont ramos que no está mal subir este archivo a un repositorio público. En Stack Overflow se menciona que como es una clave que va a estar en el apk de todas formas lo que debe hacerse es controlarse los permisos de la clave desde la consola de Firebase usando [rules](https://firebase.google.com/docs/rules) y [AppCheck](https://firebase.google.com/docs/app-check?hl=es-419)
+
+En cuanto a la seguridad en las comunicaciones con el backend, utilizamos el protocolo HTTPS, que es el protocolo de comunicación segura.
 
 ---
