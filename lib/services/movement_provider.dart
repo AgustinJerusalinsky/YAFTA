@@ -46,6 +46,10 @@ class MovementProvider extends ChangeNotifier {
       _expenseTotalDirty || _expenseMonthDirty || _expenseWeekDirty;
 
   List<Movement> get totalIncomes {
+    if (_authProvider.user == null) {
+      return [];
+    }
+
     String userId = _authProvider.user!.uid;
 
     if (_incomeTotalDirty) {
@@ -58,6 +62,10 @@ class MovementProvider extends ChangeNotifier {
   }
 
   List<Movement> get totalExpenses {
+    if (_authProvider.user == null) {
+      return [];
+    }
+
     String userId = _authProvider.user!.uid;
 
     if (_expenseTotalDirty) {
@@ -70,6 +78,10 @@ class MovementProvider extends ChangeNotifier {
   }
 
   List<Movement> get monthIncomes {
+    if (_authProvider.user == null) {
+      return [];
+    }
+
     String userId = _authProvider.user!.uid;
 
     if (_incomeMonthDirty) {
@@ -82,6 +94,10 @@ class MovementProvider extends ChangeNotifier {
   }
 
   List<Movement> get monthExpenses {
+    if (_authProvider.user == null) {
+      return [];
+    }
+
     String userId = _authProvider.user!.uid;
 
     if (_expenseMonthDirty) {
@@ -94,6 +110,10 @@ class MovementProvider extends ChangeNotifier {
   }
 
   List<Movement> get weekIncomes {
+    if (_authProvider.user == null) {
+      return [];
+    }
+
     String userId = _authProvider.user!.uid;
 
     if (_incomeWeekDirty) {
@@ -106,6 +126,10 @@ class MovementProvider extends ChangeNotifier {
   }
 
   List<Movement> get weekExpenses {
+    if (_authProvider.user == null) {
+      return [];
+    }
+
     String userId = _authProvider.user!.uid;
 
     if (_expenseWeekDirty) {
@@ -194,6 +218,10 @@ class MovementProvider extends ChangeNotifier {
   // add movement
   Future<void> addMovement(double amount, Category category, String description,
       MovementType type, DateTime date) async {
+    if (_authProvider.user == null) {
+      return Future.value();
+    }
+
     String userId = _authProvider.user!.uid;
     //add date to movement
     Movement movement = Movement(
@@ -223,6 +251,10 @@ class MovementProvider extends ChangeNotifier {
 
   // delete movement
   Future<void> deleteMovement(String movementId) {
+    if (_authProvider.user == null) {
+      return Future.value();
+    }
+
     String userId = _authProvider.user!.uid;
     return _firestoreService.deleteMovement(userId, movementId).then((value) {
       incomeDirty = true;
