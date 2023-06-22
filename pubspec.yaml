@@ -50,6 +50,7 @@ dependencies:
   golden_toolkit: ^0.15.0
   google_sign_in: ^6.1.4
   app_tracking_transparency: ^2.0.4
+  fake_cloud_firestore: ^2.4.1+1
 
 dev_dependencies:
   flutter_test:

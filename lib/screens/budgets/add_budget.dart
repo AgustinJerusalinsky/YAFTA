@@ -24,7 +24,9 @@ class AddBudgetScreenState extends State<AddBudgetScreen> {
   final _formKey = GlobalKey<FormState>();
   void _handleSubmit() async {
     //validate form
-
+    BudgetProvider budgetProvider = context.read<BudgetProvider>();
+    final scaffoldMessager = ScaffoldMessenger.of(context);
+    final theme = Theme.of(context);
     if (!_formKey.currentState!.validate()) return;
     setState(() {
       submitting = true;
@@ -35,9 +37,19 @@ class AddBudgetScreenState extends State<AddBudgetScreen> {
 
     final MovementType type = dropdownValue!;
 
-    await context
-        .read<BudgetProvider>()
-        .addCategory(categoryName, double.parse(amount), type);
+    try {
+      await budgetProvider.addCategory(
+          categoryName, double.parse(amount), type);
+    } catch (e) {
+      scaffoldMessager.showSnackBar(SnackBar(
+          duration: const Duration(seconds: 1),
+          backgroundColor: theme.colorScheme.errorContainer,
+          content: Text(
+            "Error al añadir categoria",
+            style: TextStyle(color: theme.colorScheme.onErrorContainer),
+          )));
+    }
+
     await AnalyticsHandler.logNewBudget(
         budgetName: categoryName, budgetAmount: amount);
     context.pop();

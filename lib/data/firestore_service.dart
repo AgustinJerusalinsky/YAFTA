@@ -8,7 +8,15 @@ final log = Logger('Logger');
 
 //singleton class
 class FirestoreService {
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  late FirebaseFirestore firestore;
+
+  FirestoreService() {
+    firestore = FirebaseFirestore.instance;
+  }
+
+  FirestoreService.test(this.firestore) {
+    _instance = this;
+  }
 
   static FirestoreService? _instance;
   static FirestoreService get instance {

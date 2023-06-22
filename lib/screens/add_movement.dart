@@ -58,6 +58,9 @@ class AddMovementScreenState extends State<AddMovementScreen> {
     final description = _descriptionController.text.trim();
     final amount = _amountController.text.trim();
     final date = _dateController.text.trim();
+    final movementProvider = context.read<MovementProvider>();
+    final scaffoldMessager = ScaffoldMessenger.of(context);
+    final theme = Theme.of(context);
 
     if (!RemoteConfigHandler.instance!.getBudgets()) {
       BudgetProvider budgetProvider = context.read<BudgetProvider>();
@@ -71,9 +74,18 @@ class AddMovementScreenState extends State<AddMovementScreen> {
             noCategoryName, widget.type);
       }
     }
-
-    await context.read<MovementProvider>().addMovement(double.parse(amount),
-        category!, description, widget.type, DateTime.parse(date));
+    try {
+      await movementProvider.addMovement(double.parse(amount), category!,
+          description, widget.type, DateTime.parse(date));
+    } catch (e) {
+      scaffoldMessager.showSnackBar(SnackBar(
+          duration: const Duration(seconds: 1),
+          backgroundColor: theme.colorScheme.errorContainer,
+          content: Text(
+            "Error al añadir movimiento",
+            style: TextStyle(color: theme.colorScheme.onErrorContainer),
+          )));
+    }
     await AnalyticsHandler.logMovement(
         movementType: widget.type, value: double.parse(amount));
     context.pop();
