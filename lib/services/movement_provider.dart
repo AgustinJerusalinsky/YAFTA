@@ -193,7 +193,7 @@ class MovementProvider extends ChangeNotifier {
 
   // add movement
   Future<void> addMovement(double amount, Category category, String description,
-      MovementType type, DateTime date) {
+      MovementType type, DateTime date) async {
     String userId = _authProvider.user!.uid;
     //add date to movement
     Movement movement = Movement(
@@ -203,6 +203,12 @@ class MovementProvider extends ChangeNotifier {
       type: type,
       date: date,
     );
+
+    //check if category exists
+    List<Category> categories = await _firestoreService.getCategories(userId);
+    if (!categories.map((e) => e.categoryId).contains(category.categoryId)) {
+      throw Exception('Category does not exist');
+    }
 
     // add movement to firestore
     return _firestoreService.addMovement(userId, movement).then((value) {

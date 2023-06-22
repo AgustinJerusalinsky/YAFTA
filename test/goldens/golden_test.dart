@@ -23,8 +23,8 @@ import 'package:yafta/services/budget_provider.dart';
 import 'package:yafta/services/movement_provider.dart';
 import 'package:yafta/utils/remote_config.dart';
 
-import 'firebase_mocks.dart';
-import 'provider_mocks.dart';
+import '../mocks/firebase_mocks.dart';
+import '../mocks/provider_mocks.dart';
 
 MultiProvider customBuilder(child, {bool darkMode = false}) {
   MockAuthProvider mockAuthProvider = MockAuthProvider();
@@ -33,7 +33,6 @@ MultiProvider customBuilder(child, {bool darkMode = false}) {
       authProvider: mockAuthProvider, movementProvider: mockMovementProvider);
   MockAppNavigator mockAppNavigator = MockAppNavigator();
 
-  WidgetsFlutterBinding.ensureInitialized();
   return MultiProvider(
       providers: [
         ChangeNotifierProvider<MovementProvider>(
