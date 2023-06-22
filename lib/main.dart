@@ -14,6 +14,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:yafta/services/budget_provider.dart';
 import 'package:yafta/utils/remote_config.dart';
 import 'package:yafta/services/movement_provider.dart';
+import 'package:yafta/utils/restart_widget.dart';
 import 'models/user.dart';
 import 'services/auth_provider.dart';
 
@@ -32,7 +33,7 @@ void main() async {
 
   await RemoteConfigHandler.initialize();
 
-  runApp(const MyApp());
+  runApp(const RestartWidget(child: MyApp()));
 }
 
 class MyApp extends StatefulWidget {
