@@ -138,22 +138,17 @@ class AuthProvider extends ChangeNotifier {
   // Signup method
   Future<User?> signup(
       String email, String password, String fullname, String username) async {
-    try {
-      final result = await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      final firebaseUser = result.user;
+    final result = await _auth.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    final firebaseUser = result.user;
 
-      await firebaseUser?.updateDisplayName(fullname);
-      await firebaseUser?.updatePhotoURL('${username}THEME#light');
-      final user = _userFromFirebase(_auth.currentUser);
-      // _user = firebaseUser;
-      return user;
-    } catch (error) {
-      _user = null;
-    }
-    return null;
+    await firebaseUser?.updateDisplayName(fullname);
+    await firebaseUser?.updatePhotoURL('${username}THEME#light');
+    final user = _userFromFirebase(_auth.currentUser);
+    // _user = firebaseUser;
+    return user;
   }
 
   // // Logout method
