@@ -51,16 +51,14 @@ A continuación se encuentran los requerimientos funcionales del proyecto.
   - El usuario debe poder filtrar los movimientos por categoría
   - El usuario debe poder filtrar los movimientos por fecha
   - El usuario debe poder crear movimientos cargando el motivo, el monto, la categoría y la fecha
-  - El usuario debe poder editar los movimientos cargados
   - El usuario debe poder eliminar los movimientos cargados
   - El usuario debe poder ver un resumen de sus movimientos y balance del día, del mes y total.
 - Categorías
   - El usuario debe poder ver una lista de todas sus categorías
-  - El usuario debe poder crear categorías cargando el nombre, el color y monto máximo
+  - El usuario debe poder crear categorías cargando el nombre, el tipo (ingreso o gasto) y monto máximo
   - El usuario debe poder editar las categorías cargadas
 - Perfil
-  - El usuario debe poder ver su perfil - El usuario debe poder editar su perfil
-    This project is a starting point for a Flutter application.
+  - El usuario debe poder ver su perfil
 
 ---
 
@@ -163,6 +161,12 @@ Dentro de la configuración del test puede especificarse los dispositivos para l
 
 Esto nos permitió durante el desarrollo identificar _overflows_ o problemas visuales que un testing manual no hubiera detectado, porque hace pruebas rápido sobre múltiples dispositivos.
 
+Para correr todos los tests unitarios y golden tests ejecutamos el siguiente comando:
+
+```
+flutter test
+```
+
 ---
 
 ### **Routing**
@@ -216,7 +220,15 @@ Para esto utilizamos [Firebase Remote Config](https://firebase.google.com/docs/r
 
 Podemos ver en la imagen los valores de configuración que elegimos para la aplicación.
 
-- `sign_in_with_google`: permite activar o desactivar el botón de login con Google. Decidimos por defecto
+- `sign_in_with_google`: permite activar o desactivar el botón de login con Google. Decidimos por defecto dejarlo en `false` porque hay que verificar nuestra aplicación con Google para poder usar este servicio de forma segura. Además en AppStore si se agrega otro proveedor para la autenticación debe agregarse también el `Sign in with Apple`. Por lo tanto, esta es una feature que tenemos que tener apagada hasta antes no resolver estos temas.
+
+- `budgets`: decidimos prender la feature de budgets porque es importante para la aplicación, pero nos pareció interesante usarla como ejemplo para mostrar como se puede activar o desactivar una funcionalidad grande de forma remota. Tener la estructura de proyecto agrupada por feature hizo que esta lógica sea más fácil de implementar.
+
+- `app_theme_toggle`: esta es la feature flag que decidimos usar para el experimento de A/B testing. La idea es permitir a un 40% de los usuarios de android cambiar su aplicación a `dark_theme` con un toggle. Este experimento se puede configurar desde Firebase Remote Config. Hace falta definir un evento a observar para poder medir el impacto de este experimento.
+
+![ab_testing](assets/ab_testing.png)
+
+En la imagen se ve la creación del experimento de A/B testing en base a el flag `app_theme_toggle`. Se puede ver que se puede definir el porcentaje de usuarios que van a ver la feature y también el evento que se va a observar para medir el impacto de la misma.
 
 ---
 
@@ -268,5 +280,9 @@ Por último definimos un evento para medir la cantidad de usuarios que se regist
 ---
 
 ### **Seguridad**
+
+Respecto a las apiKeys utilizadas en el proyecto, para los servicios de Firebase, éste brinda (para Android) un archivo `google-services.json` que contiene identificadores únicos de aplicación, configuración y claves. Indagando, encont ramos que no está mal subir este archivo a un repositorio público. En Stack Overflow se menciona que como es una clave que va a estar en el apk de todas formas lo que debe hacerse es controlarse los permisos de la clave desde la consola de Firebase usando [rules](https://firebase.google.com/docs/rules) y [AppCheck](https://firebase.google.com/docs/app-check?hl=es-419)
+
+En cuanto a la seguridad en las comunicaciones con el backend, utilizamos el protocolo HTTPS, que es el protocolo de comunicación segura.
 
 ---

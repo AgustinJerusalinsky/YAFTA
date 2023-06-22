@@ -90,130 +90,134 @@ class AddMovementScreenState extends State<AddMovementScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      resizeToAvoidBottomInset: false,
-      appBar: const YaftaAppBar(
-        back: true,
-        showBrand: true,
-        showProfile: false,
-      ),
-      body: YaftaOverlayLoading(
-        isLoading: _submitting,
-        child: Consumer<BudgetProvider>(builder: (context, provider, _) {
-          return Form(
-            key: _formKey,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(15, 30, 15, 30),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(children: [
-                    YaftaTextField(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        resizeToAvoidBottomInset: false,
+        appBar: const YaftaAppBar(
+          back: true,
+          showBrand: true,
+          showProfile: false,
+        ),
+        body: YaftaOverlayLoading(
+          isLoading: _submitting,
+          child: Consumer<BudgetProvider>(builder: (context, provider, _) {
+            return Form(
+              key: _formKey,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(15, 30, 15, 30),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(children: [
+                      YaftaTextField(
+                          validator: (value) =>
+                              value.isEmpty ? 'Campo requerido' : null,
+                          label: "Descripción",
+                          textController: _descriptionController),
+                      YaftaTextField(
                         validator: (value) =>
                             value.isEmpty ? 'Campo requerido' : null,
-                        label: "Descripción",
-                        textController: _descriptionController),
-                    YaftaTextField(
-                      validator: (value) =>
-                          value.isEmpty ? 'Campo requerido' : null,
-                      label: "Valor",
-                      textController: _amountController,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                      ],
-                    ),
-                    if (RemoteConfigHandler.instance!.getBudgets())
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: DropdownButtonFormField(
-                            validator: (value) =>
-                                value == null ? 'Campo requerido' : null,
-                            borderRadius: BorderRadius.circular(10),
-                            value: category,
-                            isExpanded: true,
-                            dropdownColor:
-                                Theme.of(context).colorScheme.surfaceVariant,
-                            hint: Text(
-                              "Categoria",
-                              style: TextStyle(
-                                  color:
-                                      Theme.of(context).colorScheme.onSurface),
-                            ),
-                            items: provider.categories
-                                .where((element) =>
-                                    element.type == widget.type &&
-                                    element.name != noCategoryName)
-                                .map((category) => DropdownMenuItem(
-                                      value: category,
-                                      child: Text(category.name,
-                                          style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .onSurface)),
-                                    ))
-                                .toList(),
-                            onChanged: onChanged),
+                        label: "Valor",
+                        textController: _amountController,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
                       ),
-                    YaftaTextField(
-                      label: "Fecha",
-                      textController: _dateController,
-                      readOnly: true,
-                      validator: (value) =>
-                          value.isEmpty ? 'Campo requerido' : null,
-                      onTap: () async {
-                        final DateTime? date = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(1900),
-                          lastDate: DateTime.now(),
-                        );
-                        if (date != null) {
-                          _dateController.text = date.toString().split(' ')[0];
-                        }
-                      },
-                    ),
-                  ]),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: YaftaButton(
-                              text: 'Cancelar',
-                              fullWidth: true,
-                              variant: 'filled',
-                              secondary: true,
-                              onPressed: () => context.pop(),
-                            ),
-                          ),
+                      if (RemoteConfigHandler.instance!.getBudgets())
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: DropdownButtonFormField(
+                              validator: (value) =>
+                                  value == null ? 'Campo requerido' : null,
+                              borderRadius: BorderRadius.circular(10),
+                              value: category,
+                              isExpanded: true,
+                              dropdownColor:
+                                  Theme.of(context).colorScheme.surfaceVariant,
+                              hint: Text(
+                                "Categoria",
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurface),
+                              ),
+                              items: provider.categories
+                                  .where((element) =>
+                                      element.type == widget.type &&
+                                      element.name != noCategoryName)
+                                  .map((category) => DropdownMenuItem(
+                                        value: category,
+                                        child: Text(category.name,
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onSurface)),
+                                      ))
+                                  .toList(),
+                              onChanged: onChanged),
                         ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: YaftaButton(
-                              text: 'Guardar',
-                              fullWidth: true,
-                              variant: 'filled',
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primaryContainer,
-                              textStyle: TextStyle(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onPrimaryContainer),
-                              onPressed: _handleSubmit,
+                      YaftaTextField(
+                        label: "Fecha",
+                        textController: _dateController,
+                        readOnly: true,
+                        validator: (value) =>
+                            value.isEmpty ? 'Campo requerido' : null,
+                        onTap: () async {
+                          final DateTime? date = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(1900),
+                            lastDate: DateTime.now(),
+                          );
+                          if (date != null) {
+                            _dateController.text =
+                                date.toString().split(' ')[0];
+                          }
+                        },
+                      ),
+                    ]),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: YaftaButton(
+                                text: 'Cancelar',
+                                fullWidth: true,
+                                variant: 'outlined',
+                                secondary: true,
+                                onPressed: () => context.pop(),
+                              ),
                             ),
                           ),
-                        )
-                      ])
-                ],
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: YaftaButton(
+                                text: 'Guardar',
+                                fullWidth: true,
+                                variant: 'filled',
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer,
+                                textStyle: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimaryContainer),
+                                onPressed: _handleSubmit,
+                              ),
+                            ),
+                          )
+                        ])
+                  ],
+                ),
               ),
-            ),
-          );
-        }),
+            );
+          }),
+        ),
       ),
     );
   }
