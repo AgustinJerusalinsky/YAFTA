@@ -120,6 +120,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 onChangePassword(context, authProvider),
                           ),
                           YaftaButton(
+                            onPressed: () => authProvider.logout(),
                             text: "Cerrar sesión",
                             textStyle: Theme.of(context)
                                 .textTheme
