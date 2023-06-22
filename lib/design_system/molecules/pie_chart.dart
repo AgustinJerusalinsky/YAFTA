@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:pie_chart/src/utils.dart';
+import 'package:provider/provider.dart';
+import 'package:yafta/services/auth_provider.dart';
 import 'package:yafta/utils/remote_config.dart';
 
 const List<Color> defaultDarkColorList = [
@@ -45,7 +47,7 @@ class YaftaPieChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Color> defaultColors =
-        RemoteConfigHandler.instance!.getTheme() == AppTheme.light
+        context.read<AuthProvider>().theme == AppTheme.light
             ? defaultColorList
             : defaultDarkColorList;
     return PieChart(

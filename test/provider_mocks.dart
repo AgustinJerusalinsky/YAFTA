@@ -15,7 +15,6 @@ import 'package:yafta/utils/remote_config.dart';
 class MockAuthProvider extends ChangeNotifier implements AuthProvider {
   @override
   void dispose() {
-    // TODO: implement dispose
     return;
   }
 
@@ -26,7 +25,8 @@ class MockAuthProvider extends ChangeNotifier implements AuthProvider {
         uid: "testUID",
         email: email,
         fullName: "Test User",
-        userName: "testuser");
+        userName: "testuser",
+        theme: _theme);
     return user;
   }
 
@@ -46,39 +46,32 @@ class MockAuthProvider extends ChangeNotifier implements AuthProvider {
 
   @override
   Future<void> changePassword() {
-    // TODO: implement changePassword
     return Future.value();
   }
 
   @override
   Future<void> resetPassword(String email) {
-    // TODO: implement resetPassword
     return Future.value();
   }
 
   @override
   Future<User?> signInWithGoogle() {
-    // TODO: implement signInWithGoogle
     return login("test@yafta.com", "12345678");
   }
 
-  @override
-  // TODO: implement theme
-  AppTheme get theme => AppTheme.dark;
+  AppTheme _theme = AppTheme.light;
 
   @override
-  void toggleDarkTheme() {
-    // TODO: implement toggleDarkTheme
-  }
+  void toggleDarkTheme() {}
 
   @override
   Future<void> toggleTheme(AppTheme theme) {
-    // TODO: implement toggleTheme
     return Future.value();
   }
-}
 
-final mockAuthProvider = MockAuthProvider();
+  @override
+  AppTheme get theme => AppTheme.light;
+}
 
 //categories
 Category education = Category(
@@ -165,7 +158,6 @@ final mockBudgets = [
 class MockMovementsProvider extends ChangeNotifier implements MovementProvider {
   @override
   void dispose() {
-    // TODO: implement dispose
     return;
   }
 
@@ -193,96 +185,73 @@ class MockMovementsProvider extends ChangeNotifier implements MovementProvider {
   @override
   Future<void> addMovement(double amount, Category category, String description,
       MovementType type, DateTime date) {
-    // TODO: implement addMovement
     return Future.value();
   }
 
   @override
-  Future<void> deleteMovement(String userId, String movementId) {
-    // TODO: implement deleteMovement
+  Future<void> deleteMovement(String movementId) {
     return Future.value();
   }
 
   @override
-  set expenseDirty(bool value) {
-    // TODO: implement expenseDirty
-  }
+  set expenseDirty(bool value) {}
 
   @override
-  set expenseMonthDirty(bool value) {
-    // TODO: implement expenseMonthDirty
-  }
+  set expenseMonthDirty(bool value) {}
 
   @override
-  set expenseTotalDirty(bool value) {
-    // TODO: implement expenseTotalDirty
-  }
+  set expenseTotalDirty(bool value) {}
 
   @override
-  set expenseWeekDirty(bool value) {
-    // TODO: implement expenseWeekDirty
-  }
+  set expenseWeekDirty(bool value) {}
 
   @override
-  // TODO: implement expensesMonthShouldFetch
   bool get expensesMonthShouldFetch => false;
 
   @override
-  // TODO: implement expensesShouldFetch
   bool get expensesShouldFetch => false;
 
   @override
-  // TODO: implement expensesTotalShouldFetch
   bool get expensesTotalShouldFetch => false;
 
   @override
-  set incomeMonthDirty(bool value) {
-    // TODO: implement incomeMonthDirty
-  }
+  set incomeMonthDirty(bool value) {}
 
   @override
-  set incomeTotalDirty(bool value) {
-    // TODO: implement incomeTotalDirty
-  }
+  set incomeTotalDirty(bool value) {}
 
   @override
-  set incomeWeekDirty(bool value) {
-    // TODO: implement incomeWeekDirty
-  }
+  set incomeWeekDirty(bool value) {}
 
   @override
-  // TODO: implement incomesMonthShouldFetch
   bool get incomesMonthShouldFetch => false;
 
   @override
-  // TODO: implement incomesShouldFetch
   bool get incomesShouldFetch => false;
 
   @override
-  // TODO: implement incomesTotalShouldFetch
   bool get incomesTotalShouldFetch => false;
 
   @override
-  // TODO: implement incomesWeekShouldFetch
   bool get incomesWeekShouldFetch => false;
 
   @override
-  set incomeDirty(bool value) {
-    // TODO: implement incomeDirty
-  }
+  set incomeDirty(bool value) {}
 }
-
-final mockMovementProvider = MockMovementsProvider();
 
 class MockBudgetsProvider extends ChangeNotifier implements BudgetProvider {
   @override
   void dispose() {
-    // TODO: implement dispose
     return;
   }
 
   @override
-  AuthProvider authProvider = mockAuthProvider;
+  AuthProvider authProvider;
+
+  MovementProvider movementProvider;
+
+  MockBudgetsProvider(
+      {required this.authProvider, required this.movementProvider});
 
   @override
   List<Budget> budgets = mockBudgets;
@@ -295,7 +264,6 @@ class MockBudgetsProvider extends ChangeNotifier implements BudgetProvider {
 
   @override
   Future<Category> addCategory(String name, double amount, MovementType type) {
-    // TODO: implement addCategory
     return Future.value(Category(
         categoryId: "testId",
         name: "testName",
@@ -304,22 +272,18 @@ class MockBudgetsProvider extends ChangeNotifier implements BudgetProvider {
   }
 
   @override
-  // TODO: implement budgetsShouldFetch
   bool get budgetsShouldFetch => false;
 
   @override
   Future<void> deleteCategory(String categoryId) {
-    // TODO: implement deleteCategory
     return Future.value();
   }
 
   @override
-  // TODO: implement firestoreService
   FirestoreService get firestoreService => throw UnimplementedError();
 
   @override
   Future<Category> getCategory(String categoryId) {
-    // TODO: implement getCategory
     return Future.value(Category(
         categoryId: "testId",
         name: "testName",
@@ -328,24 +292,15 @@ class MockBudgetsProvider extends ChangeNotifier implements BudgetProvider {
   }
 
   @override
-  // TODO: implement movementProvider
-  MovementProvider get movementProvider => mockMovementProvider;
-
-  @override
   Future<void> updateCategory(String categoryId, String name, double amount) {
-    // TODO: implement updateCategory
     return Future.value();
   }
 
   @override
-  set budgetDirty(bool value) {
-    // TODO: implement budgetDirty
-  }
+  set budgetDirty(bool value) {}
 
   @override
-  set categoryDirty(bool value) {
-    // TODO: implement categoryDirty
-  }
+  set categoryDirty(bool value) {}
 
   @override
   Future<bool> categoryExists(String name, MovementType type) {
@@ -362,12 +317,9 @@ class MockBudgetsProvider extends ChangeNotifier implements BudgetProvider {
   }
 }
 
-final mockBudgetsProvider = MockBudgetsProvider();
-
 class MockAppNavigator extends ChangeNotifier implements AppNavigation {
   @override
   void dispose() {
-    // TODO: implement dispose
     return;
   }
 
@@ -375,16 +327,11 @@ class MockAppNavigator extends ChangeNotifier implements AppNavigation {
   int currentIndex = 0;
 
   @override
-  // TODO: implement currentNavigationItem
   get currentNavigationItem => currentIndex;
 
   @override
-  // TODO: implement currentOptionRoute
   String get currentOptionRoute => "testRoute";
 
   @override
-  // TODO: implement currentRoute
   String get currentRoute => "testRoute";
 }
-
-final mockAppNavigator = MockAppNavigator();
