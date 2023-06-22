@@ -127,7 +127,7 @@ class AddBudgetScreenState extends State<AddBudgetScreen> {
                           child: YaftaButton(
                             text: 'Cancelar',
                             fullWidth: true,
-                            variant: 'filled',
+                            variant: 'outlined',
                             secondary: true,
                             onPressed: () => context.pop(),
                           ),

@@ -184,7 +184,7 @@ class AddMovementScreenState extends State<AddMovementScreen> {
                             child: YaftaButton(
                               text: 'Cancelar',
                               fullWidth: true,
-                              variant: 'filled',
+                              variant: 'outlined',
                               secondary: true,
                               onPressed: () => context.pop(),
                             ),
