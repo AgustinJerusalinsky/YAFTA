@@ -148,6 +148,8 @@ class AuthProvider extends ChangeNotifier {
       await firebaseUser?.updateDisplayName(fullname);
       await firebaseUser?.updatePhotoURL('${username}THEME#light');
       final user = _userFromFirebase(_auth.currentUser);
+      _user = user;
+      notifyListeners();
       // _user = firebaseUser;
       return user;
     } catch (error) {
