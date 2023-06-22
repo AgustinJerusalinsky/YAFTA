@@ -7,6 +7,7 @@ import 'package:yafta/design_system/molecules/yafta_overlay_loading.dart';
 import 'package:yafta/services/auth_provider.dart';
 import 'package:yafta/utils/analytics.dart';
 import 'package:yafta/utils/remote_config.dart';
+import 'package:yafta/utils/restart_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -120,7 +121,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 onChangePassword(context, authProvider),
                           ),
                           YaftaButton(
-                            onPressed: () => authProvider.logout(),
+                            onPressed: () {
+                              authProvider.logout();
+                              RestartWidget.restartApp(context);
+                            },
                             text: "Cerrar sesión",
                             textStyle: Theme.of(context)
                                 .textTheme
