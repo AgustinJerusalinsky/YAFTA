@@ -22,6 +22,10 @@ extension EventName on EventType {
 class AnalyticsHandler {
   static final FirebaseAnalytics _analytics = FirebaseAnalytics.instance;
 
+  static Future<void> disableAnalytics() async {
+    await _analytics.setAnalyticsCollectionEnabled(false);
+  }
+
   static Future<void> logMovement(
       {required final MovementType movementType,
       required final double value}) async {

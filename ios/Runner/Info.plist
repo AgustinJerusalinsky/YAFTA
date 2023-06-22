@@ -62,5 +62,7 @@
 		</array>
 		</dict>
 	</array>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Esta app recollecta datos para mejorar la experiencia de usuario</string>
 </dict>
 </plist>

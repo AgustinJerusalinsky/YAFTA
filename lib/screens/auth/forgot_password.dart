@@ -103,7 +103,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   YaftaButton(
                       variant: "text",
                       text: "Volver",
-                      child: const Row(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [Icon(Icons.arrow_back_ios), Text("Volver")],
                       ),

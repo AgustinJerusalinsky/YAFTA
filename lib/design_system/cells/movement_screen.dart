@@ -114,10 +114,10 @@ class _MovementScreenState extends State<MovementScreen> {
         ),
         const SizedBox(height: 16),
         widget.loading
-            ? const Expanded(
+            ? Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: const [
                     SizedBox(
                       height: 60,
                       width: 60,
