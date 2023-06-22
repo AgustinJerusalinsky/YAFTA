@@ -64,7 +64,7 @@ class _MainLayoutState extends State<MainLayout> {
               color: Theme.of(context).colorScheme.onTertiaryContainer),
           label: Text(
               "${AppNavigation.navigationItems[appNavigation.currentIndex]["fabLabel"]}",
-              style: Theme.of(context).textTheme.button!.copyWith(
+              style: Theme.of(context).textTheme.labelLarge!.copyWith(
                     color: Theme.of(context).colorScheme.onTertiaryContainer,
                   )),
         ),

@@ -137,7 +137,10 @@ class FirestoreService {
           return value.get();
         })
         .then((value) => categoryFromDocument(value))
-        .catchError((error) => log.warning("Failed to add category: $error"));
+        .catchError((error) {
+          log.warning("Failed to add category: $error");
+          throw error;
+        });
   }
 
   Future<void> deleteCategory(String userId, String categoryId) async {

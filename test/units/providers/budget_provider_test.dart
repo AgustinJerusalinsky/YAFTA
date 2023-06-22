@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:yafta/data/firestore_service.dart';
 import 'package:yafta/models/category.dart';
 import 'package:yafta/models/movement_type.dart';
-import 'package:yafta/services/movement_provider.dart';
 import 'package:yafta/services/budget_provider.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import '../../mocks/provider_mocks.dart';

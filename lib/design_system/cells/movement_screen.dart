@@ -16,10 +16,10 @@ class MovementScreen extends StatefulWidget {
   final MovementType type;
   final bool loading;
   @override
-  _MovementScreenState createState() => _MovementScreenState();
+  MovementScreenState createState() => MovementScreenState();
 }
 
-class _MovementScreenState extends State<MovementScreen> {
+class MovementScreenState extends State<MovementScreen> {
   List<String> selectedCategories = [];
   List<Movement> filteredMovements = [];
   List<Movement> _movements = [];
@@ -114,10 +114,10 @@ class _MovementScreenState extends State<MovementScreen> {
         ),
         const SizedBox(height: 16),
         widget.loading
-            ? Expanded(
+            ? const Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     SizedBox(
                       height: 60,
                       width: 60,

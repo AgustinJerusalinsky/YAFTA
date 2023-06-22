@@ -70,8 +70,8 @@ void main() {
     expect(movements, findsOneWidget);
   });
 
-  testWidgets("Test if graphs are being rendered", (WidgetTester) async {
-    await WidgetTester.pumpWidget(customBuilder(const MainLayout(
+  testWidgets("Test if graphs are being rendered", (widgetTester) async {
+    await widgetTester.pumpWidget(customBuilder(const MainLayout(
       body: HomeScreen(),
     )));
     final graphs = find.byType(BalanceGraph);

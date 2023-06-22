@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:yafta/design_system/molecules/main_layout.dart';
 import 'package:yafta/design_system/tokens/colors.dart';
-import 'package:yafta/design_system/tokens/theme_data.dart';
 import 'package:yafta/models/movement_type.dart';
 import 'package:yafta/screens/add_movement.dart';
 import 'package:yafta/screens/auth/forgot_password.dart';
@@ -16,7 +14,6 @@ import 'package:yafta/screens/budgets/edit_budget.dart';
 import 'package:yafta/screens/dashboard/home.dart';
 import 'package:yafta/screens/expenses/expenses.dart';
 import 'package:yafta/screens/incomes/incomes.dart';
-import 'package:yafta/screens/profile/profile.dart';
 import 'package:yafta/services/app_navigation.dart';
 import 'package:yafta/services/auth_provider.dart';
 import 'package:yafta/services/budget_provider.dart';

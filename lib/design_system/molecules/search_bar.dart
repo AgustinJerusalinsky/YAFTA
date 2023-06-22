@@ -168,10 +168,10 @@ class DialogContent extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _DialogContentState createState() => _DialogContentState();
+  DialogContentState createState() => DialogContentState();
 }
 
-class _DialogContentState extends State<DialogContent> {
+class DialogContentState extends State<DialogContent> {
   @override
   Widget build(BuildContext context) {
     return Dialog(

@@ -59,7 +59,7 @@ class MockAuthProvider extends ChangeNotifier implements AuthProvider {
     return login("test@yafta.com", "12345678");
   }
 
-  AppTheme _theme = AppTheme.light;
+  final AppTheme _theme = AppTheme.light;
 
   @override
   void toggleDarkTheme() {}
@@ -248,6 +248,7 @@ class MockBudgetsProvider extends ChangeNotifier implements BudgetProvider {
   @override
   AuthProvider authProvider;
 
+  @override
   MovementProvider movementProvider;
 
   MockBudgetsProvider(
