@@ -69,67 +69,70 @@ class _LoginScreenState extends State<LoginScreen> {
     final signInWithGoogleEnabled =
         RemoteConfigHandler.instance!.getSignInWithGoogle();
 
-    return Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: YaftaOverlayLoading(
-            isLoading: _submitting,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 52),
-              child: Form(
-                onChanged: () {
-                  setState(() {
-                    _errorMessage = "";
-                  });
-                },
-                key: _formKey,
-                child: ListView(children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16),
-                    child: YaftaLogo.imagotype(),
-                  ),
-                  YaftaTextField(
-                    label: "Email",
-                    textController: _emailController,
-                    validator: emailValidator,
-                  ),
-                  YaftaPasswordTextField(
-                    editingController: _passwordController,
-                  ),
-                  YaftaButton(
-                      variant: 'text',
-                      text: "Olvidé mi contraseña",
-                      onPressed: () =>
-                          context.go(AppRoutes.forgotPassword.path)),
-                  const SizedBox(height: 32),
-                  if (_errorMessage.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                      child: Text(
-                        _errorMessage,
-                        style: const TextStyle(
-                          color: Colors.red,
-                          fontWeight: FontWeight.bold,
+    return SafeArea(
+      child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: YaftaOverlayLoading(
+              isLoading: _submitting,
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 32, vertical: 52),
+                child: Form(
+                  onChanged: () {
+                    setState(() {
+                      _errorMessage = "";
+                    });
+                  },
+                  key: _formKey,
+                  child: ListView(children: [
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      child: YaftaLogo.imagotype(),
+                    ),
+                    YaftaTextField(
+                      label: "Email",
+                      textController: _emailController,
+                      validator: emailValidator,
+                    ),
+                    YaftaPasswordTextField(
+                      editingController: _passwordController,
+                    ),
+                    YaftaButton(
+                        variant: 'text',
+                        text: "Olvidé mi contraseña",
+                        onPressed: () =>
+                            context.go(AppRoutes.forgotPassword.path)),
+                    const SizedBox(height: 32),
+                    if (_errorMessage.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        child: Text(
+                          _errorMessage,
+                          style: const TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                  YaftaButton(
-                      onPressed: _handleLogin,
-                      variant: "filled",
-                      secondary: true,
-                      text: "Iniciar sesión"),
-                  YaftaButton(
-                      variant: "text",
-                      text: "Crear una cuenta",
-                      onPressed: () => context.go(AppRoutes.signup.path)),
-                  if (signInWithGoogleEnabled) ...[
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
-                      child: Divider(),
-                    ),
-                    GoogleButton(onPressed: _handleGoogleSignup)
-                  ]
-                ]),
-              ),
-            )));
+                    YaftaButton(
+                        onPressed: _handleLogin,
+                        variant: "filled",
+                        secondary: true,
+                        text: "Iniciar sesión"),
+                    YaftaButton(
+                        variant: "text",
+                        text: "Crear una cuenta",
+                        onPressed: () => context.go(AppRoutes.signup.path)),
+                    if (signInWithGoogleEnabled) ...[
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 16.0),
+                        child: Divider(),
+                      ),
+                      GoogleButton(onPressed: _handleGoogleSignup)
+                    ]
+                  ]),
+                ),
+              ))),
+    );
   }
 }

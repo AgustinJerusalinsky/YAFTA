@@ -41,7 +41,10 @@ class _SignupScreenState extends State<SignupScreen> {
         _submitting = true;
       });
       await context.read<AuthProvider>().signInWithGoogle();
-      AnalyticsHandler.logSignup();
+      //If platform is android send analytics event
+      if (Theme.of(context).platform == TargetPlatform.android) {
+        AnalyticsHandler.logSignup();
+      }
       context.go(AppRoutes.home.path);
     } on FirebaseAuthException catch (e) {
       setState(() {
@@ -72,7 +75,9 @@ class _SignupScreenState extends State<SignupScreen> {
         await context
             .read<AuthProvider>()
             .signup(email, password, fullName, username);
-        AnalyticsHandler.logSignup();
+        if (Theme.of(context).platform == TargetPlatform.android) {
+          AnalyticsHandler.logSignup();
+        }
         context.go(AppRoutes.home.path);
       } on FirebaseAuthException catch (e) {
         setState(() {
@@ -89,66 +94,68 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     final signInWithGoogleEnabled =
         RemoteConfigHandler.instance!.getSignInWithGoogle();
-    return Scaffold(
-      body: YaftaOverlayLoading(
-        isLoading: _submitting,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 52),
-          child: Form(
-            onChanged: () {
-              setState(() {
-                _errorMessage = "";
-              });
-            },
-            key: _formKey,
-            child: ListView(children: [
-              const YaftaLogo.isologo(),
-              YaftaTextField(
-                label: "Full name",
-                textController: _fullNameController,
-                validator: requiredValidator,
-              ),
-              YaftaTextField(
-                label: "Username",
-                textController: _usernameController,
-                validator: requiredValidator,
-              ),
-              YaftaTextField(
-                label: "Email",
-                textController: _emailController,
-                validator: emailValidator,
-              ),
-              YaftaPasswordTextField(
-                editingController: _passwordController,
-              ),
-              YaftaPasswordTextField(
-                editingController: _passwordConfirmationController,
-              ),
-              if (_errorMessage.isNotEmpty)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: Text(
-                    _errorMessage,
-                    style: const TextStyle(
-                      color: Colors.red,
-                      fontWeight: FontWeight.bold,
+    return SafeArea(
+      child: Scaffold(
+        body: YaftaOverlayLoading(
+          isLoading: _submitting,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 52),
+            child: Form(
+              onChanged: () {
+                setState(() {
+                  _errorMessage = "";
+                });
+              },
+              key: _formKey,
+              child: ListView(children: [
+                const YaftaLogo.isologo(),
+                YaftaTextField(
+                  label: "Full name",
+                  textController: _fullNameController,
+                  validator: requiredValidator,
+                ),
+                YaftaTextField(
+                  label: "Username",
+                  textController: _usernameController,
+                  validator: requiredValidator,
+                ),
+                YaftaTextField(
+                  label: "Email",
+                  textController: _emailController,
+                  validator: emailValidator,
+                ),
+                YaftaPasswordTextField(
+                  editingController: _passwordController,
+                ),
+                YaftaPasswordTextField(
+                  editingController: _passwordConfirmationController,
+                ),
+                if (_errorMessage.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: Text(
+                      _errorMessage,
+                      style: const TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-              YaftaButton(
-                  onPressed: _handleSignup,
-                  variant: "filled",
-                  secondary: true,
-                  text: "Sign up"),
-              YaftaButton(
-                  variant: "text",
-                  text: "I already have an account",
-                  onPressed: () => context.go(AppRoutes.login.path)),
-              if (signInWithGoogleEnabled) ...[
-                const Divider(),
-                GoogleButton(onPressed: _handleGoogleSignup)
-              ]
-            ]),
+                YaftaButton(
+                    onPressed: _handleSignup,
+                    variant: "filled",
+                    secondary: true,
+                    text: "Sign up"),
+                YaftaButton(
+                    variant: "text",
+                    text: "I already have an account",
+                    onPressed: () => context.go(AppRoutes.login.path)),
+                if (signInWithGoogleEnabled) ...[
+                  const Divider(),
+                  GoogleButton(onPressed: _handleGoogleSignup)
+                ]
+              ]),
+            ),
           ),
         ),
       ),

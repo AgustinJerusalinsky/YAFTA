@@ -48,68 +48,74 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          leading: const BackButton(),
-          title: const Text("Recuperar contraseña"),
-        ),
-        resizeToAvoidBottomInset: false,
-        body: YaftaOverlayLoading(
-            isLoading: _submitting,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 52),
-              child: Form(
-                onChanged: () {
-                  setState(() {
-                    _errorMessage = "";
-                  });
-                },
-                key: _formKey,
-                child: ListView(children: [
-                  if (!_success) ...[
-                    YaftaTextField(
-                      label: "Email",
-                      textController: _emailController,
-                      validator: emailValidator,
-                    ),
-                    const SizedBox(height: 32),
-                    if (_errorMessage.isNotEmpty)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 16.0),
-                        child: Text(
-                          _errorMessage,
-                          style: const TextStyle(
-                            color: Colors.red,
-                            fontWeight: FontWeight.bold,
+    return SafeArea(
+      child: Scaffold(
+          appBar: AppBar(
+            leading: const BackButton(),
+            title: const Text("Recuperar contraseña"),
+          ),
+          resizeToAvoidBottomInset: false,
+          body: YaftaOverlayLoading(
+              isLoading: _submitting,
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 32, vertical: 52),
+                child: Form(
+                  onChanged: () {
+                    setState(() {
+                      _errorMessage = "";
+                    });
+                  },
+                  key: _formKey,
+                  child: ListView(children: [
+                    if (!_success) ...[
+                      YaftaTextField(
+                        label: "Email",
+                        textController: _emailController,
+                        validator: emailValidator,
+                      ),
+                      const SizedBox(height: 32),
+                      if (_errorMessage.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 16.0),
+                          child: Text(
+                            _errorMessage,
+                            style: const TextStyle(
+                              color: Colors.red,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
+                      YaftaButton(
+                          onPressed: _handleForgotPassword,
+                          variant: "filled",
+                          secondary: true,
+                          text: "Recuperar contraseña"),
+                    ] else ...[
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        child: Image.asset(
+                          'assets/auth/email_sent.png',
+                          width: 30,
+                        ),
                       ),
+                      Text(
+                          "Se envió un email a ${_emailController.text.trim()} con las instrucciones para recuperar tu contraseña.")
+                    ],
                     YaftaButton(
-                        onPressed: _handleForgotPassword,
-                        variant: "filled",
-                        secondary: true,
-                        text: "Recuperar contraseña"),
-                  ] else ...[
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                      child: Image.asset(
-                        'assets/auth/email_sent.png',
-                        width: 30,
-                      ),
-                    ),
-                    Text(
-                        "Se envió un email a ${_emailController.text.trim()} con las instrucciones para recuperar tu contraseña.")
-                  ],
-                  YaftaButton(
-                      variant: "text",
-                      text: "Volver",
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [Icon(Icons.arrow_back_ios), Text("Volver")],
-                      ),
-                      onPressed: () => context.go(AppRoutes.login.path)),
-                ]),
-              ),
-            )));
+                        variant: "text",
+                        text: "Volver",
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.arrow_back_ios),
+                            Text("Volver")
+                          ],
+                        ),
+                        onPressed: () => context.go(AppRoutes.login.path)),
+                  ]),
+                ),
+              ))),
+    );
   }
 }

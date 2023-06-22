@@ -41,38 +41,40 @@ class _MainLayoutState extends State<MainLayout> {
   Widget build(BuildContext context) {
     final appNavigation = Provider.of<AppNavigation>(context);
 
-    return Scaffold(
-      appBar: YaftaAppBar(
-        title:
-            "${AppNavigation.navigationItems[appNavigation.currentIndex]["label"]}",
-      ),
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 15.0),
-        child: widget.body,
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
-        onPressed: () {
-          context.push(AppNavigation.navigationItems[appNavigation.currentIndex]
-              ["fabRoute"]);
-          // context.go(
-          //     "${AppNavigation.navigationItems[appNavigation.currentIndex]["fabRoute"]}");
-        },
-        icon: Icon(Icons.add,
-            color: Theme.of(context).colorScheme.onTertiaryContainer),
-        label: Text(
-            "${AppNavigation.navigationItems[appNavigation.currentIndex]["fabLabel"]}",
-            style: Theme.of(context).textTheme.button!.copyWith(
-                  color: Theme.of(context).colorScheme.onTertiaryContainer,
-                )),
-      ),
-      bottomNavigationBar: YaftaNavigationBar(
-        currentIndex: appNavigation.currentIndex,
-        onDestinationSelected: (index) {
-          context.go(shellRoutes[index].path);
-          appNavigation.currentIndex = index;
-        },
+    return SafeArea(
+      child: Scaffold(
+        appBar: YaftaAppBar(
+          title:
+              "${AppNavigation.navigationItems[appNavigation.currentIndex]["label"]}",
+        ),
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 15.0),
+          child: widget.body,
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
+          onPressed: () {
+            context.push(AppNavigation
+                .navigationItems[appNavigation.currentIndex]["fabRoute"]);
+            // context.go(
+            //     "${AppNavigation.navigationItems[appNavigation.currentIndex]["fabRoute"]}");
+          },
+          icon: Icon(Icons.add,
+              color: Theme.of(context).colorScheme.onTertiaryContainer),
+          label: Text(
+              "${AppNavigation.navigationItems[appNavigation.currentIndex]["fabLabel"]}",
+              style: Theme.of(context).textTheme.button!.copyWith(
+                    color: Theme.of(context).colorScheme.onTertiaryContainer,
+                  )),
+        ),
+        bottomNavigationBar: YaftaNavigationBar(
+          currentIndex: appNavigation.currentIndex,
+          onDestinationSelected: (index) {
+            context.go(shellRoutes[index].path);
+            appNavigation.currentIndex = index;
+          },
+        ),
       ),
     );
   }
