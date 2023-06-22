@@ -70,10 +70,9 @@ class _HomeScreenState extends State<HomeScreen> {
         final Map<String, double> incomesByCategory = {};
 
         for (var element in expenses) {
-          if (expensesByCategory.containsKey(element.category.categoryId)) {
-            expensesByCategory[element.category.categoryId!] =
-                expensesByCategory[element.category.categoryId]! +
-                    element.amount;
+          if (expensesByCategory.containsKey(element.category.name)) {
+            expensesByCategory[element.category.name] =
+                expensesByCategory[element.category.name]! + element.amount;
           } else {
             expensesByCategory[element.category.name] = element.amount;
           }
