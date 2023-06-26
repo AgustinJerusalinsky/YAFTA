@@ -101,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         variant: 'text',
                         text: "Olvidé mi contraseña",
                         onPressed: () =>
-                            context.go(AppRoutes.forgotPassword.path)),
+                            context.push(AppRoutes.forgotPassword.path)),
                     const SizedBox(height: 32),
                     if (_errorMessage.isNotEmpty)
                       Padding(
