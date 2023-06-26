@@ -110,12 +110,12 @@ class _SignupScreenState extends State<SignupScreen> {
               child: ListView(children: [
                 const YaftaLogo.isologo(),
                 YaftaTextField(
-                  label: "Full name",
+                  label: "Nombre completo",
                   textController: _fullNameController,
                   validator: requiredValidator,
                 ),
                 YaftaTextField(
-                  label: "Username",
+                  label: "Nombre de usuario",
                   textController: _usernameController,
                   validator: requiredValidator,
                 ),
@@ -145,10 +145,10 @@ class _SignupScreenState extends State<SignupScreen> {
                     onPressed: _handleSignup,
                     variant: "filled",
                     secondary: true,
-                    text: "Sign up"),
+                    text: "Registrarse"),
                 YaftaButton(
                     variant: "text",
-                    text: "I already have an account",
+                    text: "Ya tengo una cuenta",
                     onPressed: () => context.go(AppRoutes.login.path)),
                 if (signInWithGoogleEnabled) ...[
                   const Divider(),
