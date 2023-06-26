@@ -6,6 +6,7 @@ import 'package:yafta/design_system/molecules/button.dart';
 import 'package:yafta/design_system/molecules/text_field.dart';
 import 'package:yafta/design_system/molecules/yafta_app_bar.dart';
 import 'package:yafta/design_system/molecules/yafta_overlay_loading.dart';
+import 'package:yafta/models/exceptions/category_exists_exception.dart';
 import 'package:yafta/models/movement_type.dart';
 import 'package:yafta/services/budget_provider.dart';
 import 'package:yafta/utils/analytics.dart';
@@ -40,12 +41,21 @@ class AddBudgetScreenState extends State<AddBudgetScreen> {
     try {
       await budgetProvider.addCategory(
           categoryName, double.parse(amount), type);
+    } on CategoryAlreadyExistsException {
+      const message = "Ya existe una categoria con ese nombre";
+      scaffoldMessager.showSnackBar(SnackBar(
+          duration: const Duration(seconds: 1),
+          backgroundColor: theme.colorScheme.errorContainer,
+          content: Text(
+            message,
+            style: TextStyle(color: theme.colorScheme.onErrorContainer),
+          )));
     } catch (e) {
       scaffoldMessager.showSnackBar(SnackBar(
           duration: const Duration(seconds: 1),
           backgroundColor: theme.colorScheme.errorContainer,
           content: Text(
-            "Error al añadir categoria",
+            "Error al crear la categoria",
             style: TextStyle(color: theme.colorScheme.onErrorContainer),
           )));
     }

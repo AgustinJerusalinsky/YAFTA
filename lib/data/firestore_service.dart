@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:yafta/models/category.dart';
+import 'package:yafta/models/exceptions/category_exists_exception.dart';
 import 'package:yafta/models/movement.dart';
 import 'package:logging/logging.dart';
 import 'package:yafta/models/movement_type.dart';
@@ -126,7 +127,22 @@ class FirestoreService {
             .toList());
   }
 
-  Future<Category> addCategory(String userId, Category category) {
+  Future<Category> addCategory(String userId, Category category) async {
+    // check if category already exists for user
+
+    var categoryExists = await firestore
+        .collection('users')
+        .doc(userId)
+        .collection('categories')
+        .where('name', isEqualTo: category.name)
+        .where('type', isEqualTo: category.type.toString())
+        .get();
+
+    if (categoryExists.docs.isNotEmpty) {
+      log.warning("Category already exists");
+      throw CategoryAlreadyExistsException("Category already exists");
+    }
+
     return firestore
         .collection('users')
         .doc(userId)
